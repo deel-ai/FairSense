@@ -1,4 +1,5 @@
-from math import *
+
+from math import erf, sqrt
 
 import numpy as np
 import pandas as pd
@@ -34,7 +35,7 @@ def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
     Returns: a dataframe with the sobol indice (columns) for each variable (rows)
 
     """
-    check_arg_sobol(n=n, N=N, bs=bs) # TODO
+    check_arg_sobol(n=n, N=N, bs=bs)  # TODO
 
     variable_names = None
     if isinstance(fairness_problem.get_inputs(), pd.DataFrame):
@@ -42,10 +43,13 @@ def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
         x = x.values
     sobol_table = []
     for i in tqdm(range(bs)):
-        sobol_table.append(compute_sobol_table(fairness_problem.get_function(), fairness_problem.get_inputs(), n=n, N=N))
+        sobol_table.append(compute_sobol_table(
+            fairness_problem.get_function(), fairness_problem.get_inputs(), n=n, N=N))
     bootstrap_table = np.stack(sobol_table)
-    fairness_problem.set_result(sobol_table_to_dataframe(bootstrap_table, variable_names))
-      
+    fairness_problem.set_result(
+        sobol_table_to_dataframe(bootstrap_table, variable_names))
+
+
 def sobol_table_to_dataframe(sobol_table, variable_names=None):
     """
     Turn the numpy array into a printable dataframe. Displays confidence intervals when bootstrapping.
@@ -79,12 +83,6 @@ def sobol_table_to_dataframe(sobol_table, variable_names=None):
         columns=cols,
         index=variable_names
     )
-
-
-#######################
-# sobol computation
-#######################
-
 
 def compute_sobol_table(f, x, y=None, n=1000, N=None):
     """
@@ -190,11 +188,6 @@ def sobol_indices_at_i(f, variable_index, mode, n, cov, f_inv):
         sobol_total_ind_unnormalized(zcbis, zcquad, f, mode) / (2 * V)
     ]
     )
-
-#######################
-# marginal estimation
-#######################
-
 
 def apply_marginals(z_cond, F_inv):
     """

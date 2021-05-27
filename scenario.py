@@ -4,7 +4,7 @@ import pandas as pd
 from data_management.factory import create_fairness_problem
 from indices.sobol import compute_sobol
 from indices.test_sensivity_indices import gaussian_data_generator
-from visualization.visu_demo_sobol import demo_sobol
+from visualization.visu_demo_sobol import visu_demo_sobol
 
 if __name__ == '__main__':
     # Setup
@@ -23,4 +23,4 @@ if __name__ == '__main__':
     # Use Case
     my_problem = create_fairness_problem(inputs=data, function=func)
     compute_sobol(my_problem, n=nsample, bs=bootstrap_size)
-    demo_sobol(my_problem)
+    visu_demo_sobol(my_problem)
