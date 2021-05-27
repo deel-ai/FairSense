@@ -1,0 +1,13 @@
+analyze
+    compute_sobol_table
+        empirical_cov
+        compute_marginal_inv_cumul_dist
+        sobol_indices_at_i
+            generator
+            reorder_cols
+            apply_marginals
+
+            sobol_ind_unnormalized
+            sobol_total_unnormalized
+            sobol_ind_unnormalized
+            sobol_total_ind_unnormalized

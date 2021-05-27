@@ -21,11 +21,31 @@ def check_arg_sobol(**kargs):
 
 
 def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
-    check_arg_sobol(n=n, N=N, bs=bs)
-    # ... calcul ...
-    fairness_problem.result = 0
+    """
+    Take a function and a dataset and compute the sobol indices.
+    Args:
+        y:
+        f: the function to analyze. The function must be vectorized ( must work with array of inputs )
+        x: the dataset to analyze can be either a numpy array or a pandas dataframe.
+        n: number of sample used to compute the indices
+        bs: bootstrapping, number of runs used to compute confidence intervals.
+        N: number of samples used to compute the marginals
 
+    Returns: a dataframe with the sobol indice (columns) for each variable (rows)
 
+    """
+    check_arg_sobol(n=n, N=N, bs=bs) # TODO
+
+    variable_names = None
+    if isinstance(fairness_problem.get_inputs(), pd.DataFrame):
+        variable_names = fairness_problem.get_inputs().columns
+        x = x.values
+    sobol_table = []
+    for i in tqdm(range(bs)):
+        sobol_table.append(compute_sobol_table(fairness_problem.get_function(), fairness_problem.get_inputs(), n=n, N=N))
+    bootstrap_table = np.stack(sobol_table)
+    fairness_problem.set_result(sobol_table_to_dataframe(bootstrap_table, variable_names))
+      
 def sobol_table_to_dataframe(sobol_table, variable_names=None):
     """
     Turn the numpy array into a printable dataframe. Displays confidence intervals when bootstrapping.
@@ -59,31 +79,6 @@ def sobol_table_to_dataframe(sobol_table, variable_names=None):
         columns=cols,
         index=variable_names
     )
-
-
-def analyze(f, x, y=None, n=1000, N=None, bs=150):
-    """
-    Take a function and a dataset and compute the sobol indices.
-    Args:
-        y:
-        f: the function to analyze. The function must be vectorized ( must work with array of inputs )
-        x: the dataset to analyze can be either a numpy array or a pandas dataframe.
-        n: number of sample used to compute the indices
-        bs: bootstrapping, number of runs used to compute confidence intervals.
-        N: number of samples used to compute the marginals
-
-    Returns: a dataframe with the sobol indice (columns) for each variable (rows)
-
-    """
-    variable_names = None
-    if isinstance(x, pd.DataFrame):
-        variable_names = x.columns
-        x = x.values
-    sobol_table = []
-    for i in tqdm(range(bs)):
-        sobol_table.append(compute_sobol_table(f, x, n=n, N=N))
-    bootstrap_table = np.stack(sobol_table)
-    return sobol_table_to_dataframe(bootstrap_table, variable_names)
 
 
 #######################

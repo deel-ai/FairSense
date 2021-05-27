@@ -1,17 +1,26 @@
 import numpy as np
-import data_management.factory
-import indices.sobol
-import indices.cvm
-import visualization.one_way_to_display
+import pandas as pd
 
-# My data
-x = np.linspace(1, 10, 10)
-f = lambda x: np.random.randint(0,2)
-labels = [0, 1, 1, 0, 1, 0, 0, 0, 1, 1]
+from data_management.factory import create_fairness_problem
+from indices.sobol import compute_sobol
+from indices.test_sensivity_indices import gaussian_data_generator
+from visualization.visu_demo_sobol import demo_sobol
 
-my_problem = data_management.factory.create_fairness_problem(inputs=x, function=f, labels=labels)
-indices.cvm.compute_cvm(my_problem, cols=2)
-visualization.one_way_to_display.one_way_to_display(my_problem)
+if __name__ == '__main__':
+    # Setup
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
 
+    nsample = 5*10**2
+    data_sample = 10**4
+    bootstrap_size = 150
 
+    # Data
+    def func(x): return np.sum(x, axis=1)
+    data = gaussian_data_generator(
+        sigma12=0., sigma13=0., sigma23=0., N=data_sample)
 
+    # Use Case
+    my_problem = create_fairness_problem(inputs=data, function=func)
+    compute_sobol(my_problem, n=nsample, bs=bootstrap_size)
+    demo_sobol(my_problem)
