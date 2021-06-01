@@ -16,10 +16,11 @@ post it
 """
 
 
-def check_arg_sobol(**kargs):
-    if False:
-        raise Exception()
-
+def check_arg_sobol(fairness_problem, n, N, bs):
+    if fairness_problem.get_inputs() is None:
+        raise ValueError("FairnessProblem.inputs is not set yet.")
+    if fairness_problem.get_function() is None:
+        raise ValueError("FairnessProblem.function is not set yet.")
 
 def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
     """
@@ -35,7 +36,7 @@ def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
     Returns: a dataframe with the sobol indice (columns) for each variable (rows)
 
     """
-    check_arg_sobol(n=n, N=N, bs=bs)  # TODO
+    check_arg_sobol(fairness_problem, n, N, bs)  # TODO
 
     variable_names = None
     if isinstance(fairness_problem.get_inputs(), pd.DataFrame):
@@ -83,6 +84,7 @@ def sobol_table_to_dataframe(sobol_table, variable_names=None):
         columns=cols,
         index=variable_names
     )
+
 
 def compute_sobol_table(f, x, y=None, n=1000, N=None):
     """
@@ -188,6 +190,7 @@ def sobol_indices_at_i(f, variable_index, mode, n, cov, f_inv):
         sobol_total_ind_unnormalized(zcbis, zcquad, f, mode) / (2 * V)
     ]
     )
+
 
 def apply_marginals(z_cond, F_inv):
     """
