@@ -13,14 +13,29 @@ post it
 - propreté (import)
 - check
 - test
+- _ fct internes ?
 """
 
 
-def check_arg_sobol(fairness_problem, n, N, bs):
+def __check_arg_sobol(fairness_problem, n, N, bs):
+    """Check if the arguments needed to compute the Sobol indices are correct.
+    Rectify when it is possible, raise an exception otherwise.
+
+    Args:
+        fairness_problem (FairnessProblem): Data of the fairness problem.
+        n ([type]): [description]
+        N ([type]): [description]
+        bs ([type]): [description]
+
+    Raises:
+        ValueError: [description]
+        ValueError: [description]
+    """
     if fairness_problem.get_inputs() is None:
         raise ValueError("FairnessProblem.inputs is not set yet.")
     if fairness_problem.get_function() is None:
         raise ValueError("FairnessProblem.function is not set yet.")
+
 
 def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
     """
@@ -36,7 +51,7 @@ def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
     Returns: a dataframe with the sobol indice (columns) for each variable (rows)
 
     """
-    check_arg_sobol(fairness_problem, n, N, bs)  # TODO
+    __check_arg_sobol(fairness_problem, n, N, bs)  # TODO
 
     variable_names = None
     if isinstance(fairness_problem.get_inputs(), pd.DataFrame):

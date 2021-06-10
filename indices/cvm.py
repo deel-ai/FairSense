@@ -6,7 +6,18 @@ from fairness_problem import FairnessProblem
 from sklearn.neighbors import KDTree
 
 
-def check_arg_cvm(fairness_problem, cols):
+def __check_arg_cvm(fairness_problem: FairnessProblem, cols):
+    """Check if the arguments needed to compute the CVM indices are correct.
+    Rectify when it is possible, raise an exception otherwise.
+
+    Args:
+        fairness_problem (FairnessProblem): Data of the fairness problem.
+        cols ([type]): [description]
+
+    Raises:
+        ValueError: [description]
+        ValueError: [description]
+    """
     if fairness_problem.get_inputs() is None:
         raise ValueError("FairnessProblem.inputs is not set yet.")
     if fairness_problem.get_outputs() is None:
@@ -14,23 +25,33 @@ def check_arg_cvm(fairness_problem, cols):
 
 
 def compute_cvm(fairness_problem: FairnessProblem, cols=None):
-    check_arg_cvm(fairness_problem, cols)
+    """Compute the CVM indices of a fairness problem.
+    Set FairnessProblem.result as a Dataframe containing the indices.
+
+    Args:
+        fairness_problem (FairnessProblem): [description]
+        cols ([type], optional): [description]. Defaults to None.
+
+    Raises:
+        TypeError: [description]
+    """
+    __check_arg_cvm(fairness_problem, cols)
     if isinstance(fairness_problem.get_inputs(), pd.DataFrame) and isinstance(fairness_problem.get_outputs(), pd.DataFrame):
         df = fairness_problem.get_inputs().copy()
         df[fairness_problem.get_outputs().columns.array[0]
            ] = fairness_problem.get_outputs().copy()
         fairness_problem.set_result(
-            analyze(df, fairness_problem.get_outputs().columns.array[0], cols=cols))
+            __analyze(df, fairness_problem.get_outputs().columns.array[0], cols=cols))
     elif isinstance(fairness_problem.get_inputs(), np.ndarray) and isinstance(fairness_problem.get_outputs(), np.ndarray):
         df = pd.DataFrame(fairness_problem.get_inputs().copy())
         df["outputs"] = pd.DataFrame(fairness_problem.get_outputs().copy())
-        fairness_problem.set_result(analyze(df, "output", cols=cols))
+        fairness_problem.set_result(__analyze(df, "output", cols=cols))
     else:
         raise TypeError(
             "FairnessProblem.inputs and FairnessProblem.outputs must have the same type. Either np.ndarray or pd.DataFrame.")
 
 
-def CVM(data: pd.DataFrame, x_name, z_name, y_name):
+def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     """
     Compute the CVM index T(Y, Z|X)
     Args:
@@ -90,7 +111,7 @@ def CVM(data: pd.DataFrame, x_name, z_name, y_name):
     return tn_cond, u
 
 
-def analyze(x, output_var, cols=None):
+def __analyze(x, output_var, cols=None):
     """
     return the CVM indices
     Args:
@@ -134,7 +155,7 @@ def analyze(x, output_var, cols=None):
         except:
             pass
         # + list(CVM(x.copy(), col, x_names, output_var)))
-        indices.append(list(CVM(x.copy(), x_names, col, output_var)))
+        indices.append(list(__CVM(x.copy(), x_names, col, output_var)))
     if col_was_none:
         index = cols
     else:
