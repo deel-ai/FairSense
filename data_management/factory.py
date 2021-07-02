@@ -1,10 +1,10 @@
-from fairness_problem import FairnessProblem
+import fairness_problem
 import numpy as np
 import pandas as pd
 import types
 
 
-def create_fairness_problem(inputs=None, function=None, outputs=None, labels=None, groups_studied=[]):
+def create_fairness_problem(inputs=None, columns=None, function=None, outputs=None, labels=None, groups_studied=[], categorical_features=[]):
     """Create a fairness problem object.
 
     Args:
@@ -18,16 +18,29 @@ def create_fairness_problem(inputs=None, function=None, outputs=None, labels=Non
         FairnessProblem: An object representing a fairness problem.
     """
     check_inputs_type(inputs)
+    check_columns_type(columns)
     check_outputs_type(outputs)
     check_labels_type(labels)
     check_function_type(function)
     check_groups_studied_type(groups_studied)
+    check_categorical_features_type(categorical_features)
 
-    return FairnessProblem(inputs, function, outputs, labels, groups_studied)
+    if columns == None:
+        if isinstance(inputs, pd.DataFrame):
+            columns = list(inputs.columns)
+            inputs = inputs.to_numpy()
+        else:
+            columns = [str(i) for i in range(inputs.shape[1])]
+
+    return fairness_problem.FairnessProblem(inputs, columns, function, outputs, labels, groups_studied, categorical_features)
 
 def check_inputs_type(inputs):
     if inputs is not None and not check_is_array_or_df(inputs):
         raise TypeError("FairnessProblem.inputs should be a numpy array or a pandas dataframe.")
+
+def check_columns_type(columns):
+    if columns is not None and not isinstance(columns, list):
+        raise TypeError("FairnessProblem.columns should be a list.")
 
 def check_outputs_type(outputs):
     if outputs is not None and not check_is_array_or_df(outputs):
@@ -48,6 +61,10 @@ def check_groups_studied_type(groups_studied):
         for elt in groups_studied:
             if not isinstance(elt, list):
                 raise TypeError("FairnessProblem.groups_studied should be a list of lists.")
+
+def check_categorical_features_type(categorical_features):
+    if not isinstance(categorical_features, list):
+        raise TypeError("FairnessProblem.categorical_features should be a list.")
 
 def check_is_array_or_df(x):
     return isinstance(x, pd.DataFrame) or isinstance(x, np.ndarray)

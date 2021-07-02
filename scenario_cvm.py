@@ -16,6 +16,6 @@ if __name__ == '__main__':
         np.random.normal(0, 0.005, len(x))
 
     # Use Case
-    my_problem = create_fairness_problem(inputs=x, outputs=y)
+    my_problem = create_fairness_problem(inputs=x, outputs=y.to_numpy())
     compute_cvm(my_problem)
     visu_demo_cvm(my_problem)
