@@ -1,5 +1,5 @@
-from data_management import utils
-from fairness_problem import FairnessProblem
+from libfairness.data_management import utils
+from libfairness.fairness_problem import FairnessProblem
 
 # ---- DISPARATE IMPACT ----
 

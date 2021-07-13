@@ -1,4 +1,4 @@
-import data_management.factory
+from .data_management.checks import *
 import types
 
 
@@ -39,31 +39,31 @@ class FairnessProblem():
         return self.result
 
     def set_inputs(self, inputs):
-        data_management.factory.check_inputs_type(inputs)
+        check_inputs_type(inputs)
         self.inputs = inputs
 
     def set_columns(self, columns):
-        data_management.factory.check_columns_type(columns)
+        check_columns_type(columns)
         self.columns = columns
 
     def set_function(self, function):
-        data_management.factory.check_function_type(function)
+        check_function_type(function)
         self.function = function
 
     def set_outputs(self, outputs):
-        data_management.factory.check_outputs_type(outputs)
+        check_outputs_type(outputs)
         self.outputs = outputs
 
     def set_labels(self, labels):
-        data_management.factory.check_labels_type(labels)
+        check_labels_type(labels)
         self.labels = labels
 
     def set_groups_studied(self, groups_studied):
-        data_management.factory.check_groups_studied_type(groups_studied)
+        check_groups_studied_type(groups_studied)
         self.groups_studied = groups_studied
     
     def set_categorical_features(self, categorical_features):
-        data_management.factory.check_categorical_features_type(categorical_features)
+        check_categorical_features_type(categorical_features)
         self.categorical_features = categorical_features
 
     def set_result(self, result):

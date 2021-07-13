@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 
-from data_management.factory import create_fairness_problem
-from indices.cvm import compute_cvm
-from indices.test_sensivity_indices import gaussian_data_generator
-from visualization.visu_demo_cvm import visu_demo_cvm
+from libfairness.data_management.factory import create_fairness_problem
+from libfairness.indices.cvm import compute_cvm
+from libfairness.indices.test_sensivity_indices import gaussian_data_generator
+from libfairness.visualization.visu_demo_cvm import visu_demo_cvm
 
 if __name__ == '__main__':
     # Setup + Data

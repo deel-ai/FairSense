@@ -2,7 +2,7 @@ from typing import Iterable
 
 import numpy as np
 import pandas as pd
-from fairness_problem import FairnessProblem
+from libfairness.fairness_problem import FairnessProblem
 from sklearn.neighbors import KDTree
 
 

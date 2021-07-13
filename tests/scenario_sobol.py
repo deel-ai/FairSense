@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 
-from data_management.factory import create_fairness_problem
-from indices.sobol import compute_sobol
-from indices.test_sensivity_indices import gaussian_data_generator
-from visualization.visu_demo_sobol import visu_demo_sobol
+from libfairness.data_management.factory import create_fairness_problem
+from libfairness.indices.sobol import compute_sobol
+from libfairness.indices.test_sensivity_indices import gaussian_data_generator
+from libfairness.visualization.visu_demo_sobol import visu_demo_sobol
 
 if __name__ == '__main__':
     # Setup
@@ -22,5 +22,6 @@ if __name__ == '__main__':
 
     # Use Case
     my_problem = create_fairness_problem(inputs=data, function=func)
-    compute_sobol(my_problem, n=nsample, bs=bootstrap_size)
+    calcul_indices = with_confidence_intervals(compute_sobol)
+    calcul_indices(my_problem, n=nsample, bs=bootstrap_size)
     visu_demo_sobol(my_problem)

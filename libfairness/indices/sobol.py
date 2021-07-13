@@ -3,7 +3,7 @@ from math import erf, sqrt
 
 import numpy as np
 import pandas as pd
-from fairness_problem import FairnessProblem
+from libfairness.fairness_problem import FairnessProblem
 from numpy.linalg import cholesky, inv
 from tqdm import tqdm
 

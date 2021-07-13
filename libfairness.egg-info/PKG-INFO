@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: libfairness
+Version: 0.0.1
+Summary: todo
+Home-page: todo
+Author: Alexandre LANGLADE, Thibaut BOISSIN
+Author-email: alexandre.langlade@irt-saintexupery.com, thibaut.boissin@irt-saintexupery.com
+License: MIT
+Description: libfairness
+        ===========
+        
+        This lib does a lot of amazing things !
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Provides-Extra: docs

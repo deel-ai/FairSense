@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-from fairness_problem import FairnessProblem
+from libfairness.fairness_problem import FairnessProblem
 
 def visu_disparate_impact(fairness_problem):
     sns.set_theme(style="white", context="notebook")

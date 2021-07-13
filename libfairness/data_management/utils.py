@@ -1,7 +1,6 @@
-from fairness_problem import FairnessProblem
+from libfairness.fairness_problem import FairnessProblem
 from sklearn.preprocessing import OneHotEncoder
 import numpy as np
-
 
 def compute_outputs(fairness_problem: FairnessProblem):
     """Compute the outputs of the fairness problem from FairnessProblem.inputs

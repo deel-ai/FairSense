@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from indices.sobol import compute_sobol_table
+from libfairness.indices.sobol import compute_sobol_table
 
 
 def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1., var2=1., var3=1.):
