@@ -11,7 +11,7 @@ class FairnessProblem():
         self.outputs = outputs
         self.labels = labels
         self.groups_studied = groups_studied
-        self.categorical_features = categorical_features
+        self.categorical_features = self.set_categorical_features(categorical_features)
         self.result = None
 
     def get_inputs(self):
@@ -64,7 +64,18 @@ class FairnessProblem():
     
     def set_categorical_features(self, categorical_features):
         check_categorical_features_type(categorical_features)
-        self.categorical_features = categorical_features
+        temp = categorical_features
+        if len(categorical_features) > 0:
+            if type(categorical_features[0]) == str:
+                temp = []
+                col = self.get_columns()
+                for elt in categorical_features:
+                    try:
+                        if col.index(elt) not in temp:
+                            temp.append(col.index(elt))
+                    except ValueError:
+                        raise ValueError("Verify that names you gave to categorical_features are correct : " + str(elt))
+        self.categorical_features = temp
 
     def set_result(self, result):
         self.result = result

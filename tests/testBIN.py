@@ -1,8 +1,7 @@
 import numpy as np
-
-from data_management import utils
-from data_management.factory import create_fairness_problem
-from fairness_problem import FairnessProblem
+from libfairness.data_management import utils
+from libfairness.data_management.factory import create_fairness_problem
+from libfairness.fairness_problem import FairnessProblem
 
 x1 = ["Romain", "Bleu", 23]
 x2 = ["Romain", "Vert", 24]
@@ -18,6 +17,6 @@ print("--------BEFORE---------")
 print(my_problem.get_columns())
 print(my_problem.get_inputs())
 print("--------AFTER---------")
-utils.binarize(my_problem,[0,1,2])
+utils.binarize(my_problem,["Nom","Age"])
 print(my_problem.get_columns())
 print(my_problem.get_inputs())

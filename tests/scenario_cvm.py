@@ -3,8 +3,8 @@ import pandas as pd
 
 from libfairness.data_management.factory import create_fairness_problem
 from libfairness.indices.cvm import compute_cvm
-from libfairness.indices.test_sensivity_indices import gaussian_data_generator
-from libfairness.visualization.visu_demo_cvm import visu_demo_cvm
+from tests.test_sensivity_indices import gaussian_data_generator
+from libfairness.visualization.cvm_visu import visu_cvm
 
 if __name__ == '__main__':
     # Setup + Data
@@ -18,4 +18,4 @@ if __name__ == '__main__':
     # Use Case
     my_problem = create_fairness_problem(inputs=x, outputs=y.to_numpy())
     compute_cvm(my_problem)
-    visu_demo_cvm(my_problem)
+    visu_cvm(my_problem)

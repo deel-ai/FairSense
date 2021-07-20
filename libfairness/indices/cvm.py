@@ -36,20 +36,9 @@ def compute_cvm(fairness_problem: FairnessProblem, cols=None):
         TypeError: [description]
     """
     __check_arg_cvm(fairness_problem, cols)
-    if isinstance(fairness_problem.get_inputs(), pd.DataFrame) and isinstance(fairness_problem.get_outputs(), pd.DataFrame):
-        df = fairness_problem.get_inputs().copy()
-        df[fairness_problem.get_outputs().columns.array[0]
-           ] = fairness_problem.get_outputs().copy()
-        fairness_problem.set_result(
-            __analyze(df, fairness_problem.get_outputs().columns.array[0], cols=cols))
-    elif isinstance(fairness_problem.get_inputs(), np.ndarray) and isinstance(fairness_problem.get_outputs(), np.ndarray):
-        df = pd.DataFrame(fairness_problem.get_inputs().copy())
-        df["outputs"] = pd.DataFrame(fairness_problem.get_outputs().copy())
-        fairness_problem.set_result(__analyze(df, "output", cols=cols))
-    else:
-        raise TypeError(
-            "FairnessProblem.inputs and FairnessProblem.outputs must have the same type. Either np.ndarray or pd.DataFrame.")
-
+    df = pd.DataFrame(fairness_problem.get_inputs().copy(),columns=fairness_problem.get_columns())
+    df["outputs"] = pd.DataFrame(fairness_problem.get_outputs().copy())
+    fairness_problem.set_result(__analyze(df, "outputs", cols=cols))
 
 def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     """
