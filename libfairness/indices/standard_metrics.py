@@ -1,6 +1,8 @@
 from libfairness.data_management import utils
 from libfairness.fairness_problem import FairnessProblem
 
+import numpy as np
+
 # ---- DISPARATE IMPACT ----
 
 
@@ -13,31 +15,19 @@ def __disparate_impact(fairness_problem: FairnessProblem, S_index: int):
         can be found in FairnessProblem.inputs.
 
     Returns:
-        dict: Return a dict in which the keys are the values ​​of the sensitive
-        variable and the values are the associated disparate impact.
-        Disparate impact is defined as 𝑃(𝑓(𝑋)=1|𝑆)/𝑃(𝑓(𝑋)=1).
-        When P(f(X)=1) = 0, the function returns {"all": -1.}.
+        float: Return the disparate impact of a sensitive variable.
+        Disparate impact is defined as P(f(X)=1|S=0) / P(f(X)=1|S=1).
+        When P(f(X)=1|S=1)=0, the function returns None.
     """
-    occurrences = {}
-    total = 0
-    positive_prediction = 0
-    for i in range(fairness_problem.get_outputs().shape[0]):
-        temp = fairness_problem.get_inputs()[i][S_index]
-        if not temp in occurrences:
-            occurrences[temp] = [0, 0]
-        total += 1
-        output = fairness_problem.get_outputs()[i][0]
-        positive_prediction += output
-        (occurrences[temp])[int(output)] += 1
-    result = {}
-    b = positive_prediction/total
-    if b == 0:
-        return {"all": -1.}
-    for element in occurrences:
-        a = (occurrences[element])[1] / \
-            ((occurrences[element])[1]+(occurrences[element])[0])
-        result[element] = a/b
-    return result
+    inputs = fairness_problem.get_inputs()
+    outputs = fairness_problem.get_outputs()
+    a = len(np.where(inputs[:,S_index]==0)[0])
+    b = len(np.where(inputs[:,S_index]==1)[0])
+    if a==0 or b==0: return None
+    numerator = len(np.where((outputs[:,0]==1) & (inputs[:,S_index]==0))[0]) / a
+    denominator = len(np.where((outputs[:,0]==1) & (inputs[:,S_index]==1))[0]) / b
+    if denominator == 0: return None
+    return numerator/denominator
 
 
 def __check_arg_disparate_impact(fairness_problem: FairnessProblem):
@@ -66,7 +56,14 @@ def compute_disparate_impact(fairness_problem: FairnessProblem):
     __check_arg_disparate_impact(fairness_problem)
     result = {}
     for var in fairness_problem.get_groups_studied():
-        result[var[0]] = __disparate_impact(fairness_problem, var[0])
+        if type(var[0])==str:
+            try:
+                index_sensitive_var = fairness_problem.get_columns().index(var[0])
+            except ValueError:
+                raise ValueError("Verify that names you gave to FairnessProblem.groups_studied are correct : " + str(var[0]))
+        else:
+            index_sensitive_var = int(var[0])
+        result[fairness_problem.get_columns()[index_sensitive_var]] = __disparate_impact(fairness_problem, index_sensitive_var)
     fairness_problem.set_result(result)
 
 # ---- EQUALITY OF ODDS ----
