@@ -2,29 +2,16 @@ from libfairness.fairness_problem import FairnessProblem
 from sklearn.preprocessing import OneHotEncoder
 import numpy as np
 
-def compute_outputs(fairness_problem: FairnessProblem):
-    """Compute the outputs of the fairness problem from FairnessProblem.inputs
-    and FairnessProblem.function.
-
-    Args:
-        fairness_problem (FairnessProblem): Data of the fairness problem.
-
-    Raises:
-        ValueError: [description]
-    """
-    if fairness_problem.get_function() is None or fairness_problem.get_inputs() is None:
-        raise ValueError("FairnessProblem.inputs or FairnessProblem.function is not set yet.")
-    # TODO calcul des outputs
 
 def binarize(fairness_problem:FairnessProblem, categorical_features=None):
-    """[summary]
+    """Binarize the columns that have been indicated as categorical.
 
     Args:
-        fairness_problem (FairnessProblem): [description]
-        categorical_features ([type], optional): [description]. Defaults to None.
+        fairness_problem (FairnessProblem): The fairness problem created that contains inputs to binarize.
+        categorical_features (List, optional): List containing columns to binarize. Defaults to None.
 
     Raises:
-        ValueError: [description]
+        ValueError: No categorical_features list set.
     """
     if categorical_features != None:
         fairness_problem.set_categorical_features(categorical_features)
@@ -47,14 +34,14 @@ def binarize(fairness_problem:FairnessProblem, categorical_features=None):
     fairness_problem.set_categorical_features([])
 
 def __one_hot_enc(column:np.ndarray, name):
-    """[summary]
+    """Binarize a column
 
     Args:
-        column (np.ndarray): [description]
-        name ([type]): [description]
+        column (np.ndarray): A column of inputs
+        name ([type]): The name linked to the column
 
     Returns:
-        [type]: [description]
+        np.ndarray, str: The result of binarization.
     """
     encoder = OneHotEncoder(handle_unknown='ignore')
     encoder.fit(column)

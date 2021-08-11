@@ -7,15 +7,6 @@ from libfairness.fairness_problem import FairnessProblem
 from numpy.linalg import cholesky, inv
 from tqdm import tqdm
 
-"""
-post it
-- doc
-- propreté (import)
-- check
-- test
-- _ fct internes ?
-"""
-
 
 def __check_arg_sobol(fairness_problem, n, N, bs):
     """Check if the arguments needed to compute the Sobol indices are correct.
@@ -28,8 +19,8 @@ def __check_arg_sobol(fairness_problem, n, N, bs):
         bs ([type]): [description]
 
     Raises:
-        ValueError: [description]
-        ValueError: [description]
+        ValueError: Inputs unknown.
+        ValueError: Outputs unknown.
     """
     if fairness_problem.get_inputs() is None:
         raise ValueError("FairnessProblem.inputs is not set yet.")
@@ -38,20 +29,16 @@ def __check_arg_sobol(fairness_problem, n, N, bs):
 
 
 def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
-    """
-    Take a function and a dataset and compute the sobol indices.
+    """Take a function and a dataset and compute the sobol indices.
+    Set a dataframe with the sobol indice (columns) for each variable (rows) in FairnessProblem.result.
+
     Args:
-        y:
-        f: the function to analyze. The function must be vectorized ( must work with array of inputs )
-        x: the dataset to analyze can be either a numpy array or a pandas dataframe.
-        n: number of sample used to compute the indices
-        bs: bootstrapping, number of runs used to compute confidence intervals.
-        N: number of samples used to compute the marginals
-
-    Returns: a dataframe with the sobol indice (columns) for each variable (rows)
-
+        fairness_problem (FairnessProblem): The fairness problem to study.
+        n (int, optional): [description]. Defaults to 1000.
+        N ([type], optional): [description]. Defaults to None.
+        bs (int, optional): [description]. Defaults to 150.
     """
-    __check_arg_sobol(fairness_problem, n, N, bs)  # TODO
+    __check_arg_sobol(fairness_problem, n, N, bs)
 
     variable_names = None
     if isinstance(fairness_problem.get_inputs(), pd.DataFrame):

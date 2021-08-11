@@ -15,8 +15,8 @@ def __check_arg_cvm(fairness_problem: FairnessProblem, cols):
         cols ([type]): [description]
 
     Raises:
-        ValueError: [description]
-        ValueError: [description]
+        ValueError: Inputs unknown.
+        ValueError: Outputs unknown.
     """
     if fairness_problem.get_inputs() is None:
         raise ValueError("FairnessProblem.inputs is not set yet.")
@@ -29,11 +29,9 @@ def compute_cvm(fairness_problem: FairnessProblem, cols=None):
     Set FairnessProblem.result as a Dataframe containing the indices.
 
     Args:
-        fairness_problem (FairnessProblem): [description]
+        fairness_problem (FairnessProblem): The fairness problem to study.
         cols ([type], optional): [description]. Defaults to None.
 
-    Raises:
-        TypeError: [description]
     """
     __check_arg_cvm(fairness_problem, cols)
     df = pd.DataFrame(fairness_problem.get_inputs().copy(),columns=fairness_problem.get_columns())

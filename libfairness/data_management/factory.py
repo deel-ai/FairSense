@@ -7,14 +7,16 @@ def create_fairness_problem(inputs=None, columns=None, function=None, outputs=No
     """Create a fairness problem object.
 
     Args:
-        inputs ([type], optional): [description]. Defaults to None.
-        function ([type], optional): [description]. Defaults to None.
-        outputs ([type], optional): [description]. Defaults to None.
-        labels ([type], optional): [description]. Defaults to None.
-        groups_studied ([type], optional): [description]. Defaults to None.
+        inputs ([type], optional): Inputs of the fairness problem. Defaults to None.
+        columns ([type], optional): Names of the columns of the inputs. Defaults to None.
+        function ([type], optional): Function of the fairness problem. Defaults to None.
+        outputs ([type], optional): Outputs of the fairness problem. Defaults to None.
+        labels ([type], optional): Labels of the fairness problem. Defaults to None.
+        groups_studied (list, optional): List to inform which variables should be studied. Defaults to [].
+        categorical_features (list, optional): List to inform which variables should be binarize. Defaults to [].
 
     Returns:
-        FairnessProblem: An object representing a fairness problem.
+        FairnessProblem: An object representing the problem inwhich are saved usefull datas.
     """
     check_inputs_type(inputs)
     check_columns_type(columns)

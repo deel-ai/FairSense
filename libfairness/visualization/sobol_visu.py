@@ -4,6 +4,11 @@ import seaborn as sns
 from libfairness.fairness_problem import FairnessProblem
 
 def visu_sobol(fairness_problem : FairnessProblem):
+    """Display the result attribute after computing sobol indices.
+
+    Args:
+        fairness_problem (FairnessProblem): The fairness problem studied.
+    """
     res = fairness_problem.get_result()[["S", "ST", "S_ind", "ST_ind"]]
     res = res.reset_index()
     sns.set_theme(style="whitegrid")

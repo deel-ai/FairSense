@@ -4,6 +4,11 @@ import seaborn as sns
 from libfairness.fairness_problem import FairnessProblem
 
 def visu_cvm(fairness_problem : FairnessProblem):
+    """Display the result attribute after computing cvm indices.
+
+    Args:
+        fairness_problem (FairnessProblem): The fairness problem studied.
+    """
     res = fairness_problem.get_result()[["CVM", "CVM_indep"]]
     res = res.reset_index()
     sns.set_theme(style="whitegrid")
