@@ -215,6 +215,76 @@
 <dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">libfairness.fairness_problem.</span></span><span class="sig-name descname"><span class="pre">FairnessProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups_studied</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class used to represent a fairness problem</p>
+<p>…</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>inputs of the problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>np.ndarray or pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.columns">
+<span class="sig-name descname"><span class="pre">columns</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>names of the columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.function">
+<span class="sig-name descname"><span class="pre">function</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.function" title="Permalink to this definition">¶</a></dt>
+<dd><p>function associated to the problem</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.outputs">
+<span class="sig-name descname"><span class="pre">outputs</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>outputs of the problem</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>outputs of the problem</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.groups_studied">
+<span class="sig-name descname"><span class="pre">groups_studied</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.groups_studied" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate variables(columns) to study</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List of List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.categorical_features">
+<span class="sig-name descname"><span class="pre">categorical_features</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.categorical_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate categorical variables(columns) to binarize</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.result">
+<span class="sig-name descname"><span class="pre">result</span></span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contain the result after computing indices functions</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="libfairness.fairness_problem.FairnessProblem.get_categorical_features">
 <span class="sig-name descname"><span class="pre">get_categorical_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#libfairness.fairness_problem.FairnessProblem.get_categorical_features" title="Permalink to this definition">¶</a></dt>

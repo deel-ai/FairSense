@@ -3,6 +3,30 @@ import types
 
 
 class FairnessProblem():
+    """
+    A class used to represent a fairness problem
+
+    ...
+
+    Attributes
+    ----------
+    inputs : np.ndarray or pd.DataFrame
+        inputs of the problem
+    columns : List
+        names of the columns
+    function : 
+        function associated to the problem
+    outputs : 
+        outputs of the problem
+    labels : 
+        outputs of the problem
+    groups_studied : List of List
+        Indicate variables(columns) to study
+    categorical_features : List
+        Indicate categorical variables(columns) to binarize
+    result :
+        Contain the result after computing indices functions
+    """
 
     def __init__(self, inputs=None, columns=None, function=None, outputs=None, labels=None, groups_studied=[], categorical_features=[]):
         self.columns = columns
@@ -11,7 +35,7 @@ class FairnessProblem():
         self.outputs = outputs
         self.labels = labels
         self.groups_studied = groups_studied
-        self.categorical_features = self.set_categorical_features(categorical_features)
+        self.set_categorical_features(categorical_features)
         self.result = None
 
     def get_inputs(self):
@@ -75,6 +99,8 @@ class FairnessProblem():
                             temp.append(col.index(elt))
                     except ValueError:
                         raise ValueError("Verify that names you gave to categorical_features are correct : " + str(elt))
+        else:
+            temp = []
         self.categorical_features = temp
 
     def set_result(self, result):

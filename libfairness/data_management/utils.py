@@ -16,7 +16,7 @@ def binarize(fairness_problem:FairnessProblem, categorical_features=None):
     if categorical_features != None:
         fairness_problem.set_categorical_features(categorical_features)
     cf = fairness_problem.get_categorical_features()
-    if cf == None:
+    if len(cf) == 0:
         raise ValueError("FairnessProblem.categorical_features is not set yet.")
     for elt in cf:
         c = fairness_problem.get_inputs()[:,elt]
