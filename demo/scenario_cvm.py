@@ -13,8 +13,7 @@ def cvm_scenario_one():
     cols = ["X_{}".format(i) for i in range(5)]
     x = pd.DataFrame(np.random.normal(size=(samples, 5)), columns=cols)
     y = pd.DataFrame()
-    y["Y"] = x["X_0"] + 2 * x["X_1"] - x["X_2"] + \
-        np.random.normal(0, 0.005, len(x))
+    y["Y"] = x["X_0"] + 2 * x["X_1"] - x["X_2"] + np.random.normal(0, 0.005, len(x))
 
     # Use Case
     my_problem = create_fairness_problem(inputs=x, outputs=y.to_numpy())
@@ -56,6 +55,6 @@ def cvm_scenario_two():
     visu_cvm(my_problem)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cvm_scenario_one()
     cvm_scenario_two()

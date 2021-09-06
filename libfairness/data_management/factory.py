@@ -3,7 +3,16 @@ import numpy as np
 import pandas as pd
 from .checks import *
 
-def create_fairness_problem(inputs=None, columns=None, function=None, outputs=None, labels=None, groups_studied=[], categorical_features=[]):
+
+def create_fairness_problem(
+    inputs=None,
+    columns=None,
+    function=None,
+    outputs=None,
+    labels=None,
+    groups_studied=[],
+    categorical_features=[],
+):
     """Create a fairness problem object.
 
     Args:
@@ -33,4 +42,6 @@ def create_fairness_problem(inputs=None, columns=None, function=None, outputs=No
         else:
             columns = [str(i) for i in range(inputs.shape[1])]
 
-    return FairnessProblem(inputs, columns, function, outputs, labels, groups_studied, categorical_features)
+    return FairnessProblem(
+        inputs, columns, function, outputs, labels, groups_studied, categorical_features
+    )

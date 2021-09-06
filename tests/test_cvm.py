@@ -9,7 +9,6 @@ from sklearn.datasets import load_iris
 
 
 class TestCVM(unittest.TestCase):
-
     def test_cvm(self):
         # data
         iris = load_iris()
@@ -48,10 +47,16 @@ class TestCVM(unittest.TestCase):
         compute_cvm(my_problem)
 
         result = my_problem.get_result().to_numpy()
-        result_hard = np.array([[0.09232480533926586, 0.0], [0.0, 0.0], [
-            0.5461624026696329, 0.07341490545050056], [0.3592880978865406, 0.0]])
+        result_hard = np.array(
+            [
+                [0.09232480533926586, 0.0],
+                [0.0, 0.0],
+                [0.5461624026696329, 0.07341490545050056],
+                [0.3592880978865406, 0.0],
+            ]
+        )
         self.assertTrue(np.array_equal(result, result_hard))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

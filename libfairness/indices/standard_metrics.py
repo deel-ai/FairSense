@@ -21,13 +21,15 @@ def __disparate_impact(fairness_problem: FairnessProblem, S_index: int):
     """
     inputs = fairness_problem.get_inputs()
     outputs = fairness_problem.get_outputs()
-    a = len(np.where(inputs[:,S_index]==0)[0])
-    b = len(np.where(inputs[:,S_index]==1)[0])
-    if a==0 or b==0: return None
-    numerator = len(np.where((outputs[:,0]==1) & (inputs[:,S_index]==0))[0]) / a
-    denominator = len(np.where((outputs[:,0]==1) & (inputs[:,S_index]==1))[0]) / b
-    if denominator == 0: return None
-    return numerator/denominator
+    a = len(np.where(inputs[:, S_index] == 0)[0])
+    b = len(np.where(inputs[:, S_index] == 1)[0])
+    if a == 0 or b == 0:
+        return None
+    numerator = len(np.where((outputs[:, 0] == 1) & (inputs[:, S_index] == 0))[0]) / a
+    denominator = len(np.where((outputs[:, 0] == 1) & (inputs[:, S_index] == 1))[0]) / b
+    if denominator == 0:
+        return None
+    return numerator / denominator
 
 
 def __check_arg_disparate_impact(fairness_problem: FairnessProblem):
@@ -54,13 +56,17 @@ def compute_disparate_impact(fairness_problem: FairnessProblem):
     __check_arg_disparate_impact(fairness_problem)
     result = {}
     for var in fairness_problem.get_groups_studied():
-        if type(var[0])==str:
+        if type(var[0]) == str:
             try:
                 index_sensitive_var = fairness_problem.get_columns().index(var[0])
             except ValueError:
-                raise ValueError("Verify that names you gave to FairnessProblem.groups_studied are correct : " + str(var[0]))
+                raise ValueError(
+                    "Verify that names you gave to FairnessProblem.groups_studied are correct : "
+                    + str(var[0])
+                )
         else:
             index_sensitive_var = int(var[0])
-        result[fairness_problem.get_columns()[index_sensitive_var]] = __disparate_impact(fairness_problem, index_sensitive_var)
+        result[
+            fairness_problem.get_columns()[index_sensitive_var]
+        ] = __disparate_impact(fairness_problem, index_sensitive_var)
     fairness_problem.set_result(result)
-

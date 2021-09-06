@@ -2,7 +2,7 @@ from .data_management.checks import *
 import types
 
 
-class FairnessProblem():
+class FairnessProblem:
     """
     A class used to represent a fairness problem
 
@@ -14,11 +14,11 @@ class FairnessProblem():
         inputs of the problem
     columns : List
         names of the columns
-    function : 
+    function :
         function associated to the problem
-    outputs : 
+    outputs :
         outputs of the problem
-    labels : 
+    labels :
         outputs of the problem
     groups_studied : List of List
         Indicate variables(columns) to study
@@ -28,7 +28,16 @@ class FairnessProblem():
         Contain the result after computing indices functions
     """
 
-    def __init__(self, inputs=None, columns=None, function=None, outputs=None, labels=None, groups_studied=[], categorical_features=[]):
+    def __init__(
+        self,
+        inputs=None,
+        columns=None,
+        function=None,
+        outputs=None,
+        labels=None,
+        groups_studied=[],
+        categorical_features=[],
+    ):
         self.columns = columns
         self.inputs = inputs
         self.function = function
@@ -85,7 +94,7 @@ class FairnessProblem():
     def set_groups_studied(self, groups_studied):
         check_groups_studied_type(groups_studied)
         self.groups_studied = groups_studied
-    
+
     def set_categorical_features(self, categorical_features):
         check_categorical_features_type(categorical_features)
         temp = categorical_features
@@ -98,7 +107,10 @@ class FairnessProblem():
                         if col.index(elt) not in temp:
                             temp.append(col.index(elt))
                     except ValueError:
-                        raise ValueError("Verify that names you gave to categorical_features are correct : " + str(elt))
+                        raise ValueError(
+                            "Verify that names you gave to categorical_features are correct : "
+                            + str(elt)
+                        )
         else:
             temp = []
         self.categorical_features = temp

@@ -3,45 +3,46 @@ import numpy as np
 from libfairness.indices.sobol import compute_sobol_table
 
 
-def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1., var2=1., var3=1.):
-    cov = np.mat([
-        [var1, sigma12, sigma13],
-        [sigma12, var2, sigma23],
-        [sigma13, sigma23, var3]
-    ])
-    x = np.random.multivariate_normal(
-        mean=np.array([0, 0, 0]),
-        cov=cov,
-        size=N
+def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, var3=1.0):
+    cov = np.mat(
+        [[var1, sigma12, sigma13], [sigma12, var2, sigma23], [sigma13, sigma23, var3]]
     )
+    x = np.random.multivariate_normal(mean=np.array([0, 0, 0]), cov=cov, size=N)
     return x
 
 
 class MyTestCase(unittest.TestCase):
-
     def __init__(self, *args, **kwargs):
         super(MyTestCase, self).__init__(*args, **kwargs)
         self.atol = 0.05
         self.rtol = 0.05
-        self.nsample = 10**4
-        self.data_sample = 10**3
+        self.nsample = 10 ** 4
+        self.data_sample = 10 ** 3
         # test preparation, do all computations, and results are stored in two table
         # (row are x_i and columns are indices)
         # create tables from 4.1
         func = lambda x: np.sum(x, axis=1)
-        data = gaussian_data_generator(sigma12=.5, sigma13=.8, sigma23=0, N=self.data_sample)
+        data = gaussian_data_generator(
+            sigma12=0.5, sigma13=0.8, sigma23=0, N=self.data_sample
+        )
         self.indices_table = compute_sobol_table(func, data, n=self.nsample)
 
         func = lambda x: np.sum(x, axis=1)
-        data = gaussian_data_generator(sigma12=-0.5, sigma13=.2, sigma23=-0.7, N=self.data_sample)
+        data = gaussian_data_generator(
+            sigma12=-0.5, sigma13=0.2, sigma23=-0.7, N=self.data_sample
+        )
         self.indices_table_2 = compute_sobol_table(func, data, n=self.nsample)
 
         func = lambda x: np.sum(x, axis=1)
-        data = gaussian_data_generator(sigma12=0., sigma13=0., sigma23=0., N=self.data_sample)
+        data = gaussian_data_generator(
+            sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
+        )
         self.indices_table_3 = compute_sobol_table(func, data, n=self.nsample)
 
         func = lambda x: x[:, 0]
-        data = gaussian_data_generator(sigma12=.0, sigma13=0., sigma23=0., N=self.data_sample)
+        data = gaussian_data_generator(
+            sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
+        )
         self.indices_table_4 = compute_sobol_table(func, data, n=self.nsample)
 
     def test_sobol(self):
@@ -50,22 +51,34 @@ class MyTestCase(unittest.TestCase):
         sobol_2 = self.indices_table_2[:, 0]
         sobol_3 = self.indices_table_3[:, 0]
         sobol_4 = self.indices_table_4[:, 0]
-        np.testing.assert_allclose(sobol_1, [0.94, 0.40, 0.58],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 1")
-        np.testing.assert_allclose(sobol_2, [0.49, 0.04, 0.25],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_3, [0.33, 0.33, 0.33],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_4, [1.0, 0., 0.],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
+        np.testing.assert_allclose(
+            sobol_1,
+            [0.94, 0.40, 0.58],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 1",
+        )
+        np.testing.assert_allclose(
+            sobol_2,
+            [0.49, 0.04, 0.25],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_3,
+            [0.33, 0.33, 0.33],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_4,
+            [1.0, 0.0, 0.0],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
 
     def test_sobol_total(self):
         # check ST match the value of the paper
@@ -73,22 +86,34 @@ class MyTestCase(unittest.TestCase):
         sobol_2 = self.indices_table_2[:, 1]
         sobol_3 = self.indices_table_3[:, 0]
         sobol_4 = self.indices_table_4[:, 0]
-        np.testing.assert_allclose(sobol_1, [0.94, 0.40, 0.58],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol total] did not match expected values for linear case 1")
-        np.testing.assert_allclose(sobol_2, [0.49, 0.04, 0.25],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol total] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_3, [0.33, 0.33, 0.33],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_4, [1.0, 0., 0.],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
+        np.testing.assert_allclose(
+            sobol_1,
+            [0.94, 0.40, 0.58],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol total] did not match expected values for linear case 1",
+        )
+        np.testing.assert_allclose(
+            sobol_2,
+            [0.49, 0.04, 0.25],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol total] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_3,
+            [0.33, 0.33, 0.33],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_4,
+            [1.0, 0.0, 0.0],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
 
     def test_sobol_ind(self):
         # check S_i match the value of the paper
@@ -96,22 +121,34 @@ class MyTestCase(unittest.TestCase):
         sobol_2 = self.indices_table_2[:, 2]
         sobol_3 = self.indices_table_3[:, 0]
         sobol_4 = self.indices_table_4[:, 0]
-        np.testing.assert_allclose(sobol_1, [0.02, 0.05, 0.03],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol ind] did not match expected values for linear case 1")
-        np.testing.assert_allclose(sobol_2, [0.72, 0.37, 0.48],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol ind] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_3, [0.33, 0.33, 0.33],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_4, [1., 0., 0.],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
+        np.testing.assert_allclose(
+            sobol_1,
+            [0.02, 0.05, 0.03],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol ind] did not match expected values for linear case 1",
+        )
+        np.testing.assert_allclose(
+            sobol_2,
+            [0.72, 0.37, 0.48],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol ind] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_3,
+            [0.33, 0.33, 0.33],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_4,
+            [1.0, 0.0, 0.0],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
 
     def test_sobol_total_ind(self):
         # check ST_i match the value of the paper
@@ -119,23 +156,35 @@ class MyTestCase(unittest.TestCase):
         sobol_2 = self.indices_table_2[:, 3]
         sobol_3 = self.indices_table_3[:, 0]
         sobol_4 = self.indices_table_4[:, 0]
-        np.testing.assert_allclose(sobol_1, [0.02, 0.05, 0.03],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol total ind] did not match expected values for linear case 1")
-        np.testing.assert_allclose(sobol_2, [0.72, 0.37, 0.48],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol total ind] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_3, [0.33, 0.33, 0.33],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
-        np.testing.assert_allclose(sobol_4, [1.0, 0., 0.],
-                                   atol=self.atol,
-                                   rtol=self.rtol,
-                                   err_msg="indicator [sobol] did not match expected values for linear case 2")
+        np.testing.assert_allclose(
+            sobol_1,
+            [0.02, 0.05, 0.03],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol total ind] did not match expected values for linear case 1",
+        )
+        np.testing.assert_allclose(
+            sobol_2,
+            [0.72, 0.37, 0.48],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol total ind] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_3,
+            [0.33, 0.33, 0.33],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
+        np.testing.assert_allclose(
+            sobol_4,
+            [1.0, 0.0, 0.0],
+            atol=self.atol,
+            rtol=self.rtol,
+            err_msg="indicator [sobol] did not match expected values for linear case 2",
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

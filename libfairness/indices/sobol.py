@@ -1,4 +1,3 @@
-
 from math import erf, sqrt
 
 import numpy as np
@@ -46,11 +45,15 @@ def compute_sobol(fairness_problem: FairnessProblem, n=1000, N=None, bs=150):
         x = x.values
     sobol_table = []
     for i in tqdm(range(bs)):
-        sobol_table.append(compute_sobol_table(
-            fairness_problem.get_function(), fairness_problem.get_inputs(), n=n, N=N))
+        sobol_table.append(
+            compute_sobol_table(
+                fairness_problem.get_function(), fairness_problem.get_inputs(), n=n, N=N
+            )
+        )
     bootstrap_table = np.stack(sobol_table)
     fairness_problem.set_result(
-        sobol_table_to_dataframe(bootstrap_table, variable_names))
+        sobol_table_to_dataframe(bootstrap_table, variable_names)
+    )
 
 
 def sobol_table_to_dataframe(sobol_table, variable_names=None):
@@ -68,24 +71,23 @@ def sobol_table_to_dataframe(sobol_table, variable_names=None):
     cols = ["S", "ST", "S_ind", "ST_ind"]
     if len(sobol_table.shape) > 2:
         avg_indices = np.round(np.mean(sobol_table, axis=0), 2)
-        avg_indices = np.vectorize(lambda x: min(1., max(0., x)))(avg_indices)
+        avg_indices = np.vectorize(lambda x: min(1.0, max(0.0, x)))(avg_indices)
         inf_indices = np.round(np.percentile(sobol_table, 5, axis=0), 2)
-        inf_indices = np.vectorize(lambda x: min(1., max(0., x)))(inf_indices)
+        inf_indices = np.vectorize(lambda x: min(1.0, max(0.0, x)))(inf_indices)
         sup_indices = np.round(np.percentile(sobol_table, 95, axis=0), 2)
-        sup_indices = np.vectorize(lambda x: min(1., max(0., x)))(sup_indices)
+        sup_indices = np.vectorize(lambda x: min(1.0, max(0.0, x)))(sup_indices)
         # ci_sobol_table = np.vectorize(lambda inf, sup: "[%.2f,%.2f]" % (inf, sup))(inf_indices, sup_indices)
         data = np.hstack([avg_indices, inf_indices, sup_indices])
-        cols = cols + list(map(lambda x: x + "_inf", cols)) + \
-            list(map(lambda x: x + "_sup", cols))
+        cols = (
+            cols
+            + list(map(lambda x: x + "_inf", cols))
+            + list(map(lambda x: x + "_sup", cols))
+        )
     else:
         data = sobol_table
     if variable_names is None:
         variable_names = ["X%i" % i for i in range(avg_indices.shape[0])]
-    return pd.DataFrame(
-        data,
-        columns=cols,
-        index=variable_names
-    )
+    return pd.DataFrame(data, columns=cols, index=variable_names)
 
 
 def compute_sobol_table(f, x, y=None, n=1000, N=None):
@@ -109,8 +111,10 @@ def compute_sobol_table(f, x, y=None, n=1000, N=None):
     nb_variables = x.shape[1]
     cov = empirical_cov(x)
     f_inv = compute_marginal_inv_cumul_dist(x, N)
-    sobol_table = np.vectorize(lambda variable: sobol_indices_at_i(
-        f, variable, mode, n, cov, f_inv), signature='()->(n)')(range(nb_variables))
+    sobol_table = np.vectorize(
+        lambda variable: sobol_indices_at_i(f, variable, mode, n, cov, f_inv),
+        signature="()->(n)",
+    )(range(nb_variables))
     sobol_table[:, 2:] = np.roll(sobol_table[:, 2:], -1, axis=0)
     return sobol_table
 
@@ -136,10 +140,8 @@ def sobol_indices_at_i(f, variable_index, mode, n, cov, f_inv):
         cov = np.hstack([cov[:, variable_index:], cov[:, :variable_index]])
         cov = np.vstack([cov[variable_index:, :], cov[:variable_index, :]])
     else:
-        cov = np.hstack(
-            [cov[:, variable_index:], cov[:, 1:variable_index, cov[:, 0]]])
-        cov = np.vstack(
-            [cov[variable_index:, :], cov[1:variable_index, :], cov[0, :]])
+        cov = np.hstack([cov[:, variable_index:], cov[:, 1:variable_index, cov[:, 0]]])
+        cov = np.vstack([cov[variable_index:, :], cov[1:variable_index, :], cov[0, :]])
 
     # generate the znc
     znc = generator(np.eye(cov.shape[0]), n)
@@ -157,12 +159,9 @@ def sobol_indices_at_i(f, variable_index, mode, n, cov, f_inv):
 
     # compute zc
     zc = np.matmul(znc, np.matmul(inv(cholesky(empirical_cov(znc))), L.T))
-    zcbis = np.matmul(zncbis, np.matmul(
-        inv(cholesky(empirical_cov(zncbis))), L.T))
-    zcter = np.matmul(zncter, np.matmul(
-        inv(cholesky(empirical_cov(zncter))), L.T))
-    zcquad = np.matmul(zncquad, np.matmul(
-        inv(cholesky(empirical_cov(zncquad))), L.T))
+    zcbis = np.matmul(zncbis, np.matmul(inv(cholesky(empirical_cov(zncbis))), L.T))
+    zcter = np.matmul(zncter, np.matmul(inv(cholesky(empirical_cov(zncter))), L.T))
+    zcquad = np.matmul(zncquad, np.matmul(inv(cholesky(empirical_cov(zncquad))), L.T))
 
     # shift back the columns to original order
     zc = reorder_cols(zc, variable_index, mode, inverse=True)
@@ -178,19 +177,27 @@ def sobol_indices_at_i(f, variable_index, mode, n, cov, f_inv):
 
     # compute Vhat
     if mode == "on_value":
-        V = np.mean([np.var(f(zc)), np.var(f(zcbis)),
-                    np.var(f(zcter)), np.var(f(zcquad))])
+        V = np.mean(
+            [np.var(f(zc)), np.var(f(zcbis)), np.var(f(zcter)), np.var(f(zcquad))]
+        )
     else:
-        V = np.mean([np.var(f(zc[:, 1:])), np.var(f(zcbis[:, 1:])),
-                    np.var(f(zcter[:, 1:])), np.var(f(zcquad[:, 1:]))])
+        V = np.mean(
+            [
+                np.var(f(zc[:, 1:])),
+                np.var(f(zcbis[:, 1:])),
+                np.var(f(zcter[:, 1:])),
+                np.var(f(zcquad[:, 1:])),
+            ]
+        )
 
     # compute sobol indices
-    return np.array([
-        sobol_unnormalized(zc, zcbis, zcter, f, mode) / V,
-        sobol_total_unnormalized(zcbis, zcter, f, mode) / (2 * V),
-        sobol_ind_unnormalized(zc, zcbis, zcquad, f, mode) / V,
-        sobol_total_ind_unnormalized(zcbis, zcquad, f, mode) / (2 * V)
-    ]
+    return np.array(
+        [
+            sobol_unnormalized(zc, zcbis, zcter, f, mode) / V,
+            sobol_total_unnormalized(zcbis, zcter, f, mode) / (2 * V),
+            sobol_ind_unnormalized(zc, zcbis, zcquad, f, mode) / V,
+            sobol_total_ind_unnormalized(zcbis, zcquad, f, mode) / (2 * V),
+        ]
     )
 
 
@@ -207,6 +214,7 @@ def apply_marginals(z_cond, F_inv):
     """
     xj_cols = []
     import matplotlib.pyplot as plt
+
     for j in range(z_cond.shape[1]):
         xj_cols.append(
             np.expand_dims(F_inv[j](phi(z_cond[:, j])), axis=1)
@@ -234,8 +242,11 @@ def compute_marginal_inv_cumul_dist(data_x: np.ndarray.__class__, N=None):
         x_sorted = x_sorted[np.random.choice(len(data_x), N)]
         x_sorted.sort()
         # cum_dists_functions.append(np.vectorize(lambda x: float(x_sorted.searchsorted(x)) / float(len(x_sorted))))
-        cum_dists_functions.append(np.vectorize(
-            lambda x: x_sorted[min(int(x*len(x_sorted)), len(x_sorted)-1)]))
+        cum_dists_functions.append(
+            np.vectorize(
+                lambda x: x_sorted[min(int(x * len(x_sorted)), len(x_sorted) - 1)]
+            )
+        )
     return cum_dists_functions
 
 
@@ -266,8 +277,8 @@ def reorder_cols(data, col_index, mode, inverse=False):
 
     """
     if inverse:
-        col_index = - col_index
-    if mode == 'on_value':
+        col_index = -col_index
+    if mode == "on_value":
         return np.hstack([data[:, col_index:], data[:, :col_index]])
     else:
         return np.hstack([data[:, 0], data[:, col_index:], data[:, 1:col_index]])
@@ -300,7 +311,10 @@ def empirical_cov(data):
 
 def sobol_unnormalized(zc, zcbis, zcter, f, mode):
     if mode == "on_error":
-        def rf(x): return np.abs(f(x[:, 1:]) - x[:, 0])
+
+        def rf(x):
+            return np.abs(f(x[:, 1:]) - x[:, 0])
+
     else:
         rf = f
     return np.mean(np.multiply(rf(zc), (rf(zcter) - rf(zcbis))))
@@ -308,7 +322,10 @@ def sobol_unnormalized(zc, zcbis, zcter, f, mode):
 
 def sobol_total_ind_unnormalized(zcbis, zcquad, f, mode):
     if mode == "on_error":
-        def rf(x): return np.abs(f(x[:, 1:]) - x[:, 0])
+
+        def rf(x):
+            return np.abs(f(x[:, 1:]) - x[:, 0])
+
     else:
         rf = f
     return np.mean(np.square(rf(zcquad) - rf(zcbis)))
@@ -316,7 +333,10 @@ def sobol_total_ind_unnormalized(zcbis, zcquad, f, mode):
 
 def sobol_ind_unnormalized(zc, zcbis, zcquad, f, mode):
     if mode == "on_error":
-        def rf(x): return np.abs(f(x[:, 1:]) - x[:, 0])
+
+        def rf(x):
+            return np.abs(f(x[:, 1:]) - x[:, 0])
+
     else:
         rf = f
     return np.mean(np.multiply(rf(zc), (rf(zcquad) - rf(zcbis))))
@@ -324,7 +344,10 @@ def sobol_ind_unnormalized(zc, zcbis, zcquad, f, mode):
 
 def sobol_total_unnormalized(zcbis, zcter, f, mode):
     if mode == "on_error":
-        def rf(x): return np.abs(f(x[:, 1:]) - x[:, 0])
+
+        def rf(x):
+            return np.abs(f(x[:, 1:]) - x[:, 0])
+
     else:
         rf = f
     return np.mean(np.square(rf(zcter) - rf(zcbis)))
