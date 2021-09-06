@@ -1,7 +1,29 @@
+from typing import Union, Callable, Optional
 from libfairness.fairness_problem import FairnessProblem
-import numpy as np
-import pandas as pd
 from .checks import *
+from ..utils.dataclasses import IndicesInput
+
+
+def from_pandas(
+    dataframe: pd.DataFrame,
+    target: Union[str, pd.DataFrame, pd.Series, None],
+    model: Optional[Callable] = None,
+) -> IndicesInput:
+    df = dataframe.copy()
+    cols = set(df.columns)
+    if target is None:
+        assert model is not None, "model must be defined when target is None"
+        x = df
+        y = None
+    elif isinstance(target, str):
+        x = df[cols - {target}]
+        y = df[target]
+    elif isinstance(target, pd.DataFrame) or isinstance(target, pd.Series):
+        x = df
+        y = pd.DataFrame(target)
+    else:
+        raise RuntimeError("type of target must be Dataframe, Series, str or None")
+    return IndicesInput(x=x, y=y, model=model)
 
 
 def create_fairness_problem(
