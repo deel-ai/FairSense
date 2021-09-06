@@ -9,21 +9,27 @@ def from_pandas(
     target: Union[str, pd.DataFrame, pd.Series, None],
     model: Optional[Callable] = None,
 ) -> IndicesInput:
-    df = dataframe.copy()
-    cols = set(df.columns)
+    cols = set(dataframe.columns)
     if target is None:
         assert model is not None, "model must be defined when target is None"
-        x = df
+        x = dataframe
         y = None
     elif isinstance(target, str):
-        x = df[cols - {target}]
-        y = df[target]
+        x = dataframe[cols - {target}]
+        y = dataframe[target]
     elif isinstance(target, pd.DataFrame) or isinstance(target, pd.Series):
-        x = df
+        x = dataframe
         y = pd.DataFrame(target)
     else:
         raise RuntimeError("type of target must be Dataframe, Series, str or None")
     return IndicesInput(x=x, y=y, model=model)
+
+
+def from_numpy(x, y, feature_names=None):
+    df = pd.DataFrame(x, columns=feature_names)
+    # build dataframe
+    target = pd.DataFrame(y, columns=["target"])
+    return from_pandas(df, target, feature_names)
 
 
 def create_fairness_problem(
