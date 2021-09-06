@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Callable, Optional, List
 from pandas import DataFrame
 import numpy as np
@@ -16,6 +15,7 @@ class IndicesInput:
         self.model = model
         self._variable_groups = variable_groups
         self._x = x
+        self._x.columns = [str(c) for c in x.columns]
         self._y = y
 
     @property
@@ -27,7 +27,7 @@ class IndicesInput:
         if self._y is not None:
             return self._y
         elif self._x is not None and self.model is not None:
-            return self.model(self.x)
+            return self.model(self.x.values)
         else:
             raise RuntimeError(
                 "y must be set, or x and a model must be given in "
@@ -68,13 +68,18 @@ class IndicesOutput:
     def __add__(self, other):
         # indices must be computed on same groups
         assert other.results.shape[0] == self.results.shape[0]
-        self.results[other.columns] = other
+        results = self.results.copy()
+        results[other.results.columns] = other.results
         if (self.confidence_intervals is not None) or (
             other.confidence_intervals is not None
         ):
             assert (self.confidence_intervals is not None) and (
                 other.confidence_intervals is not None
             )
-            self.confidence_intervals[
+            confidence_intervals = self.confidence_intervals.copy()
+            confidence_intervals[
                 other.confidence_intervals.columns
             ] = other.confidence_intervals
+        else:
+            confidence_intervals = None
+        return IndicesOutput(results, confidence_intervals)
