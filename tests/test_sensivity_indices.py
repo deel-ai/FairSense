@@ -1,6 +1,8 @@
 import unittest
 import numpy as np
-from libfairness.indices.sobol import compute_sobol_table
+import pandas as pd
+from libfairness.indices.sobol import sobol_indices
+from libfairness.utils.dataclasses import IndicesInput
 
 
 def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, var3=1.0):
@@ -8,7 +10,7 @@ def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, va
         [[var1, sigma12, sigma13], [sigma12, var2, sigma23], [sigma13, sigma23, var3]]
     )
     x = np.random.multivariate_normal(mean=np.array([0, 0, 0]), cov=cov, size=N)
-    return x
+    return pd.DataFrame(x)
 
 
 class MyTestCase(unittest.TestCase):
@@ -25,32 +27,36 @@ class MyTestCase(unittest.TestCase):
         data = gaussian_data_generator(
             sigma12=0.5, sigma13=0.8, sigma23=0, N=self.data_sample
         )
-        self.indices_table = compute_sobol_table(func, data, n=self.nsample)
+        self.indices_table = sobol_indices(IndicesInput(model=func, x=data),
+                                           n=self.nsample)
 
         func = lambda x: np.sum(x, axis=1)
         data = gaussian_data_generator(
             sigma12=-0.5, sigma13=0.2, sigma23=-0.7, N=self.data_sample
         )
-        self.indices_table_2 = compute_sobol_table(func, data, n=self.nsample)
+        self.indices_table_2 = sobol_indices(IndicesInput(model=func, x=data),
+                                             n=self.nsample)
 
         func = lambda x: np.sum(x, axis=1)
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
-        self.indices_table_3 = compute_sobol_table(func, data, n=self.nsample)
+        self.indices_table_3 = sobol_indices(IndicesInput(model=func, x=data),
+                                             n=self.nsample)
 
         func = lambda x: x[:, 0]
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
-        self.indices_table_4 = compute_sobol_table(func, data, n=self.nsample)
+        self.indices_table_4 = sobol_indices(IndicesInput(model=func, x=data),
+                                             n=self.nsample)
 
     def test_sobol(self):
         # check S match the value of the paper
-        sobol_1 = self.indices_table[:, 0]
-        sobol_2 = self.indices_table_2[:, 0]
-        sobol_3 = self.indices_table_3[:, 0]
-        sobol_4 = self.indices_table_4[:, 0]
+        sobol_1 = self.indices_table.results.values[:, 0]
+        sobol_2 = self.indices_table_2.results.values[:, 0]
+        sobol_3 = self.indices_table_3.results.values[:, 0]
+        sobol_4 = self.indices_table_4.results.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.94, 0.40, 0.58],
@@ -82,10 +88,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol_total(self):
         # check ST match the value of the paper
-        sobol_1 = self.indices_table[:, 1]
-        sobol_2 = self.indices_table_2[:, 1]
-        sobol_3 = self.indices_table_3[:, 0]
-        sobol_4 = self.indices_table_4[:, 0]
+        sobol_1 = self.indices_table.results.values[:, 1]
+        sobol_2 = self.indices_table_2.results.values[:, 1]
+        sobol_3 = self.indices_table_3.results.values[:, 0]
+        sobol_4 = self.indices_table_4.results.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.94, 0.40, 0.58],
@@ -117,10 +123,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol_ind(self):
         # check S_i match the value of the paper
-        sobol_1 = self.indices_table[:, 2]
-        sobol_2 = self.indices_table_2[:, 2]
-        sobol_3 = self.indices_table_3[:, 0]
-        sobol_4 = self.indices_table_4[:, 0]
+        sobol_1 = self.indices_table.results.values[:, 2]
+        sobol_2 = self.indices_table_2.results.values[:, 2]
+        sobol_3 = self.indices_table_3.results.values[:, 0]
+        sobol_4 = self.indices_table_4.results.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.02, 0.05, 0.03],
@@ -152,10 +158,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol_total_ind(self):
         # check ST_i match the value of the paper
-        sobol_1 = self.indices_table[:, 3]
-        sobol_2 = self.indices_table_2[:, 3]
-        sobol_3 = self.indices_table_3[:, 0]
-        sobol_4 = self.indices_table_4[:, 0]
+        sobol_1 = self.indices_table.results.values[:, 3]
+        sobol_2 = self.indices_table_2.results.values[:, 3]
+        sobol_3 = self.indices_table_3.results.values[:, 0]
+        sobol_4 = self.indices_table_4.results.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.02, 0.05, 0.03],
