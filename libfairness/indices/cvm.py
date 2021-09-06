@@ -1,54 +1,36 @@
-from typing import Iterable
-
 import numpy as np
 import pandas as pd
-from libfairness.fairness_problem import FairnessProblem
 from sklearn.neighbors import KDTree
+from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 
-def __check_arg_cvm(fairness_problem: FairnessProblem, cols):
-    """Check if the arguments needed to compute the CVM indices are correct.
-    Rectify when it is possible, raise an exception otherwise.
-
-    Args:
-        fairness_problem (FairnessProblem): Data of the fairness problem.
-        cols ([type]): [description]
-
-    Raises:
-        ValueError: Inputs unknown.
-        ValueError: Outputs unknown.
-    """
-    if fairness_problem.get_inputs() is None:
-        raise ValueError("FairnessProblem.inputs is not set yet.")
-    if fairness_problem.get_outputs() is None:
-        raise ValueError("FairnessProblem.outputs is not set yet.")
-
-
-def compute_cvm(fairness_problem: FairnessProblem, cols=None):
+def compute_cvm(index_input: IndicesInput, **kwargs):
     """Compute the CVM indices of a fairness problem.
     Set FairnessProblem.result as a Dataframe containing the indices.
 
     Args:
-        fairness_problem (FairnessProblem): The fairness problem to study.
-        cols ([type], optional): [description]. Defaults to None.
+        index_input (IndicesInput): The fairness problem to study.
+
+    Returns:
+        IndicesOutput object, containing the CVM indices.
 
     """
-    __check_arg_cvm(fairness_problem, cols)
-    df = pd.DataFrame(
-        fairness_problem.get_inputs().copy(), columns=fairness_problem.get_columns()
-    )
-    df["outputs"] = pd.DataFrame(fairness_problem.get_outputs().copy())
-    fairness_problem.set_result(__analyze(df, "outputs", cols=cols))
+    # __check_arg_cvm(index_input, cols)
+    df = pd.DataFrame(index_input.x, columns=index_input.x.columns)
+    df["outputs"] = pd.DataFrame(index_input.y)
+    return IndicesOutput(__analyze(df, "outputs", cols=index_input.variable_groups))
 
 
 def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     """
     Compute the CVM index T(Y, Z|X)
     Args:
-        data: the input data, already sorted by y_name, and with a column containing the Ri named "i"
+        data: the input data, already sorted by y_name, and with a column containing the
+            Ri named "i"
         x_name: name of the columns in the set of variables X
         z_name: name of the columns in the set of variable Z
-        y_name: name of the columns with the variable Y (not used, as we already have a column containing the Ri)
+        y_name: name of the columns with the variable Y (not used, as we already have a
+            column containing the Ri)
 
     Returns: the tuple(T(Y, Z), T(Y, Z|X))
 
@@ -65,11 +47,13 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     # compute Ni
     # build a KDTree containing the sampling of X
     kd_xi = KDTree(data[x_name])
-    # query the tree to get the two closest neighbor of each sample. The closest will be the sample itself,
-    # and the second will be the closest neighbors. This returns both the distance with the neighbor and
-    # the index of the neighbor in the list used to build the tree.
+    # query the tree to get the two closest neighbor of each sample. The closest will
+    # be the sample itself, and the second will be the closest neighbors. This
+    # returns both the distance with the neighbor and the index of the neighbor in
+    # the list used to build the tree.
     dist, ind = kd_xi.query(data[x_name], k=2)
-    # compute N_i ( add 1 as python indices start from 0, and the formula use indices starting from 1
+    # compute N_i ( add 1 as python indices start from 0, and the formula use indices
+    # starting from 1
     data["N_i"] = ind[:, 1] + 1
     # compute M_i
     # we repeat the same process, but we work on (X,Y) this time
@@ -136,7 +120,8 @@ def __analyze(x, output_var, cols=None):
     # rows are sorted on Y
     # compute the difference between two consecutive rows
     # x['i'] = x[output_var].rolling(2).apply(
-    #     lambda x: x.index[-1] if (x.iloc[-1] != x.iloc[0]) else np.nan, # if the difference is not null put the value of the second row, else put nan
+    #     lambda x: x.index[-1] if (x.iloc[-1] != x.iloc[0]) else np.nan, # if the
+    #     # difference is not null put the value of the second row, else put nan
     # )
     # x['i'].iloc[-1] = len(x['i']) # last row have index len(x)
     # x['i'] = x['i'].bfill() # fill nans with the next filled x
