@@ -1,3 +1,5 @@
+from warnings import warn
+
 from libfairness.data_management import utils
 from libfairness.fairness_problem import FairnessProblem
 
@@ -27,7 +29,8 @@ def disparate_impact_single_variable(x, y):
     df = pd.DataFrame(np.expand_dims(x, -1), columns=["X"])
     df["outputs"] = y
     succes_probs = df.groupby("X")["outputs"].mean()
-    assert len(succes_probs) == 2, "Disparact impact is only defined for binary " \
-                                   "variables"
+    if len(succes_probs) > 2:
+        warn(f"non binary variable {x.name} encountered in DI, replacing with nan.")
+        return np.nan
     di = succes_probs.min() / succes_probs.max()
     return di
