@@ -4,7 +4,7 @@ from sklearn.neighbors import KDTree
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 
-def compute_cvm(index_input: IndicesInput, **kwargs):
+def cvm_indices(index_input: IndicesInput, **kwargs):
     """Compute the CVM indices of a fairness problem.
     Set FairnessProblem.result as a Dataframe containing the indices.
 
