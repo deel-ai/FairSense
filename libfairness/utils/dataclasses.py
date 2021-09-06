@@ -14,7 +14,7 @@ class IndicesInput:
     ):
 
         self.model = model
-        self.variable_groups = variable_groups
+        self._variable_groups = variable_groups
         self._x = x
         self._y = y
 
@@ -46,6 +46,17 @@ class IndicesInput:
                 self._y = _y
             else:
                 self._y = DataFrame(_y, columns=["outputs"])
+
+    @property
+    def variable_groups(self):
+        if self._variable_groups is None:
+            return [[str(var)] for var in self._x.columns]
+        else:
+            return self._variable_groups
+
+    @property
+    def merged_groups(self):
+        return [x[0].split("=")[0] for x in self.variable_groups]
 
 
 class IndicesOutput:

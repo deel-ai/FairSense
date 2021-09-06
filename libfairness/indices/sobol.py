@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 from numpy.linalg import cholesky, inv
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
-from libfairness.utils.utils import column_group_merger
 
 
 def sobol_indices(inputs: IndicesInput, n=1000, N=None):
@@ -31,7 +30,7 @@ def sobol_indices(inputs: IndicesInput, n=1000, N=None):
     return IndicesOutput(
         pd.DataFrame(
             data=sobol_table,
-            index=column_group_merger(inputs.variable_groups),
+            index=inputs.merged_groups,
             columns=["S", "ST", "S_ind", "ST_ind"],
         )
     )

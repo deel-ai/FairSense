@@ -6,7 +6,6 @@ import pandas as pd
 
 # ---- DISPARATE IMPACT ----
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
-from libfairness.utils.utils import column_group_merger
 
 
 def disparate_impact(index_input: IndicesInput):
@@ -19,7 +18,7 @@ def disparate_impact(index_input: IndicesInput):
             group_output.append(disparate_impact_single_variable(df[var], y))
         dis.append(np.mean(group_output))
     data = np.expand_dims(np.array(dis), axis=-1)
-    index = column_group_merger(index_input.variable_groups)
+    index = index_input.merged_groups
     results = pd.DataFrame(data=data, columns=["DI"], index=index)
     return IndicesOutput(results)
 
