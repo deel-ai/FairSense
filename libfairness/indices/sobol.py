@@ -27,6 +27,9 @@ def sobol_indices(inputs: IndicesInput, n=1000, N=None):
         signature="()->(n)",
     )(range(nb_variables))
     sobol_table[:, 2:] = np.roll(sobol_table[:, 2:], -1, axis=0)
+    assert len(inputs.variable_groups) == len(inputs.x.columns), (
+        "variables groups " "are not implemented yet for sobol indices"
+    )
     return IndicesOutput(
         pd.DataFrame(
             data=sobol_table,
