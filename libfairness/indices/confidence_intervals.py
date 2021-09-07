@@ -1,6 +1,7 @@
 import pandas as pd
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 from sklearn.model_selection import KFold
+from tqdm import tqdm
 
 
 def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
@@ -14,7 +15,7 @@ def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
             y = inputs.y
             fold_results = []
             # repeat indices computation on each fold
-            for split1, _ in kf.split(x, y):
+            for split1, _ in tqdm(kf.split(x, y)):
                 # build input for the fold
                 x_fold = x.iloc[split1]
                 y_fold = y.iloc[split1]
