@@ -83,7 +83,7 @@ class TestSobol(unittest.TestCase):
         )
 
         gs1 = [["Male"], ["Driver_licence"]]
-        gs2 = [["Driver_licence"]]
+        gs2 = [["Male"]]
 
         # results that we must obtain
         result_hard = pd.DataFrame(
