@@ -1,8 +1,4 @@
 from warnings import warn
-
-from libfairness.data_management import utils
-from libfairness.fairness_problem import FairnessProblem
-
 import numpy as np
 import pandas as pd
 

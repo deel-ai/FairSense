@@ -1,12 +1,6 @@
-import numpy as np
 import pandas as pd
-# from typing import Protocol, Any
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 from sklearn.model_selection import KFold
-
-
-# class IndicesProtocol(Protocol):
-#     def __call__(self, input:IndicesInput, *args: Any, **kwargs: Any) -> IndicesOutput: ...
 
 
 def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
