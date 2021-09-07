@@ -32,5 +32,5 @@ def disparate_impact_single_variable(x: pd.Series, y: pd.Series) -> float:
     if len(succes_probs) > 2:
         warn(f"non binary variable {x.name} encountered in DI, replacing with nan.")
         return np.nan
-    di = succes_probs.min() / succes_probs.max()
+    di = 1.0 - succes_probs.min() / succes_probs.max()
     return di
