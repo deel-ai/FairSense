@@ -24,8 +24,8 @@ def from_pandas(
     return IndicesInput(x=x, y=y, model=model)
 
 
-def from_numpy(x, y, feature_names=None):
+def from_numpy(x, y, feature_names=None, model=None):
     df = pd.DataFrame(x, columns=feature_names)
     # build dataframe
     target = pd.DataFrame(y, columns=["target"])
-    return from_pandas(df, target, feature_names)
+    return from_pandas(df, target, model)
