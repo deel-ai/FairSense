@@ -18,18 +18,19 @@ def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:
     Returns: a numpy array containing sobol indices (columns) for each variable (row)
 
     """
-    x = inputs.x.values
-    nb_variables = x.shape[1]
-    cov = empirical_cov(x)
-    f_inv = compute_marginal_inv_cumul_dist(x, N)
-    sobol_table = np.vectorize(
-        lambda variable: sobol_indices_at_i(inputs.model, variable, n, cov, f_inv),
-        signature="()->(n)",
-    )(range(nb_variables))
+    x = inputs.x
+    cov = x.cov()
+    orig_cols = []
+    for group in inputs.variable_groups:
+        orig_cols += group
+    f_inv = compute_marginal_inv_cumul_dist(x[orig_cols].values, N)
+    sobol_table = []
+    for i in range(len(inputs.variable_groups)):
+        sobol_table.append(sobol_indices_at_i(
+            inputs.model, i, inputs.variable_groups, n, cov, f_inv
+        ))
+    sobol_table = np.vstack(sobol_table)
     sobol_table[:, 2:] = np.roll(sobol_table[:, 2:], -1, axis=0)
-    assert len(inputs.variable_groups) == len(inputs.x.columns), (
-        "variables groups " "are not implemented yet for sobol indices"
-    )
     return IndicesOutput(
         pd.DataFrame(
             data=sobol_table,
@@ -39,7 +40,7 @@ def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:
     )
 
 
-def sobol_indices_at_i(f, variable_index, n, cov, f_inv):
+def sobol_indices_at_i(f, variable_index, variable_groups, n, cov, f_inv):
     """
     Compute the sobol indices for a specific variable. Attention for independent indices, the output is shifted: calling
     this function on variable i will yield sobol indices for i and sobol_indep indicies for i-1.
@@ -55,9 +56,17 @@ def sobol_indices_at_i(f, variable_index, n, cov, f_inv):
     Returns: The computed sobol indices in the following order: "sobol", "sobol_total", "sobol_ind", "sobol_total_ind"
 
     """
-    # shift row and columns of cov to match the shift done on the Xi
-    cov = np.hstack([cov[:, variable_index:], cov[:, :variable_index]])
-    cov = np.vstack([cov[variable_index:, :], cov[:variable_index, :]])
+    orig_cols = []
+    for group in variable_groups:
+        orig_cols += group
+    reordered_cols = []
+    for group in variable_groups[variable_index:] + variable_groups[:variable_index]:
+        reordered_cols += group
+    cov = cov[reordered_cols].loc[reordered_cols]
+
+    # # shift row and columns of cov to match the shift done on the Xi
+    # cov = np.hstack([cov[:, variable_index:], cov[:, :variable_index]])
+    # cov = np.vstack([cov[variable_index:, :], cov[:variable_index, :]])
 
     # generate the znc
     znc = generator(np.eye(cov.shape[0]), n)
