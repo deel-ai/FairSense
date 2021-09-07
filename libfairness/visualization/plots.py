@@ -2,7 +2,7 @@ import seaborn as sns
 from libfairness.utils.dataclasses import IndicesOutput
 
 
-def bar_plot(
+def cat_plot(
     indices: IndicesOutput, plot_per="variable", kind="bar", col_wrap=None, **kwargs
 ):
     assert plot_per.lower().strip() in {"variable", "index", "indices"}

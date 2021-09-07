@@ -20,10 +20,12 @@ class IndicesInput:
 
     @property
     def x(self):
+        # indice_input.x returns a copy of the data
         return self._x.copy()
 
     @property
     def y(self):
+        # get y if a sample is given or compute it with the model
         if self._y is not None:
             return self._y
         elif self._x is not None and self.model is not None:
@@ -36,6 +38,7 @@ class IndicesInput:
 
     @y.setter
     def y(self, _y):
+        # this setter ensures that y is a dataframe and not a series
         if _y is None:
             self._y = None
         else:
