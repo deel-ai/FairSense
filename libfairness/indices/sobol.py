@@ -5,7 +5,7 @@ from numpy.linalg import cholesky, inv
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 
-def sobol_indices(inputs: IndicesInput, n=1000, N=None):
+def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:
     """
     Compute all sobol indices for all variables
     Args:

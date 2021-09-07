@@ -60,26 +60,16 @@ class IndicesInput:
 
 
 class IndicesOutput:
-    def __init__(self, results: DataFrame, confidence_intervals: DataFrame = None):
-        self.results: DataFrame = results  # 2D dataframe: lines=variable groups
-        # cols=indices_names
-        self.confidence_intervals: DataFrame = confidence_intervals
+    def __init__(self, values: DataFrame):
+        self.runs: DataFrame = values  # 2D dataframe: lines=variable groups
+
+    @property
+    def values(self):
+        return self.runs.groupby(level=0).median().clip(0., 1.)
 
     def __add__(self, other):
         # indices must be computed on same groups
-        assert other.results.shape[0] == self.results.shape[0]
-        results = self.results.copy()
-        results[other.results.columns] = other.results
-        if (self.confidence_intervals is not None) or (
-            other.confidence_intervals is not None
-        ):
-            assert (self.confidence_intervals is not None) and (
-                other.confidence_intervals is not None
-            )
-            confidence_intervals = self.confidence_intervals.copy()
-            confidence_intervals[
-                other.confidence_intervals.columns
-            ] = other.confidence_intervals
-        else:
-            confidence_intervals = None
-        return IndicesOutput(results, confidence_intervals)
+        assert other.runs.shape[0] == self.runs.shape[0]
+        new_values = self.runs.copy()
+        new_values[other.runs.columns] = other.runs
+        return IndicesOutput(new_values)

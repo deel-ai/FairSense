@@ -10,7 +10,7 @@ import pandas as pd
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 
-def disparate_impact(index_input: IndicesInput):
+def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
     df = index_input.x
     y = index_input.y
     dis = []
@@ -25,7 +25,7 @@ def disparate_impact(index_input: IndicesInput):
     return IndicesOutput(results)
 
 
-def disparate_impact_single_variable(x, y):
+def disparate_impact_single_variable(x: pd.Series, y: pd.Series) -> float:
     df = pd.DataFrame(np.expand_dims(x, -1), columns=["X"])
     df["outputs"] = y
     succes_probs = df.groupby("X")["outputs"].mean()

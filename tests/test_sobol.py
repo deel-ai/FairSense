@@ -53,10 +53,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol(self):
         # check S match the value of the paper
-        sobol_1 = self.indices_table.results.values[:, 0]
-        sobol_2 = self.indices_table_2.results.values[:, 0]
-        sobol_3 = self.indices_table_3.results.values[:, 0]
-        sobol_4 = self.indices_table_4.results.values[:, 0]
+        sobol_1 = self.indices_table.values.values[:, 0]
+        sobol_2 = self.indices_table_2.values.values[:, 0]
+        sobol_3 = self.indices_table_3.values.values[:, 0]
+        sobol_4 = self.indices_table_4.values.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.94, 0.40, 0.58],
@@ -88,10 +88,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol_total(self):
         # check ST match the value of the paper
-        sobol_1 = self.indices_table.results.values[:, 1]
-        sobol_2 = self.indices_table_2.results.values[:, 1]
-        sobol_3 = self.indices_table_3.results.values[:, 0]
-        sobol_4 = self.indices_table_4.results.values[:, 0]
+        sobol_1 = self.indices_table.values.values[:, 1]
+        sobol_2 = self.indices_table_2.values.values[:, 1]
+        sobol_3 = self.indices_table_3.values.values[:, 0]
+        sobol_4 = self.indices_table_4.values.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.94, 0.40, 0.58],
@@ -123,10 +123,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol_ind(self):
         # check S_i match the value of the paper
-        sobol_1 = self.indices_table.results.values[:, 2]
-        sobol_2 = self.indices_table_2.results.values[:, 2]
-        sobol_3 = self.indices_table_3.results.values[:, 0]
-        sobol_4 = self.indices_table_4.results.values[:, 0]
+        sobol_1 = self.indices_table.values.values[:, 2]
+        sobol_2 = self.indices_table_2.values.values[:, 2]
+        sobol_3 = self.indices_table_3.values.values[:, 0]
+        sobol_4 = self.indices_table_4.values.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.02, 0.05, 0.03],
@@ -158,10 +158,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_sobol_total_ind(self):
         # check ST_i match the value of the paper
-        sobol_1 = self.indices_table.results.values[:, 3]
-        sobol_2 = self.indices_table_2.results.values[:, 3]
-        sobol_3 = self.indices_table_3.results.values[:, 0]
-        sobol_4 = self.indices_table_4.results.values[:, 0]
+        sobol_1 = self.indices_table.values.values[:, 3]
+        sobol_2 = self.indices_table_2.values.values[:, 3]
+        sobol_3 = self.indices_table_3.values.values[:, 0]
+        sobol_4 = self.indices_table_4.values.values[:, 0]
         np.testing.assert_allclose(
             sobol_1,
             [0.02, 0.05, 0.03],

@@ -94,13 +94,13 @@ class TestSobol(unittest.TestCase):
         index_input = IndicesInput(x=inputs, y=outputs, variable_groups=gs1)
         result = disparate_impact(index_input)
         np.testing.assert_allclose(
-            result.results.values, result_hard.values, atol=1e-4, rtol=1e-4
+            result.values.values, result_hard.values, atol=1e-4, rtol=1e-4
         )
 
         index_input = IndicesInput(x=inputs, y=outputs, variable_groups=gs2)
         result = disparate_impact(index_input)
         np.testing.assert_allclose(
-            result.results.values, result_hard_2.values, atol=1e-4, rtol=1e-4
+            result.values.values, result_hard_2.values, atol=1e-4, rtol=1e-4
         )
 
 

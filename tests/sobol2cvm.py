@@ -3,7 +3,7 @@ import numpy as np
 from libfairness.indices.sobol import sobol_indices
 from libfairness.indices.cvm import cvm_indices
 from libfairness.utils.dataclasses import IndicesInput
-from tests.test_sensivity_indices import gaussian_data_generator
+from tests.test_sobol import gaussian_data_generator
 
 
 def run_experiment(name, nsample, function, data_generator, data_generator_kwargs):
@@ -33,7 +33,7 @@ class TestSobol(unittest.TestCase):
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
         results = run_experiment(
             "output_scaling_2",
             function=func1bis,
@@ -48,7 +48,7 @@ class TestSobol(unittest.TestCase):
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_input_scaling(self):
         nsample = 1 * 10 ** 4
@@ -68,7 +68,7 @@ class TestSobol(unittest.TestCase):
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_correlations(self):
         nsample = 1 * 10 ** 4
@@ -88,7 +88,7 @@ class TestSobol(unittest.TestCase):
             [0.35, 0.35, 0.0, 0.0, 0.23, 0.0],
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_distribution(self):
         nsample = 1 * 10 ** 4
@@ -108,7 +108,7 @@ class TestSobol(unittest.TestCase):
             [0.5, 0.5, 0.5, 0.5, 0.3055, 0.65],
             [0.0, 0.0, -0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
         results = run_experiment(
             "distribution_2",
             function=func3,
@@ -123,7 +123,7 @@ class TestSobol(unittest.TestCase):
             [0.15, 0.15, 0.15, 0.15, 0.0460, 0.2587],
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_joint_effects(self):
         nsample = 1 * 10 ** 4
@@ -146,7 +146,7 @@ class TestSobol(unittest.TestCase):
             [0.0, 0.5, 0.0, 0.50, 0.0189, 0.3108],
             [0.0, 0.5, 0.0, 0.50, 0.0000, 0.3041],
         ]
-        np.testing.assert_allclose(results.results, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, atol=1e-1)
 
 
 if __name__ == "__main__":
