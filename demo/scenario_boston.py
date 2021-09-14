@@ -15,16 +15,19 @@ if __name__ == "__main__":
     # load data
     data = ds.load_boston()
     # construct IndicesInput object
-    indices_inputs = from_numpy(data.data, data.target, data.feature_names,
-                                target=squared_error)
+    indices_inputs = from_numpy(
+        data.data, data.target, data.feature_names, target=squared_error
+    )
     # apply one hot encoding
     indices_inputs = one_hot_encode(indices_inputs, ["CHAS", "RAD"])
     # build and train a model
     model = DecisionTreeRegressor()
     model.fit(indices_inputs.x, indices_inputs.y)
     indices_inputs_2 = IndicesInput(
-        model=model.predict, x=indices_inputs.x, y=indices_inputs.y,
-        target=squared_error
+        model=model.predict,
+        x=indices_inputs.x,
+        y=indices_inputs.y,
+        target=squared_error,
     )
     di_with_ci = with_confidence_intervals(n_splits=31)(disparate_impact)
     cvm_with_ci = with_confidence_intervals(n_splits=31)(cvm_indices)

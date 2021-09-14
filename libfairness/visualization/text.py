@@ -12,14 +12,13 @@ def format_with_intervals(indices_outputs: IndicesOutput, quantile: int = 0.05):
     )
     high = (
         indices_outputs.runs.groupby(level=0)
-            .aggregate(partial(np.quantile, q=1-quantile))
-            .clip(0.0, 1.0)
+        .aggregate(partial(np.quantile, q=1 - quantile))
+        .clip(0.0, 1.0)
     )
     table = means.copy()
     for index in means.columns:
         table[index] = np.vectorize(
-            lambda index_val, index_inf_val, index_sup_val: "%.2f [%.2f, %.2f]" %
-                                                            (index_val, index_inf_val,
-                                                             index_sup_val)
+            lambda index_val, index_inf_val, index_sup_val: "%.2f [%.2f, %.2f]"
+            % (index_val, index_inf_val, index_sup_val)
         )(means[index], low[index], high[index])
     return table

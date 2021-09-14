@@ -28,33 +28,33 @@ class MyTestCase(unittest.TestCase):
         data = gaussian_data_generator(
             sigma12=0.5, sigma13=0.8, sigma23=0, N=self.data_sample
         )
-        self.indices_table = sobol_indices(IndicesInput(model=func, x=data,
-                                                        target=predictions),
-                                           n=self.nsample)
+        self.indices_table = sobol_indices(
+            IndicesInput(model=func, x=data, target=predictions), n=self.nsample
+        )
 
         func = lambda x: np.sum(x, axis=1)
         data = gaussian_data_generator(
             sigma12=-0.5, sigma13=0.2, sigma23=-0.7, N=self.data_sample
         )
-        self.indices_table_2 = sobol_indices(IndicesInput(model=func, x=data,
-                                                          target=predictions),
-                                             n=self.nsample)
+        self.indices_table_2 = sobol_indices(
+            IndicesInput(model=func, x=data, target=predictions), n=self.nsample
+        )
 
         func = lambda x: np.sum(x, axis=1)
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
-        self.indices_table_3 = sobol_indices(IndicesInput(model=func, x=data,
-                                                          target=predictions),
-                                             n=self.nsample)
+        self.indices_table_3 = sobol_indices(
+            IndicesInput(model=func, x=data, target=predictions), n=self.nsample
+        )
 
         func = lambda x: x[:, 0]
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
-        self.indices_table_4 = sobol_indices(IndicesInput(model=func, x=data,
-                                                          target=predictions),
-                                             n=self.nsample)
+        self.indices_table_4 = sobol_indices(
+            IndicesInput(model=func, x=data, target=predictions), n=self.nsample
+        )
 
     def test_sobol(self):
         # check S match the value of the paper

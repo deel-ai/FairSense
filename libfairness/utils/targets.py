@@ -12,7 +12,7 @@ def y_true(self: IndicesInput, x=None):
 
 
 def predictions(self: IndicesInput, x=None):
-    return DataFrame(self.model(x if x is not None else self.x), columns=['outputs'])
+    return DataFrame(self.model(x if x is not None else self.x), columns=["outputs"])
 
 
 def classification_error(self: IndicesInput, x=None):
