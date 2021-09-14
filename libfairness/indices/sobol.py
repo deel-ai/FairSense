@@ -27,9 +27,9 @@ def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:
     sobol_table = []
     for i in range(len(inputs.variable_groups)):
         sobol_table.append(sobol_indices_at_i(
-            inputs.model, i, inputs.variable_groups, n, cov, f_inv
+            inputs.get_target, i, inputs.variable_groups, n, cov, f_inv
         ))
-    sobol_table = np.vstack(sobol_table)
+    sobol_table = np.hstack(sobol_table).transpose()
     sobol_table[:, 2:] = np.roll(sobol_table[:, 2:], -1, axis=0)
     return IndicesOutput(
         pd.DataFrame(

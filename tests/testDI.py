@@ -1,5 +1,6 @@
 import unittest
 from libfairness.indices.standard_metrics import disparate_impact
+from libfairness.utils.targets import y_true
 import numpy as np
 import pandas as pd
 
@@ -16,6 +17,7 @@ class TestSobol(unittest.TestCase):
             ),
             y=pd.DataFrame(np.random.randint(low=0, high=2, size=(5000,))),
             variable_groups=[["a", "b"], ["c"], ["d"]],
+            target=y_true,
         )
         outputs = disparate_impact(inputs)
         np.testing.assert_array_less(outputs.values, 0.05)
@@ -83,14 +85,18 @@ class TestSobol(unittest.TestCase):
         gs1 = [["Male"], ["Driver_licence"]]
         gs2 = [["Driver_licence"]]
         # fairness problem
-        index_input = IndicesInput(x=inputs, y=outputs, variable_groups=gs1)
+        index_input = IndicesInput(
+            x=inputs, y=outputs, variable_groups=gs1, target=y_true
+        )
         result = disparate_impact(index_input)
         self.assertAlmostEqual(result.values.loc["Male"]["DI"], 1 - 0.538462, places=4)
         self.assertAlmostEqual(
             result.values.loc["Driver_licence"]["DI"], 1 - 0.795918, places=4
         )
 
-        index_input = IndicesInput(x=inputs, y=outputs, variable_groups=gs2)
+        index_input = IndicesInput(
+            x=inputs, y=outputs, variable_groups=gs2, target=y_true
+        )
         result = disparate_impact(index_input)
         self.assertAlmostEqual(
             result.values.loc["Driver_licence"]["DI"], 1 - 0.795918, places=4

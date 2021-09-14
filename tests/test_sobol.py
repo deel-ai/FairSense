@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from libfairness.indices.sobol import sobol_indices
 from libfairness.utils.dataclasses import IndicesInput
+from libfairness.utils.targets import predictions
 
 
 def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, var3=1.0):
@@ -27,28 +28,32 @@ class MyTestCase(unittest.TestCase):
         data = gaussian_data_generator(
             sigma12=0.5, sigma13=0.8, sigma23=0, N=self.data_sample
         )
-        self.indices_table = sobol_indices(IndicesInput(model=func, x=data),
+        self.indices_table = sobol_indices(IndicesInput(model=func, x=data,
+                                                        target=predictions),
                                            n=self.nsample)
 
         func = lambda x: np.sum(x, axis=1)
         data = gaussian_data_generator(
             sigma12=-0.5, sigma13=0.2, sigma23=-0.7, N=self.data_sample
         )
-        self.indices_table_2 = sobol_indices(IndicesInput(model=func, x=data),
+        self.indices_table_2 = sobol_indices(IndicesInput(model=func, x=data,
+                                                          target=predictions),
                                              n=self.nsample)
 
         func = lambda x: np.sum(x, axis=1)
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
-        self.indices_table_3 = sobol_indices(IndicesInput(model=func, x=data),
+        self.indices_table_3 = sobol_indices(IndicesInput(model=func, x=data,
+                                                          target=predictions),
                                              n=self.nsample)
 
         func = lambda x: x[:, 0]
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
-        self.indices_table_4 = sobol_indices(IndicesInput(model=func, x=data),
+        self.indices_table_4 = sobol_indices(IndicesInput(model=func, x=data,
+                                                          target=predictions),
                                              n=self.nsample)
 
     def test_sobol(self):

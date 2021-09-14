@@ -24,6 +24,7 @@ def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
                     x=x_fold,
                     y=y_fold,
                     variable_groups=inputs.variable_groups,
+                    target=inputs._target,
                 )
                 # compute the result for the fold
                 fold_results.append(function(fold_inputs, *args, **kwargs))

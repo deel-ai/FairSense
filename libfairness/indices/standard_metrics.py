@@ -8,7 +8,7 @@ from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
     df = index_input.x
-    y = index_input.y
+    y = index_input.get_target()
     dis = []
     for group in index_input.variable_groups:
         group_output = []

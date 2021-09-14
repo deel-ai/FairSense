@@ -3,12 +3,13 @@ import numpy as np
 from libfairness.indices.sobol import sobol_indices
 from libfairness.indices.cvm import cvm_indices
 from libfairness.utils.dataclasses import IndicesInput
+from libfairness.utils.targets import predictions
 from tests.test_sobol import gaussian_data_generator
 
 
 def run_experiment(name, nsample, function, data_generator, data_generator_kwargs):
     data = data_generator(**data_generator_kwargs)
-    inputs = IndicesInput(model=function[0], x=data)
+    inputs = IndicesInput(model=function[0], x=data, target=predictions)
     results = sobol_indices(inputs, n=nsample) + cvm_indices(inputs)
     return results
 

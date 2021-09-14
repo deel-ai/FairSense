@@ -17,7 +17,7 @@ def cvm_indices(index_input: IndicesInput) -> IndicesOutput:
     """
     # __check_arg_cvm(index_input, cols)
     df = pd.DataFrame(index_input.x, columns=index_input.x.columns)
-    df["outputs"] = pd.DataFrame(index_input.y)
+    df["outputs"] = pd.DataFrame(index_input.get_target())
     return IndicesOutput(__analyze(df, "outputs", cols=index_input.variable_groups))
 
 

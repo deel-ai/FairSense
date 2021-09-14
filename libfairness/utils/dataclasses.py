@@ -9,6 +9,7 @@ class IndicesInput:
         model: Optional[Callable] = None,
         x: Optional[DataFrame] = None,
         y: Optional[DataFrame] = None,
+        target: Callable = None,
         variable_groups: List[List[str]] = None,
     ):
 
@@ -17,24 +18,19 @@ class IndicesInput:
         self._x = x
         self._x.columns = [str(c) for c in x.columns]
         self._y = y
+        self._target = target
 
     @property
     def x(self):
         # indice_input.x returns a copy of the data
         return self._x.copy()
 
+    def get_target(self, x=None):
+        return self._target(self, x)
+
     @property
     def y(self):
-        # get y if a sample is given or compute it with the model
-        if self._y is not None:
-            return self._y
-        elif self._x is not None and self.model is not None:
-            return self.model(self.x.values)
-        else:
-            raise RuntimeError(
-                "y must be set, or x and a model must be given in "
-                "order to acces y attribute"
-            )
+        return self._y
 
     @y.setter
     def y(self, _y):
@@ -68,7 +64,7 @@ class IndicesOutput:
 
     @property
     def values(self):
-        return self.runs.groupby(level=0).median().clip(0., 1.)
+        return self.runs.groupby(level=0).median().clip(0.0, 1.0)
 
     def __add__(self, other):
         # indices must be computed on same groups

@@ -5,27 +5,28 @@ from libfairness.utils.dataclasses import IndicesInput
 
 def from_pandas(
     dataframe: pd.DataFrame,
-    target: Union[str, pd.DataFrame, pd.Series, None],
+    y: Union[str, pd.DataFrame, pd.Series, None],
     model: Optional[Callable] = None,
+    target: Callable = None,
 ) -> IndicesInput:
     cols = set(dataframe.columns)
-    if target is None:
+    if y is None:
         assert model is not None, "model must be defined when target is None"
         x = dataframe
         y = None
-    elif isinstance(target, str):
-        x = dataframe[cols - {target}]
-        y = dataframe[target]
-    elif isinstance(target, pd.DataFrame) or isinstance(target, pd.Series):
+    elif isinstance(y, str):
+        x = dataframe[cols - {y}]
+        y = dataframe[y]
+    elif isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
         x = dataframe
-        y = pd.DataFrame(target)
+        y = pd.DataFrame(y)
     else:
         raise RuntimeError("type of target must be Dataframe, Series, str or None")
-    return IndicesInput(x=x, y=y, model=model)
+    return IndicesInput(x=x, y=y, model=model, target=target)
 
 
-def from_numpy(x, y, feature_names=None, model=None):
+def from_numpy(x, y, feature_names=None, model=None, target=None):
     df = pd.DataFrame(x, columns=feature_names)
     # build dataframe
-    target = pd.DataFrame(y, columns=["target"])
-    return from_pandas(df, target, model)
+    y = pd.DataFrame(y, columns=["target"])
+    return from_pandas(dataframe=df, y=y, model=model, target=target)
