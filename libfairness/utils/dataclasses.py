@@ -8,8 +8,8 @@ class IndicesInput:
         self,
         model: Optional[Callable] = None,
         x: Optional[DataFrame] = None,
-        y: Optional[DataFrame] = None,
-        target: Callable = None,
+        y_true: Optional[DataFrame] = None,
+        objective: Callable = None,
         variable_groups: List[List[str]] = None,
     ):
 
@@ -17,8 +17,8 @@ class IndicesInput:
         self._variable_groups = variable_groups
         self._x = x
         self._x.columns = [str(c) for c in x.columns]
-        self._y = y
-        self._target = target
+        self._y_true = y_true
+        self._target = objective
 
     @property
     def x(self):
@@ -29,22 +29,22 @@ class IndicesInput:
         return self._target(self, x)
 
     @property
-    def y(self):
-        return self._y
+    def y_true(self):
+        return self._y_true
 
-    @y.setter
-    def y(self, _y):
-        # this setter ensures that y is a dataframe and not a series
+    @y_true.setter
+    def y_true(self, _y):
+        # this setter ensures that y_true is a dataframe and not a series
         if _y is None:
-            self._y = None
+            self._y_true = None
         else:
             if len(_y.shape) < 2:
                 _y = np.expand_dims(_y, -1)
-                self._y = DataFrame(_y, columns=["outputs"])
+                self._y_true = DataFrame(_y, columns=["outputs"])
             elif isinstance(_y, DataFrame):
-                self._y = _y
+                self._y_true = _y
             else:
-                self._y = DataFrame(_y, columns=["outputs"])
+                self._y_true = DataFrame(_y, columns=["outputs"])
 
     @property
     def variable_groups(self):

@@ -3,7 +3,7 @@ from functools import partial
 from libfairness.utils.dataclasses import IndicesOutput
 
 
-def format_with_intervals(indices_outputs: IndicesOutput, quantile: int = 0.05):
+def format_with_intervals(indices_outputs: IndicesOutput, quantile: float = 0.05):
     means = indices_outputs.runs.groupby(level=0).median().clip(0.0, 1.0)
     low = (
         indices_outputs.runs.groupby(level=0)

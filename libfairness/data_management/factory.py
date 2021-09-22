@@ -22,7 +22,7 @@ def from_pandas(
         y = pd.DataFrame(y)
     else:
         raise RuntimeError("type of target must be Dataframe, Series, str or None")
-    return IndicesInput(x=x, y=y, model=model, target=target)
+    return IndicesInput(x=x, y_true=y, model=model, objective=target)
 
 
 def from_numpy(x, y, feature_names=None, model=None, target=None):

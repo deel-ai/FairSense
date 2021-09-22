@@ -12,7 +12,7 @@ def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
         def call_function(inputs: IndicesInput, *args, **kwargs):
             # get full inputs
             x = inputs.x
-            y = inputs.y
+            y = inputs.y_true
             fold_results = []
             # repeat indices computation on each fold
             for split1, _ in tqdm(kf.split(x, y)):
@@ -22,9 +22,9 @@ def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
                 fold_inputs = IndicesInput(
                     model=inputs.model,
                     x=x_fold,
-                    y=y_fold,
+                    y_true=y_fold,
                     variable_groups=inputs.variable_groups,
-                    target=inputs._target,
+                    objective=inputs._target,
                 )
                 # compute the result for the fold
                 fold_results.append(function(fold_inputs, *args, **kwargs))

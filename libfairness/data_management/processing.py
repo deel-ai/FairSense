@@ -36,8 +36,8 @@ def one_hot_encode(
         out_var_groups.append(new_group)
     return IndicesInput(
         x=out_x,
-        y=indices_input.y,
+        y_true=indices_input.y_true,
         model=indices_input.model,
         variable_groups=out_var_groups,
-        target=indices_input._target,
+        objective=indices_input._target,
     )
