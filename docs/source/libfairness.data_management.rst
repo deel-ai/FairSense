@@ -4,29 +4,11 @@ libfairness.data\_management package
 Submodules
 ----------
 
-libfairness.data\_management.checks module
-------------------------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: libfairness.data_management.checks
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-libfairness.data\_management.factory module
--------------------------------------------
-
-.. automodule:: libfairness.data_management.factory
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-libfairness.data\_management.utils module
------------------------------------------
-
-.. automodule:: libfairness.data_management.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   libfairness.data_management.factory
+   libfairness.data_management.processing
 
 Module contents
 ---------------

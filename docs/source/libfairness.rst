@@ -9,18 +9,8 @@ Subpackages
 
    libfairness.data_management
    libfairness.indices
+   libfairness.utils
    libfairness.visualization
-
-Submodules
-----------
-
-libfairness.fairness\_problem module
-------------------------------------
-
-.. automodule:: libfairness.fairness_problem
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Module contents
 ---------------

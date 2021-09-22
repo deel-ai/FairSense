@@ -7,10 +7,15 @@ Welcome to libfairness's documentation!
 =======================================
 
 .. toctree::
-   :maxdepth: 2
+   :titlesonly:
+   :maxdepth: 4
    :caption: Contents:
+   :glob:
 
-   modules
+   libfairness.data_managment
+   libfairness.indices
+   libfairness.visualization
+   libfairness.utils
 
 
 Indices and tables
