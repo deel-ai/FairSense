@@ -18,15 +18,15 @@ class IndicesInput:
         self._x = x
         self._x.columns = [str(c) for c in x.columns]
         self._y_true = y_true
-        self._target = objective
+        self._objective = objective
 
     @property
     def x(self):
         # indice_input.x returns a copy of the data
         return self._x.copy()
 
-    def get_target(self, x=None):
-        return self._target(self, x)
+    def compute_objective(self, x=None):
+        return self._objective(self, x)
 
     @property
     def y_true(self):

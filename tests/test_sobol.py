@@ -18,7 +18,7 @@ class MyTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(MyTestCase, self).__init__(*args, **kwargs)
         self.atol = 0.05
-        self.rtol = 0.05
+        self.rtol = 0.5  # high rtol for low values
         self.nsample = 10 ** 4
         self.data_sample = 10 ** 3
         # test preparation, do all computations, and results are stored in two table

@@ -12,10 +12,10 @@ class TestSobol(unittest.TestCase):
         inputs = IndicesInput(
             model=None,
             x=pd.DataFrame(
-                data=np.random.randint(low=0, high=2, size=(5000, 4)),
+                data=np.random.randint(low=0, high=2, size=(10000, 4)),
                 columns="a,b,c," "" "d".split(","),
             ),
-            y_true=pd.DataFrame(np.random.randint(low=0, high=2, size=(5000,))),
+            y_true=pd.DataFrame(np.random.randint(low=0, high=2, size=(10000,))),
             variable_groups=[["a", "b"], ["c"], ["d"]],
             objective=y_true,
         )

@@ -21,7 +21,6 @@ class TestSobol(unittest.TestCase):
         func1 = lambda x: x[:, 0], "f(x) -> X_0"
         func1bis = lambda x: 10 * x[:, 0], "f(x) -> 10*X_0"
         results = run_experiment(
-            "output_scaling_1",
             function=func1,
             nsample=nsample,
             data_generator=gaussian_data_generator,
@@ -36,7 +35,6 @@ class TestSobol(unittest.TestCase):
         ]
         np.testing.assert_allclose(results.values, target, atol=1e-1)
         results = run_experiment(
-            "output_scaling_2",
             function=func1bis,
             nsample=nsample,
             data_generator=gaussian_data_generator,
@@ -56,7 +54,6 @@ class TestSobol(unittest.TestCase):
         data_sample = 1 * 10 ** 4
         func1 = lambda x: x[:, 0], "f(x) -> X_0"
         results = run_experiment(
-            "input_scaling_2",
             function=func1,
             nsample=nsample,
             data_generator=gaussian_data_generator,
@@ -76,7 +73,6 @@ class TestSobol(unittest.TestCase):
         data_sample = 1 * 10 ** 4
         func1 = lambda x: x[:, 0], "f(x) -> X_0"
         results = run_experiment(
-            "correlation_2",
             function=func1,
             nsample=nsample,
             data_generator=gaussian_data_generator,
@@ -96,7 +92,6 @@ class TestSobol(unittest.TestCase):
         data_sample = 1 * 10 ** 4
         func3 = lambda x: x[:, 0] + x[:, 1], "f(x) -> X_0 + X_1"
         results = run_experiment(
-            "distribution_1",
             function=func3,
             nsample=nsample,
             data_generator=gaussian_data_generator,
@@ -111,7 +106,6 @@ class TestSobol(unittest.TestCase):
         ]
         np.testing.assert_allclose(results.values, target, atol=1e-1)
         results = run_experiment(
-            "distribution_2",
             function=func3,
             nsample=nsample,
             data_generator=gaussian_data_generator,
@@ -134,7 +128,6 @@ class TestSobol(unittest.TestCase):
             "f(x) -> 20*X_0 if (X_1 > 0.5)&& (" "X_2 > 0.5) else: 0.25*X_0 ",
         )
         results = run_experiment(
-            "joint_effect_1",
             function=func4,
             nsample=nsample,
             data_generator=gaussian_data_generator,
