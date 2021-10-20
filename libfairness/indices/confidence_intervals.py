@@ -15,10 +15,10 @@ def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
             y = inputs.y_true
             fold_results = []
             # repeat indices computation on each fold
-            for split1, _ in tqdm(kf.split(x, y)):
+            for _, split in tqdm(kf.split(x, y), total=n_splits, ncols=80):
                 # build input for the fold
-                x_fold = x.iloc[split1]
-                y_fold = y.iloc[split1]
+                x_fold = x.iloc[split]
+                y_fold = y.iloc[split]
                 fold_inputs = IndicesInput(
                     model=inputs.model,
                     x=x_fold,
