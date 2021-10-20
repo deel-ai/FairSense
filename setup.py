@@ -31,11 +31,11 @@ docs_requires = [
 setuptools.setup(
     name="libfairness",
     version="0.0.1",
-    author=", ".join(["Alexandre LANGLADE", "Thibaut BOISSIN"]),
+    author=", ".join(["Thibaut BOISSIN", "Alexandre LANGLADE"]),
     author_email=", ".join(
         [
-            "alexandre.langlade@irt-saintexupery.com",
             "thibaut.boissin@irt-saintexupery.com",
+            "alexandre.langlade@irt-saintexupery.com",
         ]
     ),
     description="todo",

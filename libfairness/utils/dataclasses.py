@@ -30,7 +30,7 @@ class IndicesInput:
 
     @property
     def y_true(self):
-        return self._y_true
+        return self._y_true.copy()
 
     @y_true.setter
     def y_true(self, _y):
