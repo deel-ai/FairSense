@@ -9,11 +9,12 @@ from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
     df = index_input.x
     y = index_input.compute_objective()
+    df["outputs"] = y
     dis = []
     for group in index_input.variable_groups:
         group_output = []
         for var in group:
-            group_output.append(disparate_impact_single_variable(df[var], y))
+            group_output.append(disparate_impact_single_variable(df, var))
         dis.append(np.mean(group_output))
     data = np.expand_dims(np.array(dis), axis=-1)
     index = index_input.merged_groups
@@ -21,12 +22,10 @@ def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
     return IndicesOutput(results)
 
 
-def disparate_impact_single_variable(x: pd.Series, y: pd.Series) -> float:
-    df = pd.DataFrame(np.expand_dims(x, -1), columns=["X"])
-    df["outputs"] = y
-    succes_probs = df.groupby("X")["outputs"].mean()
+def disparate_impact_single_variable(df: pd.Series, variable: str) -> float:
+    succes_probs = df[[variable, "outputs"]].groupby(variable)["outputs"].mean()
     if len(succes_probs) > 2:
-        warn(f"non binary variable {x.name} encountered in DI, replacing with nan.")
+        # warn(f"non binary variable {variable} encountered in DI, replacing with nan.")
         return np.nan
-    di = 1.0 - succes_probs.min() / succes_probs.max()
+    di = 1.0 - succes_probs.min() / (succes_probs.max() + 1e-7)
     return di
