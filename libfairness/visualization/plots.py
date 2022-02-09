@@ -24,10 +24,11 @@ def cat_plot(
             the column facets span multiple rows.
         **kwargs: extra arguments passed to `seaborn.catplot`_.
 
+    Returns:
+        a matplotlib axes object
+
     .. _seaborn.catplot:
         https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot
-
-    Returns: a matplotlib axes object
 
     """
     assert plot_per.lower().strip() in {"variable", "index", "indices"}

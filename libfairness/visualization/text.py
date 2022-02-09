@@ -10,15 +10,15 @@ format. The outputs of the indices are epresented as
 
 
 def format_with_intervals(indices_outputs: IndicesOutput, quantile: float = 0.05):
-    f"""
+    """
     Pretty print the indices table with confidence intervals. Note that the intervals
     are displayed even if the indices are computed without confidence intervals. See
     :mod:`libfairness.indices.confidence_intervals` for more information.
 
     Args:
         indices_outputs (IndicesOutput): computed indices
-        quantile (float): quantile used to compute confidence intervals. Values must
-        be in [0., 0.5].
+            quantile (float): quantile used to compute confidence intervals. Values must
+            be in [0., 0.5].
 
     Returns: the table with indices properly displayed. Note that the table values
         are now string and not float.
