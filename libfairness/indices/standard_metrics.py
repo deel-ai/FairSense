@@ -1,8 +1,6 @@
 from warnings import warn
 import numpy as np
 import pandas as pd
-
-# ---- DISPARATE IMPACT ----
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 

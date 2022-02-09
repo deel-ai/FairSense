@@ -12,13 +12,22 @@ class IndicesInput:
         objective: Callable = None,
         variable_groups: List[List[str]] = None,
     ):
+        """
+
+        Args:
+            model:
+            x:
+            y_true:
+            objective:
+            variable_groups:
+        """
 
         self.model = model
         self._variable_groups = variable_groups
         self._x = x
         self._x.columns = [str(c) for c in x.columns]
         self._y_true = y_true
-        self._objective = objective
+        self.objective = objective
 
     @property
     def x(self):
@@ -26,7 +35,7 @@ class IndicesInput:
         return self._x.copy()
 
     def compute_objective(self, x=None):
-        return self._objective(self, x)
+        return self.objective(self, x)
 
     @property
     def y_true(self):
@@ -60,6 +69,11 @@ class IndicesInput:
 
 class IndicesOutput:
     def __init__(self, values: DataFrame):
+        """
+
+        Args:
+            values:
+        """
         self.runs: DataFrame = values  # 2D dataframe: lines=variable groups
 
     @property

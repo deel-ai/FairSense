@@ -39,5 +39,5 @@ def one_hot_encode(
         y_true=indices_input.y_true,
         model=indices_input.model,
         variable_groups=out_var_groups,
-        objective=indices_input._objective,
+        objective=indices_input.objective,
     )
