@@ -4,11 +4,21 @@ libfairness.utils package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+libfairness.utils.dataclasses module
+------------------------------------
 
-   libfairness.utils.dataclasses
-   libfairness.utils.fairness_objective
+.. automodule:: libfairness.utils.dataclasses
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+libfairness.utils.fairness\_objective module
+--------------------------------------------
+
+.. automodule:: libfairness.utils.fairness_objective
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

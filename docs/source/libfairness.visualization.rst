@@ -4,11 +4,21 @@ libfairness.visualization package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+libfairness.visualization.plots module
+--------------------------------------
 
-   libfairness.visualization.plots
-   libfairness.visualization.text
+.. automodule:: libfairness.visualization.plots
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+libfairness.visualization.text module
+-------------------------------------
+
+.. automodule:: libfairness.visualization.text
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

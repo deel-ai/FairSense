@@ -4,14 +4,37 @@ libfairness.indices package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+libfairness.indices.confidence\_intervals module
+------------------------------------------------
 
-   libfairness.indices.backup
-   libfairness.indices.confidence_intervals
-   libfairness.indices.cvm
-   libfairness.indices.sobol
-   libfairness.indices.standard_metrics
+.. automodule:: libfairness.indices.confidence_intervals
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+libfairness.indices.cvm module
+------------------------------
+
+.. automodule:: libfairness.indices.cvm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+libfairness.indices.sobol module
+--------------------------------
+
+.. automodule:: libfairness.indices.sobol
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+libfairness.indices.standard\_metrics module
+--------------------------------------------
+
+.. automodule:: libfairness.indices.standard_metrics
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
