@@ -14,7 +14,7 @@ def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
     for group in index_input.variable_groups:
         group_output = []
         for var in group:
-            group_output.append(disparate_impact_single_variable(df, var))
+            group_output.append(_disparate_impact_single_variable(df, var))
         dis.append(np.mean(group_output))
     data = np.expand_dims(np.array(dis), axis=-1)
     index = index_input.merged_groups
@@ -22,7 +22,7 @@ def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
     return IndicesOutput(results)
 
 
-def disparate_impact_single_variable(df: pd.Series, variable: str) -> float:
+def _disparate_impact_single_variable(df: pd.Series, variable: str) -> float:
     succes_probs = df[[variable, "outputs"]].groupby(variable)["outputs"].mean()
     if len(succes_probs) > 2:
         # warn(f"non binary variable {variable} encountered in DI, replacing with nan.")
