@@ -8,14 +8,20 @@ from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:
     """
     Compute all sobol indices for all variables
+
+    Warning:
+        this indice may fail silently if all values of one variable are similar (
+        constant ) which  may occurs when applying one hot encoding with a large
+        number of splits.
+
     Args:
-        y:
-        f: the function to analyze
-        x: numpy array containing the data
+        inputs (IndicesInput): The fairness problem to study.
         n: number of sample used to compute the sobol indices
         N: number of sample used to compute marginals
 
-    Returns: a numpy array containing sobol indices (columns) for each variable (row)
+    Returns:
+        IndicesOutput object, containing the CVM indices, one line per variable group
+        and one column for each index.
 
     """
     x = inputs.x

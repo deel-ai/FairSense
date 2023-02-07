@@ -5,6 +5,33 @@ from tqdm import tqdm
 
 
 def with_confidence_intervals(n_splits=31, shuffle=False, random_state=None):
+    """
+    Function decorator that allows to compute confidence intervals using the naive
+    method. The input data is split in n_splits and for each split indices are
+    computed.
+
+    Warnings:
+            No correction if applied on the output (small number of split will lead
+            to overconfident intervals and a large number of split will lead to a
+            large variance due to the lack of data).
+
+    This function must be applied on one of the indices computation function from the
+    indices module.
+
+    Args:
+        n_splits: positive integer : number of split.
+        shuffle:  Whether to shuffle the data before splitting into batches. Note that
+            the samples within each split will not be shuffled.
+        random_state: When `shuffle` is True, `random_state` affects the ordering of
+            the indices, which controls the randomness of each fold. Otherwise, this
+            parameter has no effect. Pass an int for reproducible output across
+            multiple function calls.
+
+    Returns:
+        the original indice computation function enriched to compute confidence
+        intervals.
+
+    """
 
     kf = KFold(n_splits, shuffle=shuffle, random_state=random_state)
 

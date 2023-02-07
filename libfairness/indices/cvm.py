@@ -8,11 +8,17 @@ def cvm_indices(index_input: IndicesInput) -> IndicesOutput:
     """Compute the CVM indices of a fairness problem.
     Set FairnessProblem.result as a Dataframe containing the indices.
 
+    Warning:
+        this indice may fail silently if all values of one variable are similar (
+        constant ) which  may occurs when applying one hot encoding with a large
+        number of splits.
+
     Args:
         index_input (IndicesInput): The fairness problem to study.
 
     Returns:
-        IndicesOutput object, containing the CVM indices.
+        IndicesOutput object, containing the CVM indices, one line per variable group
+        and one column for each index.
 
     """
     # __check_arg_cvm(index_input, cols)

@@ -13,13 +13,17 @@ class IndicesInput:
         variable_groups: List[List[str]] = None,
     ):
         """
+        Build an IndiceInput object.
 
         Args:
-            model:
-            x:
-            y_true:
-            objective:
-            variable_groups:
+            model: function that can be applied on x, that return a series with
+            same shape as y_true.
+            x: a dataframe containing the samples to analyse.
+            y_true: a dataframe containing the labels of the samples (in the same
+                order)
+            objective: one of the target from the utils.fairness_objective module.
+            variable_groups: list of list, containing the name of the columns that
+                should be grouped.
         """
 
         self.model = model
@@ -35,6 +39,19 @@ class IndicesInput:
         return self._x.copy()
 
     def compute_objective(self, x=None):
+        """
+        Compute the objective, using available data.
+        When objective is y_true, y_true is returned, when objective is y_pred,
+        the model is applied on x, and other objective compute the difference between
+        y_true and y_pred.
+
+        Args:
+            x: the sample to compute the objective on. When None, `self.x` is used.
+
+        Returns:
+            the value of the objective.
+
+        """
         return self.objective(self, x)
 
     @property
@@ -70,9 +87,13 @@ class IndicesInput:
 class IndicesOutput:
     def __init__(self, values: DataFrame):
         """
+        Encapsulate the results of the analysis. Every function from the indices
+        module returns an object of this type.
+        This object override the `+` operator allorw to combine result more easily.
 
         Args:
-            values:
+            values: a DataFrame containing the values of the indices. When confidence
+            intervals are enabled this dataframe contains the results of each split.
         """
         self.runs: DataFrame = values  # 2D dataframe: lines=variable groups
 

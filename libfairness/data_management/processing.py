@@ -6,6 +6,19 @@ from libfairness.utils.dataclasses import IndicesInput
 def one_hot_encode(
     indices_input: IndicesInput, categorical_variables: List[str] = None
 ) -> IndicesInput:
+    """
+    Performs one-hot encoding on the specified categorical variables. Variable groups
+    are updated accordingly. Newly created variables are named:
+    `original_feature_name=value`
+
+    Args:
+        indices_input: IndiceInput object containing the data.
+        categorical_variables: name of the variable that should be encoded.
+
+    Returns:
+        the updated IndicesInput.
+
+    """
     x = indices_input.x
     orig_var_groups = indices_input.variable_groups
     out_x = pd.get_dummies(

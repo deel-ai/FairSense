@@ -5,6 +5,28 @@ from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 
 def disparate_impact(index_input: IndicesInput, group_reduction=np.mean) -> IndicesOutput:
+    """
+    Compute the disparate impact.
+
+    Warning:
+        disparate impact/equality of odds can only be computed on classification
+        problems, and on categorical variables. Continuous variables are dropped and
+        output replaced by `np.nan`
+
+    Note:
+         When applied with `target=classification_error` this function compute the
+         equality of odds.
+
+    Args:
+        index_input (IndicesInput): The fairness problem to study.
+        group_reduction: the method used to compute the indices for a group of
+            variables. By default the average of the values of each groups is applied.
+
+    Returns:
+        IndicesOutput object, containing the CVM indices, one line per variable group
+        and one column for each index.
+
+    """
     df = index_input.x
     y = index_input.compute_objective()
     df["outputs"] = y.values
