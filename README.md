@@ -1,4 +1,4 @@
-<img src="docs/source/fairsense.png" alt="logo fairsense" style
+<img src="docs/assest/logo.png" alt="logo fairsense" style
 ="width
 :500px;"/>
 

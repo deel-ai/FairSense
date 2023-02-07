@@ -20,12 +20,12 @@ dev_requires = [
 ]
 
 docs_requires = [
-    "sphinx",
-    "recommonmark",
-    "sphinx_rtd_theme",
-    "sphinx_markdown_builder",
-    "sphinxcontrib_katex",
-    "ipython",  # required for Pygments
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings",
+    # only if you want to generate notebooks in documentation website
+    "mknotebooks",
+    "ipython",
 ]
 
 setuptools.setup(
