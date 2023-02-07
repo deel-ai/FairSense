@@ -29,7 +29,7 @@ docs_requires = [
 ]
 
 setuptools.setup(
-    name="libfairness",
+    name="fairsense",
     version="0.0.1",
     author=", ".join(["Thibaut BOISSIN", "Alexandre LANGLADE"]),
     author_email=", ".join(
@@ -42,7 +42,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="todo",
-    packages=setuptools.find_namespace_packages(include=["libfairness.*"]),
+    packages=setuptools.find_namespace_packages(include=["fairsense.*"]),
     install_requires=["numpy", "pandas", "matplotlib", "scikit-learn", "seaborn"],
     license="MIT",
     extras_require={"dev": dev_requires, "docs": docs_requires},

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KDTree
-from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
+from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 
 
 def cvm_indices(index_input: IndicesInput) -> IndicesOutput:

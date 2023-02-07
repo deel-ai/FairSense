@@ -1,6 +1,6 @@
 from typing import List
 import pandas as pd
-from libfairness.utils.dataclasses import IndicesInput
+from fairsense.utils.dataclasses import IndicesInput
 
 
 def one_hot_encode(

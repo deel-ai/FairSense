@@ -1,9 +1,9 @@
 import unittest
 import numpy as np
 import pandas as pd
-from libfairness.indices.sobol import sobol_indices
-from libfairness.utils.dataclasses import IndicesInput
-from libfairness.utils.fairness_objective import y_pred
+from fairsense.indices.sobol import sobol_indices
+from fairsense.utils.dataclasses import IndicesInput
+from fairsense.utils.fairness_objective import y_pred
 
 
 def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, var3=1.0):

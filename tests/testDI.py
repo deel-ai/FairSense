@@ -1,10 +1,10 @@
 import unittest
-from libfairness.indices.standard_metrics import disparate_impact
-from libfairness.utils.fairness_objective import y_true
+from fairsense.indices.standard_metrics import disparate_impact
+from fairsense.utils.fairness_objective import y_true
 import numpy as np
 import pandas as pd
 
-from libfairness.utils.dataclasses import IndicesInput
+from fairsense.utils.dataclasses import IndicesInput
 
 
 class TestSobol(unittest.TestCase):

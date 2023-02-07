@@ -1,7 +1,7 @@
 from warnings import warn
 import numpy as np
 import pandas as pd
-from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
+from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 
 
 def disparate_impact(index_input: IndicesInput, group_reduction=np.mean) -> IndicesOutput:

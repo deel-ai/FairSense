@@ -1,10 +1,10 @@
 import unittest
 import pandas as pd
 import sklearn.datasets as ds
-from libfairness.data_management.factory import from_pandas
-from libfairness.data_management.processing import one_hot_encode
+from fairsense.data_management.factory import from_pandas
+from fairsense.data_management.processing import one_hot_encode
 
-# from libfairness.utils.targets import y_true
+# from fairsense.utils.targets import y_true
 
 
 class MyTestCase(unittest.TestCase):

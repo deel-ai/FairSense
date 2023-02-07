@@ -1,5 +1,5 @@
 import pandas as pd
-from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
+from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 from sklearn.model_selection import KFold
 from tqdm import tqdm
 

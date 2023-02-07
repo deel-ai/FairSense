@@ -4,7 +4,7 @@ as these will be passed to a `IndicesInput.objective`.
 """
 import numpy as np
 from pandas import DataFrame
-from libfairness.utils.dataclasses import IndicesInput
+from fairsense.utils.dataclasses import IndicesInput
 
 
 def y_true(self: IndicesInput, x=None):

@@ -1,10 +1,18 @@
 import unittest
 import numpy as np
-from libfairness.indices.sobol import sobol_indices
-from libfairness.indices.cvm import cvm_indices
-from libfairness.utils.dataclasses import IndicesInput
-from libfairness.utils.fairness_objective import y_pred
-from tests.test_sobol import gaussian_data_generator
+import pandas as pd
+from fairsense.indices.sobol import sobol_indices
+from fairsense.indices.cvm import cvm_indices
+from fairsense.utils.dataclasses import IndicesInput
+from fairsense.utils.fairness_objective import y_pred
+
+
+def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, var3=1.0):
+    cov = np.mat(
+        [[var1, sigma12, sigma13], [sigma12, var2, sigma23], [sigma13, sigma23, var3]]
+    )
+    x = np.random.multivariate_normal(mean=np.array([0, 0, 0]), cov=cov, size=N)
+    return pd.DataFrame(x, columns=[0, 1, 2])
 
 
 def run_experiment(nsample, function, data_generator, data_generator_kwargs):

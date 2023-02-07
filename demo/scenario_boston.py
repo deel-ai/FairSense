@@ -1,16 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from libfairness.data_management.factory import from_numpy, from_pandas
-from libfairness.data_management.processing import one_hot_encode
-from libfairness.indices.confidence_intervals import with_confidence_intervals
-from libfairness.indices.cvm import cvm_indices
-from libfairness.indices.standard_metrics import disparate_impact
-from libfairness.indices.sobol import sobol_indices
-from libfairness.utils.dataclasses import IndicesInput
-from libfairness.utils.fairness_objective import y_true, squared_error, y_pred
-from libfairness.visualization.plots import cat_plot
-from libfairness.visualization.text import format_with_intervals
+from fairsense.data_management.factory import from_numpy, from_pandas
+from fairsense.data_management.processing import one_hot_encode
+from fairsense.indices.confidence_intervals import with_confidence_intervals
+from fairsense.indices.cvm import cvm_indices
+from fairsense.indices.standard_metrics import disparate_impact
+from fairsense.indices.sobol import sobol_indices
+from fairsense.utils.dataclasses import IndicesInput
+from fairsense.utils.fairness_objective import y_true, squared_error, y_pred
+from fairsense.visualization.plots import cat_plot
+from fairsense.visualization.text import format_with_intervals
 from sklearn.tree import DecisionTreeRegressor
 
 data = pd.read_csv("data/adult.csv")

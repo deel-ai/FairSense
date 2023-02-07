@@ -4,7 +4,7 @@ objects.
 """
 from typing import Union, Callable, Optional
 import pandas as pd
-from libfairness.utils.dataclasses import IndicesInput
+from fairsense.utils.dataclasses import IndicesInput
 
 
 def from_pandas(
