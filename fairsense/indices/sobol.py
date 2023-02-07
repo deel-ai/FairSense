@@ -106,6 +106,11 @@ def _sobol_indices_at_i(f, variable_index, variable_groups, n, cov, f_inv):
     zcbis = _apply_marginals(zcbis, f_inv)
     zcter = _apply_marginals(zcter, f_inv)
     zcquad = _apply_marginals(zcquad, f_inv)
+
+    zc = pd.DataFrame(zc, columns=orig_cols)
+    zcbis = pd.DataFrame(zcbis, columns=orig_cols)
+    zcter = pd.DataFrame(zcter, columns=orig_cols)
+    zcquad = pd.DataFrame(zcquad, columns=orig_cols)
     # mx["zc"] = zc.mean(0)
     # print(mx)
     # print(f"zc{zc.var()}")
