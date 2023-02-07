@@ -22,7 +22,9 @@ def y_pred(self: IndicesInput, x=None):
     Evaluate the fairness of the model's predictions over the dataset. This allow to
     check if the model gives biased decisions.
     """
-    return DataFrame(self.model(x if x is not None else self.x), columns=["outputs"])
+    return DataFrame(
+        self.model(x if x is not None else self.x), dtype=float, columns=["outputs"]
+    )
 
 
 def classification_error(self: IndicesInput, x=None):
@@ -38,7 +40,7 @@ def classification_error(self: IndicesInput, x=None):
     y_pred = self.model(self.x)
     # if len(y_pred.shape) < 2:
     #     y_pred = np.expand_dims(y_pred, -1)
-    return np.not_equal(self.y_true, y_pred)
+    return np.not_equal(self.y_true, y_pred).astype(float)
 
 
 def squared_error(self: IndicesInput, x=None):

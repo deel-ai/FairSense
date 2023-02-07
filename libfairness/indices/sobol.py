@@ -19,7 +19,7 @@ def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:
 
     """
     x = inputs.x
-    cov = x.cov()
+    cov = (x + np.random.normal(scale=1e-5, size=x.shape)).cov()
     orig_cols = []
     for group in inputs.variable_groups:
         orig_cols += group
@@ -58,6 +58,7 @@ def _sobol_indices_at_i(f, variable_index, variable_groups, n, cov, f_inv):
     Returns: The computed sobol indices in the following order: "sobol", "sobol_total", "sobol_ind", "sobol_total_ind"
 
     """
+    # global mx
     orig_cols = []
     for group in variable_groups:
         orig_cols += group
@@ -77,14 +78,17 @@ def _sobol_indices_at_i(f, variable_index, variable_groups, n, cov, f_inv):
     zncquad = np.hstack((zncbis[:, :-1], znc[:, [-1]]))
 
     # compute the L
+    # print(f"eigenvals: {np.linalg.eigvals(cov)}")
+    # u, s, vh = np.linalg.svd(cov, hermitian=True)
+    # print(f"s: {s}")
+    # cov_2 = u @ np.diag(np.clip(s, a_min=1e-8, a_max=None)) @ vh
     L = cholesky(cov)
-
     # compute zc
     zc = np.matmul(znc, np.matmul(inv(cholesky(_empirical_cov(znc))), L.T))
     zcbis = np.matmul(zncbis, np.matmul(inv(cholesky(_empirical_cov(zncbis))), L.T))
     zcter = np.matmul(zncter, np.matmul(inv(cholesky(_empirical_cov(zncter))), L.T))
     zcquad = np.matmul(zncquad, np.matmul(inv(cholesky(_empirical_cov(zncquad))), L.T))
-
+    # print(f"znc{zc.var()}")
     # shift back the columns to original order
     zc = _reorder_cols(zc, variable_index, inverse=True)
     zcbis = _reorder_cols(zcbis, variable_index, inverse=True)
@@ -96,17 +100,21 @@ def _sobol_indices_at_i(f, variable_index, variable_groups, n, cov, f_inv):
     zcbis = _apply_marginals(zcbis, f_inv)
     zcter = _apply_marginals(zcter, f_inv)
     zcquad = _apply_marginals(zcquad, f_inv)
-
+    # mx["zc"] = zc.mean(0)
+    # print(mx)
+    # print(f"zc{zc.var()}")
+    # print(f"f(zc){f(np.random.standard_normal(zc.shape)).var()}")
     # compute Vhat
     V = np.mean([np.var(f(zc)), np.var(f(zcbis)), np.var(f(zcter)), np.var(f(zcquad))])
+    # print(V)
 
     # compute sobol indices
     return np.array(
         [
-            _sobol_unnormalized(zc, zcbis, zcter, f) / V,
-            _sobol_total_unnormalized(zcbis, zcter, f) / (2 * V),
-            _sobol_ind_unnormalized(zc, zcbis, zcquad, f) / V,
-            _sobol_total_ind_unnormalized(zcbis, zcquad, f) / (2 * V),
+            _sobol_unnormalized(zc, zcbis, zcter, f) / (V + 1e-3),
+            _sobol_total_unnormalized(zcbis, zcter, f) / ((2 * V) + 1e-3),
+            _sobol_ind_unnormalized(zc, zcbis, zcquad, f) / (V + 1e-3),
+            _sobol_total_ind_unnormalized(zcbis, zcquad, f) / ((2 * V) + 1e-3),
         ]
     )
 

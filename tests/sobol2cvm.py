@@ -125,7 +125,7 @@ class TestSobol(unittest.TestCase):
         data_sample = 1 * 10 ** 4
         func4 = (
             lambda x: x[:, 0] * (((x[:, 1] > 0) * (x[:, 2] > 0) * 20) + -10),
-            "f(x) -> 20*X_0 if (X_1 > 0.5)&& (" "X_2 > 0.5) else: 0.25*X_0 ",
+            "f(x) -> 20*X_0 if (X_1 > 0.5) && (X_2 > 0.5) else: 0.25*X_0 ",
         )
         results = run_experiment(
             function=func4,

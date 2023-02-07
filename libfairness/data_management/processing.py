@@ -30,7 +30,7 @@ def one_hot_encode(
                 # variable has been one hot encoded, find the new variable names and
                 # add it to the group
                 new_group += list(
-                    filter(lambda cname: cname.startswith(c), out_x.columns)
+                    filter(lambda cname: cname.startswith(c + "="), out_x.columns)
                 )
         # group is finished add the new group to groups
         out_var_groups.append(new_group)

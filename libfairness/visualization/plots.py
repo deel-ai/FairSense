@@ -1,7 +1,8 @@
 import seaborn as sns
 from libfairness.utils.dataclasses import IndicesOutput
+
 """
-This module contains functions used to plot the outputs of the indices. The outputs of 
+This module contains functions used to plot the outputs of the indices. The outputs of
 the indices are epresented as :mod:`.utils.dataclasses.IndicesOutput`.
 """
 
@@ -32,18 +33,30 @@ def cat_plot(
 
     """
     assert plot_per.lower().strip() in {"variable", "index", "indices"}
-    if plot_per == "variable":
-        col = "variable"
-        x = "index"
-    else:
-        col = "index"
-        x = "variable"
+    indices_names = indices.values.columns
+    variable_names = indices.values.index
     data = indices.runs.stack().reset_index()
     data.rename(
         columns={"level_0": "variable", "level_1": "index", 0: "value"}, inplace=True
     )
+    if plot_per == "variable":
+        col = "variable"
+        x = "index"
+        order = indices_names
+    else:
+        col = "index"
+        x = "variable"
+        order = variable_names
     ax = sns.catplot(
-        data=data, x=x, y="value", col=col, kind=kind, col_wrap=col_wrap, **kwargs
+        data=data,
+        x=x,
+        y="value",
+        col=col,
+        kind=kind,
+        col_wrap=col_wrap,
+        order=order,
+        **kwargs
     )
     ax.set(ylim=(0.0, 1.0))
+    ax.set_xticklabels(rotation=45, horizontalalignment="right")
     return ax

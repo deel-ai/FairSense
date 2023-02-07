@@ -4,16 +4,16 @@ import pandas as pd
 from libfairness.utils.dataclasses import IndicesInput, IndicesOutput
 
 
-def disparate_impact(index_input: IndicesInput) -> IndicesOutput:
+def disparate_impact(index_input: IndicesInput, group_reduction=np.mean) -> IndicesOutput:
     df = index_input.x
     y = index_input.compute_objective()
-    df["outputs"] = y
+    df["outputs"] = y.values
     dis = []
     for group in index_input.variable_groups:
         group_output = []
         for var in group:
             group_output.append(_disparate_impact_single_variable(df, var))
-        dis.append(np.mean(group_output))
+        dis.append(group_reduction(group_output))
     data = np.expand_dims(np.array(dis), axis=-1)
     index = index_input.merged_groups
     results = pd.DataFrame(data=data, columns=["DI"], index=index)
