@@ -92,7 +92,7 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     tn_cond = np.clip(num_2 / den_2, 0.0, 1.0)
     u = np.clip(num_1 / den_2, 0.0, 1.0)
     u2 = np.clip(num_2 / den_1, 0.0, 1.0)
-    return tn_cond, u
+    return tn_ind, u2
 
 
 def __analyze(x, output_var, cols=None):

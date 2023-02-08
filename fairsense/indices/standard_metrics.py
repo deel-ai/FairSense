@@ -31,7 +31,7 @@ def disparate_impact(
     """
     df = index_input.x
     y = index_input.compute_objective()
-    df["outputs"] = y.values
+    df["outputs"] = y.values if hasattr(y, 'values') else y
     dis = []
     for group in index_input.variable_groups:
         group_output = []

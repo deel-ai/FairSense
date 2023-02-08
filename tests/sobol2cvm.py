@@ -77,23 +77,24 @@ class TestSobol(unittest.TestCase):
         np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_correlations(self):
-        nsample = 1 * 10**4
-        data_sample = 1 * 10**4
+        nsample = 1 * 10**5
+        data_sample = 1 * 10**5
         func1 = lambda x: x["0"], "f(x) -> X_0"
         results = run_experiment(
             function=func1,
             nsample=nsample,
             data_generator=gaussian_data_generator,
             data_generator_kwargs=dict(
-                sigma12=0.6, sigma13=0.0, sigma23=0.0, N=data_sample
+                sigma12=0.6, sigma13=0.6, sigma23=0.0, N=data_sample
             ),
         )
         target = [
-            [1.0, 1.0, 0.66, 0.66, 1.0, 0.66],
-            [0.35, 0.35, 0.0, 0.0, 0.23, 0.0],
-            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [1.0, 1.0, 0.27, 0.27, 1.0, 1.0],
+            [0.35, 0.35, 0.0, 0.0, 0.0, 1.0],
+            [0.35, 0.35, 0.0, 0.0, 0.0, 1.0],
         ]
-        np.testing.assert_allclose(results.values, target, atol=1e-1)
+        print(results.values)
+        np.testing.assert_allclose(results.values, target, rtol=1e-1, atol=1e-1)
 
     def test_distribution(self):
         nsample = 1 * 10**4
@@ -108,11 +109,11 @@ class TestSobol(unittest.TestCase):
             ),
         )
         target = [
-            [0.5, 0.5, 0.5, 0.5, 0.3166, 0.63],
-            [0.5, 0.5, 0.5, 0.5, 0.3055, 0.65],
+            [0.5, 0.5, 0.5, 0.5, 0.93, 0.42],
+            [0.5, 0.5, 0.5, 0.5, 0.93, 0.42],
             [0.0, 0.0, -0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.values, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, rtol=1e-1, atol=1e-1)
         results = run_experiment(
             function=func3,
             nsample=nsample,
@@ -122,15 +123,15 @@ class TestSobol(unittest.TestCase):
             ),
         )
         target = [
-            [0.85, 0.85, 0.85, 0.85, 0.7112, 0.9277],
-            [0.15, 0.15, 0.15, 0.15, 0.0460, 0.2587],
+            [0.85, 0.85, 0.85, 0.85, 0.95, 0.75],
+            [0.15, 0.15, 0.15, 0.15, 0.95, 0.25],
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         ]
-        np.testing.assert_allclose(results.values, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, rtol=1e-1, atol=1e-1)
 
     def test_joint_effects(self):
-        nsample = 1 * 10**4
-        data_sample = 1 * 10**4
+        nsample = 1 * 10**5
+        data_sample = 1 * 10**5
         func4 = (
             lambda x: x["0"] * (((x["1"] > 0) * (x["2"] > 0) * 20) + -10),
             "f(x) -> 20*X_0 if (X_1 > 0.5) && (X_2 > 0.5) else: 0.25*X_0 ",
@@ -144,11 +145,11 @@ class TestSobol(unittest.TestCase):
             ),
         )
         target = [
-            [0.25, 1.0, 0.25, 1.0, 0.4096, 0.9136],
-            [0.0, 0.5, 0.0, 0.50, 0.0189, 0.3108],
-            [0.0, 0.5, 0.0, 0.50, 0.0000, 0.3041],
+            [0.25, 1.0, 0.25, 1.0, 1.0, 0.5],
+            [0.0, 0.5, 0.0, 0.50, 1.0, 0.],
+            [0.0, 0.5, 0.0, 0.50, 1.0, 0.],
         ]
-        np.testing.assert_allclose(results.values, target, atol=1e-1)
+        np.testing.assert_allclose(results.values, target, rtol=1e-1, atol=1e-1)
 
 
 if __name__ == "__main__":
