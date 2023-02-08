@@ -24,10 +24,10 @@ def run_experiment(nsample, function, data_generator, data_generator_kwargs):
 
 class TestSobol(unittest.TestCase):
     def test_output_scaling(self):
-        nsample = 1 * 10 ** 4
-        data_sample = 1 * 10 ** 4
-        func1 = lambda x: x['0'], "f(x) -> X_0"
-        func1bis = lambda x: 10 * x['0'], "f(x) -> 10*X_0"
+        nsample = 1 * 10**4
+        data_sample = 1 * 10**4
+        func1 = lambda x: x["0"], "f(x) -> X_0"
+        func1bis = lambda x: 10 * x["0"], "f(x) -> 10*X_0"
         results = run_experiment(
             function=func1,
             nsample=nsample,
@@ -58,9 +58,9 @@ class TestSobol(unittest.TestCase):
         np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_input_scaling(self):
-        nsample = 1 * 10 ** 4
-        data_sample = 1 * 10 ** 4
-        func1 = lambda x: x['0'], "f(x) -> X_0"
+        nsample = 1 * 10**4
+        data_sample = 1 * 10**4
+        func1 = lambda x: x["0"], "f(x) -> X_0"
         results = run_experiment(
             function=func1,
             nsample=nsample,
@@ -77,9 +77,9 @@ class TestSobol(unittest.TestCase):
         np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_correlations(self):
-        nsample = 1 * 10 ** 4
-        data_sample = 1 * 10 ** 4
-        func1 = lambda x: x['0'], "f(x) -> X_0"
+        nsample = 1 * 10**4
+        data_sample = 1 * 10**4
+        func1 = lambda x: x["0"], "f(x) -> X_0"
         results = run_experiment(
             function=func1,
             nsample=nsample,
@@ -96,9 +96,9 @@ class TestSobol(unittest.TestCase):
         np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_distribution(self):
-        nsample = 1 * 10 ** 4
-        data_sample = 1 * 10 ** 4
-        func3 = lambda x: x['0'] + x['1'], "f(x) -> X_0 + X_1"
+        nsample = 1 * 10**4
+        data_sample = 1 * 10**4
+        func3 = lambda x: x["0"] + x["1"], "f(x) -> X_0 + X_1"
         results = run_experiment(
             function=func3,
             nsample=nsample,
@@ -129,10 +129,10 @@ class TestSobol(unittest.TestCase):
         np.testing.assert_allclose(results.values, target, atol=1e-1)
 
     def test_joint_effects(self):
-        nsample = 1 * 10 ** 4
-        data_sample = 1 * 10 ** 4
+        nsample = 1 * 10**4
+        data_sample = 1 * 10**4
         func4 = (
-            lambda x: x['0'] * (((x['1'] > 0) * (x['2'] > 0) * 20) + -10),
+            lambda x: x["0"] * (((x["1"] > 0) * (x["2"] > 0) * 20) + -10),
             "f(x) -> 20*X_0 if (X_1 > 0.5) && (X_2 > 0.5) else: 0.25*X_0 ",
         )
         results = run_experiment(

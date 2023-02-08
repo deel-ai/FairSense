@@ -24,7 +24,6 @@ class TestSobol(unittest.TestCase):
         print(outputs)
 
     def test_disparate_impact(self):
-
         columns = ["Male", "Driver_licence"]
         # data
         inputs = pd.DataFrame(

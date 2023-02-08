@@ -19,8 +19,8 @@ class MyTestCase(unittest.TestCase):
         super(MyTestCase, self).__init__(*args, **kwargs)
         self.atol = 0.05
         self.rtol = 0.5  # high rtol for low values
-        self.nsample = 10 ** 4
-        self.data_sample = 10 ** 3
+        self.nsample = 10**4
+        self.data_sample = 10**3
         # test preparation, do all computations, and results are stored in two table
         # (row are x_i and columns are indices)
         # create tables from 4.1
@@ -48,7 +48,7 @@ class MyTestCase(unittest.TestCase):
             IndicesInput(model=func, x=data, objective=y_pred), n=self.nsample
         )
 
-        func = lambda x: x['0']
+        func = lambda x: x["0"]
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )

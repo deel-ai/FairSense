@@ -4,7 +4,9 @@ import pandas as pd
 from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 
 
-def disparate_impact(index_input: IndicesInput, group_reduction=np.mean) -> IndicesOutput:
+def disparate_impact(
+    index_input: IndicesInput, group_reduction=np.mean
+) -> IndicesOutput:
     """
     Compute the disparate impact.
 

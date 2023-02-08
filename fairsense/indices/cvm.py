@@ -78,16 +78,16 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     n = len(data)
     num_1 = (
         np.sum(np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i"]))
-        / n ** 2
+        / n**2
     )
-    den_1 = (np.sum(data["i"] - np.minimum(data["i"], data["N_i"]))) / n ** 2
+    den_1 = (np.sum(data["i"] - np.minimum(data["i"], data["N_i"]))) / n**2
     num_2 = (
         np.sum(
             (len(data) * np.minimum(data["i"], data["M_i2"])) - np.square(data["L_i"])
         )
-        / n ** 3
+        / n**3
     )
-    den_2 = np.sum(data["L_i"] * (len(data) - data["L_i"])) / n ** 3
+    den_2 = np.sum(data["L_i"] * (len(data) - data["L_i"])) / n**3
     tn_ind = np.clip(num_1 / den_1, 0.0, 1.0)
     tn_cond = np.clip(num_2 / den_2, 0.0, 1.0)
     u = np.clip(num_1 / den_2, 0.0, 1.0)
