@@ -61,7 +61,7 @@ indices. These results can finally be visualized with the functions available in
 ##install fairsense
 
 
-###for users
+### for users
 
 ```bash
 pip install fairsense
@@ -100,12 +100,6 @@ Warning: the library must be installed to generate the doc.
 Feel free to propose your ideas or come and contribute with us on the Libname toolbox! We have a specific document where we describe in a simple way how to make your first pull request: [just here](CONTRIBUTING.md).
 
 ## 👀 See Also
-
-This library is one approach of many...
-
-Other tools to explain your model include:
-
-- [Random](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 More from the DEEL project:
 

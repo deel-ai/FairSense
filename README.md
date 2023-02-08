@@ -54,7 +54,7 @@ indices. These results can finally be visualized with the functions available in
 install fairsense
 -------------------
 
-###for users
+### for users
 
 ```bash
 pip install fairsense
