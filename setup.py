@@ -42,7 +42,7 @@ docs_requires = [
 
 setuptools.setup(
     name="fairsense",
-    version="0.0.1",
+    version="0.0.1a",
     author=", ".join(["Thibaut BOISSIN", "Alexandre LANGLADE"]),
     author_email=", ".join(
         [
