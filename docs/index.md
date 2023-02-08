@@ -7,11 +7,22 @@
 <!-- Badge section -->
 <div align="center">
     <a href="#">
-        <img src="https://img.shields.io/badge/Python-3.6, 3.7, 3.8-efefef">
+        <img src="https://img.shields.io/badge/Python-3.7, 3.8, 3.9, 3.10-efefef">
+    </a>
+    <a href="https://github.com/deel-ai/FairSense/actions/workflows/python-lints.yml">
+        <img alt="PyLint" src="https://github.com/deel-ai/FairSense/actions/workflows/python-lints.yml/badge.svg">
+    </a>
+    <a href="https://github.com/deel-ai/FairSense/actions/workflows/python-tests.yml">
+        <img alt="Tox" src="https://github.com/deel-ai/FairSense/actions/workflows/python-tests.yml/badge.svg">
+    </a>
+    <a href="https://github.com/deel-ai/FairSense/actions/workflows/python-publish.yml">
+        <img alt="Pypi" src="https://github.com/deel-ai/FairSense/actions/workflows/python-publish.yml/badge.svg">
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/License-MIT-efefef">
     </a>
+    <br>
+    <a href="https://deel-ai.github.io/FairSense/"><strong>Explore FairSense docs</strong></a>
 </div>
 <br>
 
@@ -19,14 +30,21 @@
 
 
 This library allow to compute global sensitivity indices in the context of fairness measurements.
+The paper `Fairness seen as Global Sensitivity Analysis` bridges the gap between 
 global sensitivity analysis (GSA) and fairness. It states that for each sensitivity 
 analysis, there is a fairness measure, and vice-versa.
 
+    @misc{https://doi.org/10.48550/arxiv.2103.04613,
+      doi = {10.48550/ARXIV.2103.04613},  
+      url = {https://arxiv.org/abs/2103.04613},  
+      author = {Bénesse, Clément and Gamboa, Fabrice and Loubes, Jean-Michel and Boissin, Thibaut},
+      keywords = {Statistics Theory (math.ST), Methodology (stat.ME), FOS: Mathematics, FOS: Mathematics, FOS: Computer and information sciences, FOS: Computer and information sciences},
+      title = {Fairness seen as Global Sensitivity Analysis},
+
 This library is a toolbox which ease the computation of fairness and GSA indices.
 
-
-##The problem
-
+👉 The problem
+----------
 
 Each index has it's characteristics: some can be applied on continuous variables and 
 some cannot. Some can handle regression problems and some handle classification 
@@ -37,8 +55,8 @@ the model.
 The objective is then to provide a tool to investigate the fairness of an ML problem
 by computing the GSA indices while avoiding the aforementioned issues.
 
-##The strategy
-
+🚀 The strategy
+------------
 
 The library allows to formulate a fairness problem which is stated as following:
 
@@ -58,10 +76,10 @@ indices. These results can finally be visualized with the functions available in
 `fairsense.visualization` module.
 
 
-##install fairsense
+💻 install fairsense
+-------------------
 
-
-### for users
+### ‍for users
 
 ```bash
 pip install fairsense

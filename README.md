@@ -1,6 +1,27 @@
 <img src="docs/assets/banner_light.png#gh-light-mode-only" alt="logo fairsense" style="width:500px;"/>
 <img src="docs/assets/banner_dark.png#gh-dark-mode-only" alt="logo fairsense" style="width:500px;"/>
 
+<div align="center">
+    <a href="#">
+        <img src="https://img.shields.io/badge/Python-3.7, 3.8, 3.9, 3.10-efefef">
+    </a>
+    <a href="https://github.com/deel-ai/FairSense/actions/workflows/python-lints.yml">
+        <img alt="PyLint" src="https://github.com/deel-ai/FairSense/actions/workflows/python-lints.yml/badge.svg">
+    </a>
+    <a href="https://github.com/deel-ai/FairSense/actions/workflows/python-tests.yml">
+        <img alt="Tox" src="https://github.com/deel-ai/FairSense/actions/workflows/python-tests.yml/badge.svg">
+    </a>
+    <a href="https://github.com/deel-ai/FairSense/actions/workflows/python-publish.yml">
+        <img alt="Pypi" src="https://github.com/deel-ai/FairSense/actions/workflows/python-publish.yml/badge.svg">
+    </a>
+    <a href="#">
+        <img src="https://img.shields.io/badge/License-MIT-efefef">
+    </a>
+    <br>
+    <a href="https://deel-ai.github.io/FairSense/"><strong>Explore FairSense docs</strong></a>
+</div>
+<br>
+
 FairSense
 ===========
 
