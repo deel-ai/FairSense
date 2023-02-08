@@ -48,7 +48,7 @@ class MyTestCase(unittest.TestCase):
             IndicesInput(model=func, x=data, objective=y_pred), n=self.nsample
         )
 
-        func = lambda x: x[:, 0]
+        func = lambda x: x['0']
         data = gaussian_data_generator(
             sigma12=0.0, sigma13=0.0, sigma23=0.0, N=self.data_sample
         )
