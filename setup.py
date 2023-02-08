@@ -11,14 +11,34 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-with open(path.join(this_directory, "requirements.txt"), encoding="utf-8") as f:
-    install_requires = f.read().split()
+install_requires = [
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "scikit-learn",
+    "seaborn",
+    "tqdm",
+]
 
-with open(path.join(this_directory, "requirements_dev.txt"), encoding="utf-8") as f:
-    dev_requires = f.read().split()
+dev_requires = [
+    "setuptools",
+    "pre-commit",
+    "tox",
+    "black",
+    "flake8",
+    "flake8-black",
+    "pytest",
+    "pylint",
+    "bump2version",
+]
 
-with open(path.join(this_directory, "requirements_docs.txt"), encoding="utf-8") as f:
-    docs_requires = f.read().split()
+docs_requires = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mknotebooks",
+    "ipython",
+]
 
 setuptools.setup(
     name="fairsense",
@@ -43,10 +63,11 @@ setuptools.setup(
         "all": install_requires + dev_requires + docs_requires,
     },
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
