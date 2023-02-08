@@ -1,6 +1,5 @@
-<img src="docs/assest/logo.png" alt="logo fairsense" style
-="width
-:500px;"/>
+<img src="docs/assets/banner_light.png#gh-light-mode-only" alt="logo fairsense" style="width:500px;"/>
+<img src="docs/assets/banner_dark.png#gh-dark-mode-only" alt="logo fairsense" style="width:500px;"/>
 
 FairSense
 ===========
