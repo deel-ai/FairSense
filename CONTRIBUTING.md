@@ -12,11 +12,11 @@ work is not in vain.
 
 ## Setup with make
 
-- Clone the repo `git clone <lib url>.git`.
-- Go to your freshly downloaded repo `cd <lib-name>`
+- Clone the repo `git clone https://github.com/deel-ai/FairSense.git`.
+- Go to your freshly downloaded repo `cd FairSense`
 - Create a virtual environment and install the necessary dependencies for development:
 
-  `make prepare-dev && source lib-name_dev_env/bin/activate`.
+  `make prepare-dev && source fairsense/bin/activate`.
 
 Welcome to the team !
 
