@@ -30,14 +30,18 @@ setuptools.setup(
             "alexandre.langlade@irt-saintexupery.com",
         ]
     ),
-    description="todo",
+    description="This library allow to compute global sensitivity indices in the context of fairness measurements.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="todo",
+    url="https://github.com/deel-ai/FairSense",
     packages=setuptools.find_namespace_packages(include=["fairsense.*"]),
     install_requires=install_requires,
     license="MIT",
-    extras_require={"dev": dev_requires, "docs": docs_requires},
+    extras_require={
+        "dev": dev_requires,
+        "docs": docs_requires,
+        "all": install_requires + dev_requires + docs_requires,
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
