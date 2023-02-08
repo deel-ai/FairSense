@@ -84,7 +84,7 @@ img[alt*="Colab"] {
 
 .md-typeset img,
 .md-typeset svg {
-    max-width: none;
+    max-width: 600px;
 }
 
 .md-typeset .task-list-control [type=checkbox]:checked+.task-list-indicator::before {
@@ -107,6 +107,12 @@ h2.numkdoc~ul li:not(.footnote) {
 
 table {
     border: solid 2px rgba(255, 255, 255, 0.1);
+    display: block;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    margin: 0 auto;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .md-typeset table:not([class]) th {
