@@ -1,0 +1,9 @@
+setuptools
+pre-commit
+tox
+black
+flake8
+flake8-black
+pytest
+pylint
+bump2version

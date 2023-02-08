@@ -11,22 +11,14 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-dev_requires = [
-    "tox",
-    "black",
-    "flake8",
-    "flake8-black",
-    "numpy",
-]
+with open(path.join(this_directory, "requirements.txt"), encoding="utf-8") as f:
+    install_requires = f.read().split()
 
-docs_requires = [
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings",
-    # only if you want to generate notebooks in documentation website
-    "mknotebooks",
-    "ipython",
-]
+with open(path.join(this_directory, "requirements_dev.txt"), encoding="utf-8") as f:
+    dev_requires = f.read().split()
+
+with open(path.join(this_directory, "requirements_docs.txt"), encoding="utf-8") as f:
+    docs_requires = f.read().split()
 
 setuptools.setup(
     name="fairsense",
@@ -43,7 +35,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="todo",
     packages=setuptools.find_namespace_packages(include=["fairsense.*"]),
-    install_requires=["numpy", "pandas", "matplotlib", "scikit-learn", "seaborn"],
+    install_requires=install_requires,
     license="MIT",
     extras_require={"dev": dev_requires, "docs": docs_requires},
     classifiers=[
