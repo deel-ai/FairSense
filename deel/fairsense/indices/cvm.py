@@ -76,12 +76,12 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
         z_name = list(z_name)
     # compute Ni
     # build a KDTree containing the sampling of X
-    kd_xi = KDTree(data[x_name])
+    kd_xi = KDTree(data[z_name])
     # query the tree to get the two closest neighbor of each sample. The closest will
     # be the sample itself, and the second will be the closest neighbors. This
     # returns both the distance with the neighbor and the index of the neighbor in
     # the list used to build the tree.
-    dist, ind = kd_xi.query(data[x_name], k=2)
+    dist, ind = kd_xi.query(data[z_name], k=2)
     # compute N_i ( add 1 as python indices start from 0, and the formula use indices
     # starting from 1
     data["N_i"] = ind[:, 1] + 1
@@ -93,22 +93,35 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     data["M_i"] = ind[:, 1] + 1  # save M_i
     # compute L_i
     # the + 1 account the fact that Ri indices start from 1
-    data["L_i"] = len(data) + 1 - data["i"]
+    data["L_i"] = len(data) - data["i"]
     # compute the M_i used in the equation T(Y,Z)
-    kd_zi = KDTree(data[z_name])
-    dist, ind = kd_zi.query(data[z_name], k=2)
-    data["M_i2"] = ind[:, 1] + 1
+    kd_zi = KDTree(data[x_name])
+    dist, ind = kd_zi.query(data[x_name], k=2)
+    data["N_i2"] = ind[:, 1] + 1
     # compute CVM
     n = len(data)
+    num_1 = np.mean(
+        np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i2"])
+    )
+    den_1 = np.mean(data["i"] - np.minimum(data["i"], data["N_i2"]))
+    num_2 = np.mean(
+        (np.minimum(data["i"], data["N_i2"])) - (np.square(data["L_i"]) / n)
+    )
+    den_2 = np.mean(data["L_i"] * (1 - (data["L_i"] / n)))
+    tn_cond = num_1 / den_1
+    tn_ind = num_2 / den_1
+    tyx = tn_ind
+    # compute CVM_ind
     num_1 = np.mean(
         np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i"])
     )
     den_1 = np.mean(data["i"] - np.minimum(data["i"], data["N_i"]))
-    num_2 = np.mean((np.minimum(data["i"], data["M_i"])) - (np.square(data["L_i"]) / n))
+    num_2 = np.mean((np.minimum(data["i"], data["N_i"])) - (np.square(data["L_i"]) / n))
     den_2 = np.mean(data["L_i"] * (1 - (data["L_i"] / n)))
     tn_cond = num_1 / den_1
-    tn_ind = num_2 / den_1
-    return tn_cond / tn_ind
+    tn_ind = num_2 / den_2
+    cvm_ind = tn_cond * (1 - tn_ind)
+    return tyx, cvm_ind
     # cvm = np.clip(tn_cond * (1 - tn_ind), 0.0, 1.0)
     # # CVM ind
     # n = len(data)
@@ -174,12 +187,12 @@ def __analyze(x, output_var, cols=None):
         except:
             pass
         #
-        indices.append(
-            [
-                __CVM(x.copy(), x_names, col, output_var),
-                1 - __CVM(x.copy(), col, x_names, output_var),
-            ]
-        )
+        indices.append(__CVM(x.copy(), col, x_names, output_var))
+        # [
+        #     __CVM(x.copy(), x_names, col, output_var)[1],
+        #     __CVM(x.copy(), col, x_names, output_var),
+        # ]
+        # )
     if col_was_none:
         index = cols
     else:
