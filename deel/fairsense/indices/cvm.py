@@ -1,7 +1,31 @@
+# -*- coding: utf-8 -*-
+# Copyright IRT Antoine de Saint Exupéry et Université Paul Sabatier Toulouse III - All
+# rights reserved. DEEL is a research program operated by IVADO, IRT Saint Exupéry,
+# CRIAQ and ANITI - https://www.deel.ai/
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KDTree
-from deel.fairsense.utils.dataclasses import IndicesInput, IndicesOutput
+
+from deel.fairsense.utils.dataclasses import IndicesInput
+from deel.fairsense.utils.dataclasses import IndicesOutput
 
 
 def cvm_indices(index_input: IndicesInput) -> IndicesOutput:
@@ -76,15 +100,11 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     data["M_i2"] = ind[:, 1] + 1
     # compute CVM
     n = len(data)
-    num_1 = (
-        np.mean(np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i"]))
+    num_1 = np.mean(
+        np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i"])
     )
     den_1 = np.mean(data["i"] - np.minimum(data["i"], data["N_i"]))
-    num_2 = (
-        np.mean(
-            (np.minimum(data["i"], data["M_i"])) - (np.square(data["L_i"]) / n)
-        )
-    )
+    num_2 = np.mean((np.minimum(data["i"], data["M_i"])) - (np.square(data["L_i"]) / n))
     den_2 = np.mean(data["L_i"] * (1 - (data["L_i"] / n)))
     tn_cond = num_1 / den_1
     tn_ind = num_2 / den_1
@@ -154,8 +174,12 @@ def __analyze(x, output_var, cols=None):
         except:
             pass
         #
-        indices.append([__CVM(x.copy(), x_names, col, output_var), 1 - __CVM(
-            x.copy(), col, x_names, output_var)])
+        indices.append(
+            [
+                __CVM(x.copy(), x_names, col, output_var),
+                1 - __CVM(x.copy(), col, x_names, output_var),
+            ]
+        )
     if col_was_none:
         index = cols
     else:
