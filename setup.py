@@ -54,7 +54,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/deel-ai/FairSense",
-    packages=setuptools.find_namespace_packages(include=["fairsense.*"]),
+    packages=setuptools.find_namespace_packages(include=["deel.*"]),
     install_requires=install_requires,
     license="MIT",
     extras_require={

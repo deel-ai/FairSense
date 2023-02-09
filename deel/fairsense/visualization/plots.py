@@ -1,5 +1,5 @@
 import seaborn as sns
-from fairsense.utils.dataclasses import IndicesOutput
+from deel.fairsense.utils.dataclasses import IndicesOutput
 
 """
 This module contains functions used to plot the outputs of the indices. The outputs of

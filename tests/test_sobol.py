@@ -1,9 +1,9 @@
 import unittest
 import numpy as np
 import pandas as pd
-from fairsense.indices.sobol import sobol_indices
-from fairsense.utils.dataclasses import IndicesInput
-from fairsense.utils.fairness_objective import y_pred
+from deel.fairsense.indices import sobol_indices
+from deel.fairsense.utils.dataclasses import IndicesInput
+from deel.fairsense.utils.fairness_objective import y_pred
 
 
 def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, var3=1.0):
@@ -14,9 +14,9 @@ def gaussian_data_generator(sigma12, sigma13, sigma23, N, var1=1.0, var2=1.0, va
     return pd.DataFrame(x)
 
 
-class MyTestCase(unittest.TestCase):
+class TestSobol(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(MyTestCase, self).__init__(*args, **kwargs)
+        super(TestSobol, self).__init__(*args, **kwargs)
         self.atol = 0.05
         self.rtol = 0.5  # high rtol for low values
         self.nsample = 10**4

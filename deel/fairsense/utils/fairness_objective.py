@@ -3,8 +3,7 @@ This module contains the fairness objectives. These functions won't be called as
 as these will be passed to a `IndicesInput.objective`.
 """
 import numpy as np
-from pandas import DataFrame
-from fairsense.utils.dataclasses import IndicesInput
+from deel.fairsense.utils.dataclasses import IndicesInput
 
 
 def y_true(self: IndicesInput, x=None):

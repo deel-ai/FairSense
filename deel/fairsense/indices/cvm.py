@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KDTree
-from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
+from deel.fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 
 
 def cvm_indices(index_input: IndicesInput) -> IndicesOutput:
@@ -77,22 +77,36 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     # compute CVM
     n = len(data)
     num_1 = (
-        np.sum(np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i"]))
-        / n**2
+        np.mean(np.minimum(data["i"], data["M_i"]) - np.minimum(data["i"], data["N_i"]))
     )
-    den_1 = (np.sum(data["i"] - np.minimum(data["i"], data["N_i"]))) / n**2
+    den_1 = np.mean(data["i"] - np.minimum(data["i"], data["N_i"]))
     num_2 = (
-        np.sum(
-            (len(data) * np.minimum(data["i"], data["M_i2"])) - np.square(data["L_i"])
+        np.mean(
+            (np.minimum(data["i"], data["M_i"])) - (np.square(data["L_i"]) / n)
         )
-        / n**3
     )
-    den_2 = np.sum(data["L_i"] * (len(data) - data["L_i"])) / n**3
-    tn_ind = np.clip(num_1 / den_1, 0.0, 1.0)
-    tn_cond = np.clip(num_2 / den_2, 0.0, 1.0)
-    u = np.clip(num_1 / den_2, 0.0, 1.0)
-    u2 = np.clip(num_2 / den_1, 0.0, 1.0)
-    return tn_ind, u2
+    den_2 = np.mean(data["L_i"] * (1 - (data["L_i"] / n)))
+    tn_cond = num_1 / den_1
+    tn_ind = num_2 / den_1
+    return tn_cond / tn_ind
+    # cvm = np.clip(tn_cond * (1 - tn_ind), 0.0, 1.0)
+    # # CVM ind
+    # n = len(data)
+    # num_1 = (
+    #     np.mean(np.minimum(data["i"], data["M_i2"]) - np.minimum(data["i"], data["N_i"]))
+    # )
+    # den_1 = np.mean(data["i"] - np.minimum(data["i"], data["N_i"]))
+    # num_2 = (
+    #     np.mean(
+    #         (np.minimum(data["i"], data["M_i2"])) - (np.square(data["L_i"]) / n)
+    #     )
+    # )
+    # den_2 = np.mean(data["L_i"] * (1 - (data["L_i"] / n)))
+    # tn_cond = num_1 / den_1
+    # tn_ind = num_2 / den_2
+    # print(tn_cond, tn_ind)
+    # cvm_ind = np.clip(tn_cond * (1 - tn_ind), 0.0, 1.0)
+    # return cvm, cvm_ind
 
 
 def __analyze(x, output_var, cols=None):
@@ -139,8 +153,9 @@ def __analyze(x, output_var, cols=None):
             x_names = np.concatenate(x_names).tolist()
         except:
             pass
-        # + list(CVM(x.copy(), col, x_names, output_var)))
-        indices.append(list(__CVM(x.copy(), x_names, col, output_var)))
+        #
+        indices.append([__CVM(x.copy(), x_names, col, output_var), 1 - __CVM(
+            x.copy(), col, x_names, output_var)])
     if col_was_none:
         index = cols
     else:

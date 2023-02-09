@@ -2,7 +2,7 @@ from math import erf, sqrt
 import numpy as np
 import pandas as pd
 from numpy.linalg import cholesky, inv
-from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
+from deel.fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 
 
 def sobol_indices(inputs: IndicesInput, n=1000, N=None) -> IndicesOutput:

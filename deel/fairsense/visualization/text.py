@@ -1,6 +1,6 @@
 import numpy as np
 from functools import partial
-from fairsense.utils.dataclasses import IndicesOutput
+from deel.fairsense.utils.dataclasses import IndicesOutput
 
 """
 This module contains functions used to visualize the outputs of the indices in text 

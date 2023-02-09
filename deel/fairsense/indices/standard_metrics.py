@@ -1,7 +1,6 @@
-from warnings import warn
 import numpy as np
 import pandas as pd
-from fairsense.utils.dataclasses import IndicesInput, IndicesOutput
+from deel.fairsense.utils.dataclasses import IndicesInput, IndicesOutput
 
 
 def disparate_impact(

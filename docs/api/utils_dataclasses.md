@@ -1,4 +1,4 @@
-::: fairsense.utils.dataclasses
+::: deel.fairsense.utils.dataclasses
     rendering:
         show_root_toc_entry: True
     selection:
