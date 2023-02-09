@@ -22,9 +22,9 @@ prepare-dev:
 	python3 -m venv fairsense_dev_env
 	. fairsense_dev_env/bin/activate && pip install --upgrade pip
 	. fairsense_dev_env/bin/activate && pip install -e .[dev]
-#	. fairsense_dev_env/bin/activate && pre-commit install
-#	. fairsense_dev_env/bin/activate && pre-commit install-hooks
-#	. fairsense_dev_env/bin/activate && pre-commit install --hook-type commit-msg
+	. fairsense_dev_env/bin/activate && pre-commit install
+	. fairsense_dev_env/bin/activate && pre-commit install-hooks
+	. fairsense_dev_env/bin/activate && pre-commit install --hook-type commit-msg
 
 test:
 	. fairsense_dev_env/bin/activate && tox
