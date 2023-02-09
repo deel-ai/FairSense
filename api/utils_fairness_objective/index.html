@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#fairsense.utils.fairness_objective" class="md-skip">
+        <a href="#deel.fairsense.utils.fairness_objective" class="md-skip">
           Skip to content
         </a>
       
@@ -426,35 +426,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective" class="md-nav__link">
-    fairsense.utils.fairness_objective
+  <a href="#deel.fairsense.utils.fairness_objective" class="md-nav__link">
+    deel.fairsense.utils.fairness_objective
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.classification_error" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.classification_error" class="md-nav__link">
     classification_error()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.squared_error" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.squared_error" class="md-nav__link">
     squared_error()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.y_pred" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.y_pred" class="md-nav__link">
     y_pred()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.y_true" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.y_true" class="md-nav__link">
     y_true()
   </a>
   
@@ -598,35 +598,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective" class="md-nav__link">
-    fairsense.utils.fairness_objective
+  <a href="#deel.fairsense.utils.fairness_objective" class="md-nav__link">
+    deel.fairsense.utils.fairness_objective
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.classification_error" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.classification_error" class="md-nav__link">
     classification_error()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.squared_error" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.squared_error" class="md-nav__link">
     squared_error()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.y_pred" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.y_pred" class="md-nav__link">
     y_pred()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#fairsense.utils.fairness_objective.y_true" class="md-nav__link">
+  <a href="#deel.fairsense.utils.fairness_objective.y_true" class="md-nav__link">
     y_true()
   </a>
   
@@ -655,7 +655,7 @@
 <div class="doc doc-object doc-module">
 
 
-<a id="fairsense.utils.fairness_objective"></a>
+<a id="deel.fairsense.utils.fairness_objective"></a>
   <div class="doc doc-contents first">
   
       <p>This module contains the fairness objectives. These functions won't be called as is,
@@ -677,10 +677,10 @@ as these will be passed to a <code>IndicesInput.objective</code>.</p>
 
 
 
-<h2 class="doc doc-heading" id="fairsense.utils.fairness_objective.classification_error">
+<h2 class="doc doc-heading" id="deel.fairsense.utils.fairness_objective.classification_error">
 <code class="highlight language-python"><span class="n">classification_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a class="headerlink" href="#fairsense.utils.fairness_objective.classification_error" title="Permanent link">&para;</a></h2>
+<a class="headerlink" href="#deel.fairsense.utils.fairness_objective.classification_error" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -691,21 +691,21 @@ check if the model errors are due to the presence of a sensitive attribute.</p>
 <code>y_true</code> given in the <code>IndicesInput</code>.</p>
 
       <details class="quote">
-        <summary>Source code in <code>fairsense\utils\fairness_objective.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">classification_error</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <summary>Source code in <code>deel\fairsense\utils\fairness_objective.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">classification_error</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluate the fairness of the model&#39;s errors over the dataset. This allow to</span>
 <span class="sd">    check if the model errors are due to the presence of a sensitive attribute.</span>
@@ -729,10 +729,10 @@ check if the model errors are due to the presence of a sensitive attribute.</p>
 
 
 
-<h2 class="doc doc-heading" id="fairsense.utils.fairness_objective.squared_error">
+<h2 class="doc doc-heading" id="deel.fairsense.utils.fairness_objective.squared_error">
 <code class="highlight language-python"><span class="n">squared_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a class="headerlink" href="#fairsense.utils.fairness_objective.squared_error" title="Permanent link">&para;</a></h2>
+<a class="headerlink" href="#deel.fairsense.utils.fairness_objective.squared_error" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -743,21 +743,21 @@ check if the model errors are due to the presence of a sensitive attribute.</p>
 model output and <code>y_true</code> given in the <code>IndicesInput</code>.</p>
 
       <details class="quote">
-        <summary>Source code in <code>fairsense\utils\fairness_objective.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">squared_error</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <summary>Source code in <code>deel\fairsense\utils\fairness_objective.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">squared_error</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluate the fairness of the model&#39;s errors over the dataset. This allow to</span>
 <span class="sd">    check if the model errors are due to the presence of a sensitive attribute.</span>
@@ -781,10 +781,10 @@ model output and <code>y_true</code> given in the <code>IndicesInput</code>.</p>
 
 
 
-<h2 class="doc doc-heading" id="fairsense.utils.fairness_objective.y_pred">
+<h2 class="doc doc-heading" id="deel.fairsense.utils.fairness_objective.y_pred">
 <code class="highlight language-python"><span class="n">y_pred</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a class="headerlink" href="#fairsense.utils.fairness_objective.y_pred" title="Permanent link">&para;</a></h2>
+<a class="headerlink" href="#deel.fairsense.utils.fairness_objective.y_pred" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -793,13 +793,13 @@ model output and <code>y_true</code> given in the <code>IndicesInput</code>.</p>
 check if the model gives biased decisions.</p>
 
       <details class="quote">
-        <summary>Source code in <code>fairsense\utils\fairness_objective.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">y_pred</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <summary>Source code in <code>deel\fairsense\utils\fairness_objective.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">y_pred</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluate the fairness of the model&#39;s predictions over the dataset. This allow to</span>
 <span class="sd">    check if the model gives biased decisions.</span>
@@ -815,10 +815,10 @@ check if the model gives biased decisions.</p>
 
 
 
-<h2 class="doc doc-heading" id="fairsense.utils.fairness_objective.y_true">
+<h2 class="doc doc-heading" id="deel.fairsense.utils.fairness_objective.y_true">
 <code class="highlight language-python"><span class="n">y_true</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a class="headerlink" href="#fairsense.utils.fairness_objective.y_true" title="Permanent link">&para;</a></h2>
+<a class="headerlink" href="#deel.fairsense.utils.fairness_objective.y_true" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -827,15 +827,15 @@ check if the model gives biased decisions.</p>
 used for training is biased.</p>
 
       <details class="quote">
-        <summary>Source code in <code>fairsense\utils\fairness_objective.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">y_true</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <summary>Source code in <code>deel\fairsense\utils\fairness_objective.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">y_true</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluate the intrinsic fairness of the dataset. This allow to check if the data</span>
 <span class="sd">    used for training is biased.</span>

@@ -335,13 +335,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creators" class="md-nav__link">
-    👨‍🎓 Creators
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#citation" class="md-nav__link">
     🗞️ Citation
   </a>
@@ -351,6 +344,13 @@
         <li class="md-nav__item">
   <a href="#license" class="md-nav__link">
     📝 License
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disclaimer" class="md-nav__link">
+    💣 Disclaimer
   </a>
   
 </li>
@@ -718,13 +718,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creators" class="md-nav__link">
-    👨‍🎓 Creators
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#citation" class="md-nav__link">
     🗞️ Citation
   </a>
@@ -734,6 +727,13 @@
         <li class="md-nav__item">
   <a href="#license" class="md-nav__link">
     📝 License
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disclaimer" class="md-nav__link">
+    💣 Disclaimer
   </a>
   
 </li>
@@ -788,20 +788,20 @@
 <!-- Short description of your library -->
 
 <p>This library allow to compute global sensitivity indices in the context of fairness measurements.
-The paper <code>Fairness seen as Global Sensitivity Analysis</code> bridges the gap between 
-global sensitivity analysis (GSA) and fairness. It states that for each sensitivity 
+The paper <code>Fairness seen as Global Sensitivity Analysis</code> bridges the gap between
+global sensitivity analysis (GSA) and fairness. It states that for each sensitivity
 analysis, there is a fairness measure, and vice-versa.</p>
 <div class="highlight"><pre><span></span><code>@misc{https://doi.org/10.48550/arxiv.2103.04613,
-  doi = {10.48550/ARXIV.2103.04613},  
-  url = {https://arxiv.org/abs/2103.04613},  
+  doi = {10.48550/ARXIV.2103.04613},
+  url = {https://arxiv.org/abs/2103.04613},
   author = {Bénesse, Clément and Gamboa, Fabrice and Loubes, Jean-Michel and Boissin, Thibaut},
   keywords = {Statistics Theory (math.ST), Methodology (stat.ME), FOS: Mathematics, FOS: Mathematics, FOS: Computer and information sciences, FOS: Computer and information sciences},
   title = {Fairness seen as Global Sensitivity Analysis},
 </code></pre></div>
 <p>This library is a toolbox which ease the computation of fairness and GSA indices.</p>
 <h2 id="the-problem">👉 The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
-<p>Each index has it's characteristics: some can be applied on continuous variables and 
-some cannot. Some can handle regression problems and some handle classification 
+<p>Each index has it's characteristics: some can be applied on continuous variables and
+some cannot. Some can handle regression problems and some handle classification
 problems. Some can handle variable groups and some cannot. Finally some can only be
 applied on the predictions of a model while some can be applied on the error made by
 the model.</p>
@@ -820,7 +820,7 @@ by computing the GSA indices while avoiding the aforementioned issues.</p>
 <p>Then it becomes possible to compute GSA indices (in a interchangeable way) using the
 functions provided in <code>fairsense.indices</code>.</p>
 <p>These functions output <code>IndicesOutput</code> objects that encapsulate the values of the
-indices. These results can finally be visualized with the functions available in the 
+indices. These results can finally be visualized with the functions available in the
 <code>fairsense.visualization</code> module.</p>
 <h2 id="install-fairsense">💻 install fairsense<a class="headerlink" href="#install-fairsense" title="Permanent link">&para;</a></h2>
 <h3 id="for-users">‍for users<a class="headerlink" href="#for-users" title="Permanent link">&para;</a></h3>
@@ -858,20 +858,23 @@ Warning: the library must be installed to generate the doc.</p>
 <p><img align="right" src="https://share.deel.ai/apps/theming/image/logo?useSvg=1&v=10#only-dark" width="25%" alt="DEEL Logo" />
 <img align="right" src="https://www.deel.ai/wp-content/uploads/2021/05/logo-DEEL.png#only-light" width="25%" alt="DEEL Logo" />
 This project received funding from the French ”Investing for the Future – PIA3” program within the Artificial and Natural Intelligence Toulouse Institute (ANITI). The authors gratefully acknowledge the support of the <a href="https://www.deel.ai/"> DEEL </a> project.</p>
-<h2 id="creators">👨‍🎓 Creators<a class="headerlink" href="#creators" title="Permanent link">&para;</a></h2>
-<p>If you want to highlights the main contributors</p>
 <h2 id="citation">🗞️ Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
 <p>If you use fairsense as part of your workflow in a scientific publication, please
  consider citing the 🗞️ <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">our paper</a>:</p>
 <div class="highlight"><pre><span></span><code>    @misc{https://doi.org/10.48550/arxiv.2103.04613,
-      doi = {10.48550/ARXIV.2103.04613},  
-      url = {https://arxiv.org/abs/2103.04613},  
+      doi = {10.48550/ARXIV.2103.04613},
+      url = {https://arxiv.org/abs/2103.04613},
       author = {Bénesse, Clément and Gamboa, Fabrice and Loubes, Jean-Michel and Boissin, Thibaut},
       keywords = {Statistics Theory (math.ST), Methodology (stat.ME), FOS: Mathematics, FOS: Mathematics, FOS: Computer and information sciences, FOS: Computer and information sciences},
       title = {Fairness seen as Global Sensitivity Analysis},
 </code></pre></div>
 <h2 id="license">📝 License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>The package is released under <a href="https://choosealicense.com/licenses/mit"> MIT license</a>.</p>
+<h2 id="disclaimer">💣 Disclaimer<a class="headerlink" href="#disclaimer" title="Permanent link">&para;</a></h2>
+<p>To the maximum extent permitted by applicable law, authors of FairSense shall not be
+liable for any kind of tangible and intangible damages. Especially the authors shall
+not be liable in case of incorrect computation of the indices nor any biased
+interpretation of such indices.</p>
 
               
             </article>
