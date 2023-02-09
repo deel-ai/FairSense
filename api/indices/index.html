@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deel.fairsense.indices.standard_metrics" class="md-skip">
+        <a href="#statistical-parity-disparate-impact-demographic-parity" class="md-skip">
           Skip to content
         </a>
       
@@ -370,6 +370,48 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#statistical-parity-disparate-impact-demographic-parity" class="md-nav__link">
+    Statistical Parity - Disparate Impact - Demographic Parity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-of-disparate-treatment" class="md-nav__link">
+    Avoiding of Disparate Treatment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equality-of-odds" class="md-nav__link">
+    Equality of Odds
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-of-disparate-mistreatment" class="md-nav__link">
+    Avoiding of Disparate Mistreatment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-sensitivity-analysis" class="md-nav__link">
+    Global Sensitivity Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-of-use-recap" class="md-nav__link">
+    Case-of-use Recap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deel.fairsense.indices.standard_metrics" class="md-nav__link">
     deel.fairsense.indices.standard_metrics
   </a>
@@ -631,6 +673,48 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#statistical-parity-disparate-impact-demographic-parity" class="md-nav__link">
+    Statistical Parity - Disparate Impact - Demographic Parity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-of-disparate-treatment" class="md-nav__link">
+    Avoiding of Disparate Treatment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equality-of-odds" class="md-nav__link">
+    Equality of Odds
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-of-disparate-mistreatment" class="md-nav__link">
+    Avoiding of Disparate Mistreatment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-sensitivity-analysis" class="md-nav__link">
+    Global Sensitivity Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-of-use-recap" class="md-nav__link">
+    Case-of-use Recap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deel.fairsense.indices.standard_metrics" class="md-nav__link">
     deel.fairsense.indices.standard_metrics
   </a>
@@ -719,6 +803,127 @@
 
 
   <h1>indices module</h1>
+
+<h2 id="statistical-parity-disparate-impact-demographic-parity">Statistical Parity - Disparate Impact - Demographic Parity<a class="headerlink" href="#statistical-parity-disparate-impact-demographic-parity" title="Permanent link">&para;</a></h2>
+<p>The rates of value-1 predictions from the different groups must be equal.
+Independence between the predictor and the protected variable.</p>
+<ul>
+<li>
+<p>S binary <br>
+<span class="arithmatex">\(P(f(X)=1|S=0) = P(f(X)=1|S=1)\)</span></p>
+</li>
+<li>
+<p>S continuous or discrete <br>
+<span class="arithmatex">\(P(f(X)=1|S) = P(f(X)=1)\)</span></p>
+</li>
+</ul>
+<h2 id="avoiding-of-disparate-treatment">Avoiding of Disparate Treatment<a class="headerlink" href="#avoiding-of-disparate-treatment" title="Permanent link">&para;</a></h2>
+<p>The probability that an input leads to prediction 1 should be equal regardless of the value of the sensitive variable.</p>
+<ul>
+<li>S binary <br>
+<span class="arithmatex">\(P(f(X)=1|X_S=x,S=0) = P(f(X)=1|X_S=x,S=1)\)</span> <br>
+where <span class="arithmatex">\(X_S\)</span> represents <span class="arithmatex">\(X\)</span> without the sensitive variable.</li>
+</ul>
+<h2 id="equality-of-odds">Equality of Odds<a class="headerlink" href="#equality-of-odds" title="Permanent link">&para;</a></h2>
+<p>The rates of true and false predictions from the different groups must be equal.
+Independence between the error of the model and the protected variable.</p>
+<ul>
+<li>
+<p>S binary <br>
+<span class="arithmatex">\(P(f(X)=1|Y=i,S=0) = P(f(X)=1|Y=i,S=1) ,i=0,1\)</span></p>
+</li>
+<li>
+<p>S general <br>
+<span class="arithmatex">\(P(f(X)=1|Y=i,S) = P(f(X)=1|Y=i) ,i=0,1\)</span></p>
+</li>
+</ul>
+<h2 id="avoiding-of-disparate-mistreatment">Avoiding of Disparate Mistreatment<a class="headerlink" href="#avoiding-of-disparate-mistreatment" title="Permanent link">&para;</a></h2>
+<p>The probability that a prediction is false should be equal regardless of the value of the sensitive variable.
+- S binary <br>
+<span class="arithmatex">\(P(f(X)\ne Y|S=1) = P(f(X)\ne Y|S=0)\)</span> <br></p>
+<h2 id="global-sensitivity-analysis">Global Sensitivity Analysis<a class="headerlink" href="#global-sensitivity-analysis" title="Permanent link">&para;</a></h2>
+<p>GSA is used for quantifying the influence of a set of features on the outcome.<br>
+Sobol' indices are based on correlations and need access to the function while CVM' indices are based on rank and need only a sample of evaluations.</p>
+<p><strong>Sobol' indices</strong><br>
+4 indices that quantify how much of the output variance can be explained by the variance of Xi.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">Correlation Between Variables</th>
+<th align="center">Joined Contributions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><span class="arithmatex">\(Sob_i\)</span></strong></td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+</tr>
+<tr>
+<td><strong><span class="arithmatex">\(SobT_i\)</span></strong></td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td><strong><span class="arithmatex">\(Sob_i^{ind}\)</span></strong></td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+</tr>
+<tr>
+<td><strong><span class="arithmatex">\(SobT_i^{ind}\)</span></strong></td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cramer-Von Mises' indices</strong><br>
+The 2 CVM' indices is an extension of the Sobol’ indices to quantify more than just the second-order influence of the inputs on the output.</p>
+<p><a href="https://hal.archives-ouvertes.fr/hal-03160697/file/Fairness_seen_as_GSA.pdf" title="Fairness seen as Global Sensitivity Analysis">For further details about GSA in Fairness</a></p>
+<h2 id="case-of-use-recap">Case-of-use Recap<a class="headerlink" href="#case-of-use-recap" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">Disparate Impact</th>
+<th align="center">Avoiding Disparate Treatment</th>
+<th align="center">Equality Odds</th>
+<th align="center">Avoiding Disparate Mistreatment</th>
+<th align="center">Sobol' indices</th>
+<th align="center">Cramer-Von Mises' indices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S binary</strong></td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td><strong>S discrete</strong></td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td><strong>S continuous</strong></td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+</tbody>
+</table>
+
 
 <div class="doc doc-object doc-module">
 
