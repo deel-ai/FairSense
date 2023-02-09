@@ -1,5 +1,8 @@
-<img src="docs/assets/banner_light.png#gh-light-mode-only" alt="logo fairsense" style="width:500px;"/>
-<img src="docs/assets/banner_dark.png#gh-dark-mode-only" alt="logo fairsense" style="width:500px;"/>
+<!-- Banner section -->
+<div align="center">
+    <img src="docs/assets/banner_light.png#gh-light-mode-only" alt="logo fairsense" style="width:500px;"/>
+    <img src="docs/assets/banner_dark.png#gh-dark-mode-only" alt="logo fairsense" style="width:500px;"/>
+</div>
 
 <div align="center">
     <a href="#">
