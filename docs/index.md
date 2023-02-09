@@ -133,11 +133,6 @@ More from the DEEL project:
 <img align="right" src="https://www.deel.ai/wp-content/uploads/2021/05/logo-DEEL.png#only-light" width="25%" alt="DEEL Logo" />
 This project received funding from the French ”Investing for the Future – PIA3” program within the Artificial and Natural Intelligence Toulouse Institute (ANITI). The authors gratefully acknowledge the support of the <a href="https://www.deel.ai/"> DEEL </a> project.
 
-## 👨‍🎓 Creators
-
-If you want to highlights the main contributors
-
-
 ## 🗞️ Citation
 
 If you use fairsense as part of your workflow in a scientific publication, please
