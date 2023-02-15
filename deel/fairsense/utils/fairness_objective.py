@@ -44,7 +44,7 @@ def y_pred(self: IndicesInput, x=None):
     Evaluate the fairness of the model's predictions over the dataset. This allow to
     check if the model gives biased decisions.
     """
-    return self.model(x if x is not None else self.x)
+    return np.float32(self.model(x if x is not None else self.x))
 
 
 def classification_error(self: IndicesInput, x=None):
