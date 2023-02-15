@@ -134,25 +134,25 @@ def _sobol_indices_at_i(f, variable_index, variable_groups, n, cov, f_inv):
     zcter = _apply_marginals(zcter, f_inv)
     zcquad = _apply_marginals(zcquad, f_inv)
 
-    zc = pd.DataFrame(zc, columns=orig_cols)
-    zcbis = pd.DataFrame(zcbis, columns=orig_cols)
-    zcter = pd.DataFrame(zcter, columns=orig_cols)
-    zcquad = pd.DataFrame(zcquad, columns=orig_cols)
+    fzc = f(pd.DataFrame(zc, columns=orig_cols))
+    fzcbis = f(pd.DataFrame(zcbis, columns=orig_cols))
+    fzcter = f(pd.DataFrame(zcter, columns=orig_cols))
+    fzcquad = f(pd.DataFrame(zcquad, columns=orig_cols))
     # mx["zc"] = zc.mean(0)
     # print(mx)
     # print(f"zc{zc.var()}")
     # print(f"f(zc){f(np.random.standard_normal(zc.shape)).var()}")
     # compute Vhat
-    V = np.mean([np.var(f(zc)), np.var(f(zcbis)), np.var(f(zcter)), np.var(f(zcquad))])
+    V = np.mean([np.var(fzc), np.var(fzcbis), np.var(fzcter), np.var(fzcquad)])
     # print(V)
 
     # compute sobol indices
     return np.array(
         [
-            _sobol_unnormalized(zc, zcbis, zcter, f) / (V + 1e-3),
-            _sobol_total_unnormalized(zcbis, zcter, f) / ((2 * V) + 1e-3),
-            _sobol_ind_unnormalized(zc, zcbis, zcquad, f) / (V + 1e-3),
-            _sobol_total_ind_unnormalized(zcbis, zcquad, f) / ((2 * V) + 1e-3),
+            _sobol_unnormalized(fzc, fzcbis, fzcter) / (V + 1e-3),
+            _sobol_total_unnormalized(fzcbis, fzcter) / ((2 * V) + 1e-3),
+            _sobol_ind_unnormalized(fzc, fzcbis, fzcquad) / (V + 1e-3),
+            _sobol_total_ind_unnormalized(fzcbis, fzcquad) / ((2 * V) + 1e-3),
         ]
     )
 
@@ -261,17 +261,17 @@ def _empirical_cov(data):
     return np.cov(np.transpose(data))
 
 
-def _sobol_unnormalized(zc, zcbis, zcter, f):
-    return np.mean(np.multiply(f(zc), (f(zcter) - f(zcbis))))
+def _sobol_unnormalized(fzc, fzcbis, fzcter):
+    return np.mean(np.multiply(fzc, (fzcter - fzcbis)))
 
 
-def _sobol_total_ind_unnormalized(zcbis, zcquad, f):
-    return np.mean(np.square(f(zcquad) - f(zcbis)))
+def _sobol_total_ind_unnormalized(fzcbis, fzcquad):
+    return np.mean(np.square(fzcquad - fzcbis))
 
 
-def _sobol_ind_unnormalized(zc, zcbis, zcquad, f):
-    return np.mean(np.multiply(f(zc), (f(zcquad) - f(zcbis))))
+def _sobol_ind_unnormalized(fzc, fzcbis, fzcquad):
+    return np.mean(np.multiply(fzc, (fzcquad - fzcbis)))
 
 
-def _sobol_total_unnormalized(zcbis, zcter, f):
-    return np.mean(np.square(f(zcter) - f(zcbis)))
+def _sobol_total_unnormalized(fzcbis, fzcter):
+    return np.mean(np.square(fzcter - fzcbis))
