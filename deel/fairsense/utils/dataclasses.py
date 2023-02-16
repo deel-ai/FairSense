@@ -81,7 +81,7 @@ class IndicesInput:
 
     @property
     def y_true(self):
-        return self._y_true.copy()
+        return self._y_true.copy() if self._y_true is not None else None
 
     @y_true.setter
     def y_true(self, _y):
