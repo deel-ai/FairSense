@@ -17,6 +17,7 @@ nav:
         - fairness_objective module: api/utils_fairness_objective.md
         - dataclasses module: api/utils_dataclasses.md
   - Tutorials:
+    - "Quick start: how to read indices": notebooks/quickstart.ipynb
     - "Demo 1: Regression problem": notebooks/demo-regression.ipynb
     - "Demo 2: Classification problem": notebooks/demo-classification.ipynb
   - Contributing: CONTRIBUTING.md
