@@ -102,15 +102,12 @@ black .
 pip install -e .[docs]
 ```
 
-build rst files, in the docs folder:
+and then generate and serve docs:
 ```bash
-sphinx-apidoc ..\libfairness -o source
+mkdocs build
+mkdocs serve
 ```
-the generate html docs:
-```bash
-make html
-```
-Warning: the library must be installed to generate the doc.
+See the Makefile for more information.
 
 ## 👍 Contributing
 
