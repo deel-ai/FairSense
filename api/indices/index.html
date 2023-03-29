@@ -447,20 +447,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deel.fairsense.indices.cvm.__CVM" class="md-nav__link">
-    __CVM()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deel.fairsense.indices.cvm.__analyze" class="md-nav__link">
-    __analyze()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#deel.fairsense.indices.cvm.cvm_indices" class="md-nav__link">
     cvm_indices()
   </a>
@@ -598,6 +584,20 @@
           Tutorials
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notebooks/quickstart/" class="md-nav__link">
+        Quick start: how to read indices
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -745,20 +745,6 @@
         <li class="md-nav__item">
   <a href="#deel.fairsense.indices.cvm" class="md-nav__link">
     deel.fairsense.indices.cvm
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deel.fairsense.indices.cvm.__CVM" class="md-nav__link">
-    __CVM()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deel.fairsense.indices.cvm.__analyze" class="md-nav__link">
-    __analyze()
   </a>
   
 </li>
@@ -1340,408 +1326,6 @@ number of splits.</p>
 
 
 
-<h2 class="doc doc-heading" id="deel.fairsense.indices.cvm.__CVM">
-<code class="highlight language-python"><span class="n">__CVM</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x_name</span><span class="p">,</span> <span class="n">z_name</span><span class="p">,</span> <span class="n">y_name</span><span class="p">)</span></code>
-
-<a class="headerlink" href="#deel.fairsense.indices.cvm.__CVM" title="Permanent link">&para;</a></h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Compute the CVM index T(Y, Z|X)</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>data</code></td>
-          <td>
-                <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
-          </td>
-          <td><p>the input data, already sorted by y_name, and with a column containing the
-Ri named "i"</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>x_name</code></td>
-          <td>
-          </td>
-          <td><p>name of the columns in the set of variables X</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>z_name</code></td>
-          <td>
-          </td>
-          <td><p>name of the columns in the set of variable Z</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>y_name</code></td>
-          <td>
-          </td>
-          <td><p>name of the columns with the variable Y (not used, as we already have a
-column containing the Ri)</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>deel\fairsense\indices\cvm.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
-<span class="normal"> 63</span>
-<span class="normal"> 64</span>
-<span class="normal"> 65</span>
-<span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">__CVM</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">x_name</span><span class="p">,</span> <span class="n">z_name</span><span class="p">,</span> <span class="n">y_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Compute the CVM index T(Y, Z|X)</span>
-<span class="sd">    Args:</span>
-<span class="sd">        data: the input data, already sorted by y_name, and with a column containing the</span>
-<span class="sd">            Ri named &quot;i&quot;</span>
-<span class="sd">        x_name: name of the columns in the set of variables X</span>
-<span class="sd">        z_name: name of the columns in the set of variable Z</span>
-<span class="sd">        y_name: name of the columns with the variable Y (not used, as we already have a</span>
-<span class="sd">            column containing the Ri)</span>
-
-<span class="sd">    Returns: the tuple(T(Y, Z), T(Y, Z|X))</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># reformat the column names to have a list</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">x_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_name</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_name</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
-        <span class="n">x_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x_name</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">z_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">z_name</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z_name</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
-        <span class="n">z_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">z_name</span><span class="p">)</span>
-    <span class="c1"># compute Ni</span>
-    <span class="c1"># build a KDTree containing the sampling of X</span>
-    <span class="n">kd_xi</span> <span class="o">=</span> <span class="n">KDTree</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">z_name</span><span class="p">])</span>
-    <span class="c1"># query the tree to get the two closest neighbor of each sample. The closest will</span>
-    <span class="c1"># be the sample itself, and the second will be the closest neighbors. This</span>
-    <span class="c1"># returns both the distance with the neighbor and the index of the neighbor in</span>
-    <span class="c1"># the list used to build the tree.</span>
-    <span class="n">dist</span><span class="p">,</span> <span class="n">ind</span> <span class="o">=</span> <span class="n">kd_xi</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">z_name</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="c1"># compute N_i ( add 1 as python indices start from 0, and the formula use indices</span>
-    <span class="c1"># starting from 1</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="c1"># compute M_i</span>
-    <span class="c1"># we repeat the same process, but we work on (X,Y) this time</span>
-    <span class="n">kd_xiyi</span> <span class="o">=</span> <span class="n">KDTree</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">x_name</span> <span class="o">+</span> <span class="n">z_name</span><span class="p">])</span>  <span class="c1"># build KDTree</span>
-    <span class="c1"># find closest neighbors</span>
-    <span class="n">dist</span><span class="p">,</span> <span class="n">ind</span> <span class="o">=</span> <span class="n">kd_xiyi</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">x_name</span> <span class="o">+</span> <span class="n">z_name</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;M_i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># save M_i</span>
-    <span class="c1"># compute L_i</span>
-    <span class="c1"># the + 1 account the fact that Ri indices start from 1</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">]</span>
-    <span class="c1"># compute the M_i used in the equation T(Y,Z)</span>
-    <span class="n">kd_zi</span> <span class="o">=</span> <span class="n">KDTree</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">x_name</span><span class="p">])</span>
-    <span class="n">dist</span><span class="p">,</span> <span class="n">ind</span> <span class="o">=</span> <span class="n">kd_zi</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">x_name</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="c1"># compute CVM</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">num_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;M_i&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i2&quot;</span><span class="p">])</span>
-    <span class="p">)</span>
-    <span class="n">den_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i2&quot;</span><span class="p">]))</span>
-    <span class="n">num_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i2&quot;</span><span class="p">]))</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">den_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span><span class="p">)))</span>
-    <span class="n">tn_cond</span> <span class="o">=</span> <span class="n">num_1</span> <span class="o">/</span> <span class="n">den_1</span>
-    <span class="n">tn_ind</span> <span class="o">=</span> <span class="n">num_2</span> <span class="o">/</span> <span class="n">den_1</span>
-    <span class="n">tyx</span> <span class="o">=</span> <span class="n">tn_ind</span>
-    <span class="c1"># compute CVM_ind</span>
-    <span class="n">num_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;M_i&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i&quot;</span><span class="p">])</span>
-    <span class="p">)</span>
-    <span class="n">den_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i&quot;</span><span class="p">]))</span>
-    <span class="n">num_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;N_i&quot;</span><span class="p">]))</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">n</span><span class="p">))</span>
-    <span class="n">den_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;L_i&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span><span class="p">)))</span>
-    <span class="n">tn_cond</span> <span class="o">=</span> <span class="n">num_1</span> <span class="o">/</span> <span class="n">den_1</span>
-    <span class="n">tn_ind</span> <span class="o">=</span> <span class="n">num_2</span> <span class="o">/</span> <span class="n">den_2</span>
-    <span class="n">cvm_ind</span> <span class="o">=</span> <span class="n">tn_cond</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tn_ind</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tyx</span><span class="p">,</span> <span class="n">cvm_ind</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 class="doc doc-heading" id="deel.fairsense.indices.cvm.__analyze">
-<code class="highlight language-python"><span class="n">__analyze</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">output_var</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-<a class="headerlink" href="#deel.fairsense.indices.cvm.__analyze" title="Permanent link">&para;</a></h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>return the CVM indices</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>x</code></td>
-          <td>
-          </td>
-          <td><p>a dataframe containing inputs and outputs</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>output_var</code></td>
-          <td>
-          </td>
-          <td><p>name of the column cotaining the output</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>cols</code></td>
-          <td>
-          </td>
-          <td><p>if None one index is computed for each column,
-  a list of list containing the columns names can also be provided
-  then one index will be computed for each group.
-  [["A"], ["B=1", "B=2"]] wil return 2 indices: one for A, and one
-  for the group B.</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <details class="quote">
-        <summary>Source code in <code>deel\fairsense\indices\cvm.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">__analyze</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">output_var</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    return the CVM indices</span>
-<span class="sd">    Args:</span>
-<span class="sd">        x: a dataframe containing inputs and outputs</span>
-<span class="sd">        output_var: name of the column cotaining the output</span>
-<span class="sd">        cols: if None one index is computed for each column,</span>
-<span class="sd">              a list of list containing the columns names can also be provided</span>
-<span class="sd">              then one index will be computed for each group.</span>
-<span class="sd">              [[&quot;A&quot;], [&quot;B=1&quot;, &quot;B=2&quot;]] wil return 2 indices: one for A, and one</span>
-<span class="sd">              for the group B.</span>
-
-<span class="sd">    Returns: a Dataframe with the indices for each group.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">col_was_none</span> <span class="o">=</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span>
-    <span class="c1"># manipulate a copy of the dataset</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">cols</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output_var</span><span class="p">)</span>
-    <span class="c1"># sort the row by increasing Y</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">output_var</span><span class="p">)</span>
-    <span class="c1"># add a columns with the rank of each row</span>
-    <span class="n">x</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># commented code handle ties on the output properly ( same Y =&gt; same i )</span>
-    <span class="c1"># rows are sorted on Y</span>
-    <span class="c1"># compute the difference between two consecutive rows</span>
-    <span class="c1"># x[&#39;i&#39;] = x[output_var].rolling(2).apply(</span>
-    <span class="c1">#     lambda x: x.index[-1] if (x.iloc[-1] != x.iloc[0]) else np.nan, # if the</span>
-    <span class="c1">#     # difference is not null put the value of the second row, else put nan</span>
-    <span class="c1"># )</span>
-    <span class="c1"># x[&#39;i&#39;].iloc[-1] = len(x[&#39;i&#39;]) # last row have index len(x)</span>
-    <span class="c1"># x[&#39;i&#39;] = x[&#39;i&#39;].bfill() # fill nans with the next filled x</span>
-
-    <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
-        <span class="c1"># we compute indices for each variable</span>
-        <span class="n">x_names</span> <span class="o">=</span> <span class="n">cols</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">x_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">x_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">x_names</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">pass</span>
-        <span class="c1">#</span>
-        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">__CVM</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">col</span><span class="p">,</span> <span class="n">x_names</span><span class="p">,</span> <span class="n">output_var</span><span class="p">))</span>
-        <span class="c1"># [</span>
-        <span class="c1">#     __CVM(x.copy(), x_names, col, output_var)[1],</span>
-        <span class="c1">#     __CVM(x.copy(), col, x_names, output_var),</span>
-        <span class="c1"># ]</span>
-        <span class="c1"># )</span>
-    <span class="k">if</span> <span class="n">col_was_none</span><span class="p">:</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">cols</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># iterate the list take the first element and keep everything before the &quot;=&quot;</span>
-        <span class="c1"># this turn [[&quot;A&quot;], [&quot;B=1&quot;,&quot;B=2&quot;]] into [&quot;A&quot;, &quot;B&quot;]</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
-    <span class="c1"># store the outputs in a dataframe</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;CVM&quot;</span><span class="p">,</span> <span class="s2">&quot;CVM_indep&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">df</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
 <h2 class="doc doc-heading" id="deel.fairsense.indices.cvm.cvm_indices">
 <code class="highlight language-python"><span class="n">cvm_indices</span><span class="p">(</span><span class="n">index_input</span><span class="p">)</span></code>
 
@@ -1757,7 +1341,8 @@ Set FairnessProblem.result as a Dataframe containing the indices.</p>
   <summary>Warning</summary>
   <p>this indice may fail silently if all values of one variable are similar (
 constant ) which  may occurs when applying one hot encoding with a large
-number of splits.</p>
+number of splits. It may also yield erroneous results when used without
+enough data. Which might occur when used with confidence intervals.</p>
 </details>
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1829,14 +1414,16 @@ number of splits.</p>
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
-<span class="normal">51</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">cvm_indices</span><span class="p">(</span><span class="n">index_input</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IndicesOutput</span><span class="p">:</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">cvm_indices</span><span class="p">(</span><span class="n">index_input</span><span class="p">:</span> <span class="n">IndicesInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IndicesOutput</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the CVM indices of a fairness problem.</span>
 <span class="sd">    Set FairnessProblem.result as a Dataframe containing the indices.</span>
 
 <span class="sd">    Warning:</span>
 <span class="sd">        this indice may fail silently if all values of one variable are similar (</span>
 <span class="sd">        constant ) which  may occurs when applying one hot encoding with a large</span>
-<span class="sd">        number of splits.</span>
+<span class="sd">        number of splits. It may also yield erroneous results when used without</span>
+<span class="sd">        enough data. Which might occur when used with confidence intervals.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        index_input (IndicesInput): The fairness problem to study.</span>
@@ -1849,7 +1436,7 @@ number of splits.</p>
     <span class="c1"># __check_arg_cvm(index_input, cols)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index_input</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">index_input</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index_input</span><span class="o">.</span><span class="n">compute_objective</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">IndicesOutput</span><span class="p">(</span><span class="n">__analyze</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">index_input</span><span class="o">.</span><span class="n">variable_groups</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">IndicesOutput</span><span class="p">(</span><span class="n">_analyze</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">index_input</span><span class="o">.</span><span class="n">variable_groups</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -2074,7 +1661,7 @@ multiple function calls.</p></td>
             <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
                 <span class="c1"># build input for the fold</span>
                 <span class="n">x_fold</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split</span><span class="p">]</span>
-                <span class="n">y_fold</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split</span><span class="p">]</span>
+                <span class="n">y_fold</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split</span><span class="p">]</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
                 <span class="n">fold_inputs</span> <span class="o">=</span> <span class="n">IndicesInput</span><span class="p">(</span>
                     <span class="n">model</span><span class="o">=</span><span class="n">inputs</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
                     <span class="n">x</span><span class="o">=</span><span class="n">x_fold</span><span class="p">,</span>

@@ -521,6 +521,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../notebooks/quickstart/" class="md-nav__link">
+        Quick start: how to read indices
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../notebooks/demo-regression/" class="md-nav__link">
         Demo 1: Regression problem
       </a>
@@ -728,7 +742,7 @@ the column facets span multiple rows.</p></td>
           <td><code>**kwargs</code></td>
           <td>
           </td>
-          <td><p>extra arguments passed to <code>seaborn.catplot</code>_.</p></td>
+          <td><p>extra arguments passed to <a href="https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot">seaborn.catplot</a>.</p></td>
           <td>
                 <code>{}</code>
           </td>
@@ -752,8 +766,6 @@ the column facets span multiple rows.</p></td>
         </tr>
     </tbody>
   </table>
-      <p>.. _seaborn.catplot:
-    https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot</p>
 
       <details class="quote">
         <summary>Source code in <code>deel\fairsense\visualization\plots.py</code></summary>
@@ -807,9 +819,7 @@ the column facets span multiple rows.</p></td>
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">cat_plot</span><span class="p">(</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">cat_plot</span><span class="p">(</span>
     <span class="n">indices</span><span class="p">:</span> <span class="n">IndicesOutput</span><span class="p">,</span> <span class="n">plot_per</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -825,13 +835,11 @@ the column facets span multiple rows.</p></td>
 <span class="sd">            `box`, `violin`, `boxen`, `point`, `bar`.</span>
 <span class="sd">        col_wrap (Optional(int)): “Wrap” the column variable at this width, so that</span>
 <span class="sd">            the column facets span multiple rows.</span>
-<span class="sd">        **kwargs: extra arguments passed to `seaborn.catplot`_.</span>
+<span class="sd">        **kwargs: extra arguments passed to [seaborn.catplot](</span>
+<span class="sd">            https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        a matplotlib axes object</span>
-
-<span class="sd">    .. _seaborn.catplot:</span>
-<span class="sd">        https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">plot_per</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;indices&quot;</span><span class="p">}</span>
