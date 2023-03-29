@@ -46,13 +46,11 @@ def cat_plot(
             `box`, `violin`, `boxen`, `point`, `bar`.
         col_wrap (Optional(int)): “Wrap” the column variable at this width, so that
             the column facets span multiple rows.
-        **kwargs: extra arguments passed to `seaborn.catplot`_.
+        **kwargs: extra arguments passed to [seaborn.catplot](
+            https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot).
 
     Returns:
         a matplotlib axes object
-
-    .. _seaborn.catplot:
-        https://seaborn.pydata.org/generated/seaborn.catplot.html#seaborn.catplot
 
     """
     assert plot_per.lower().strip() in {"variable", "index", "indices"}

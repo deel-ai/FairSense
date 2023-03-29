@@ -35,7 +35,8 @@ def cvm_indices(index_input: IndicesInput) -> IndicesOutput:
     Warning:
         this indice may fail silently if all values of one variable are similar (
         constant ) which  may occurs when applying one hot encoding with a large
-        number of splits.
+        number of splits. It may also yield erroneous results when used without
+        enough data. Which might occur when used with confidence intervals.
 
     Args:
         index_input (IndicesInput): The fairness problem to study.
@@ -48,10 +49,10 @@ def cvm_indices(index_input: IndicesInput) -> IndicesOutput:
     # __check_arg_cvm(index_input, cols)
     df = pd.DataFrame(index_input.x, columns=index_input.x.columns)
     df["outputs"] = pd.DataFrame(index_input.compute_objective())
-    return IndicesOutput(__analyze(df, "outputs", cols=index_input.variable_groups))
+    return IndicesOutput(_analyze(df, "outputs", cols=index_input.variable_groups))
 
 
-def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
+def _CVM(data: pd.DataFrame, x_name, z_name, y_name):
     """
     Compute the CVM index T(Y, Z|X)
     Args:
@@ -121,7 +122,7 @@ def __CVM(data: pd.DataFrame, x_name, z_name, y_name):
     return cvm, cvm_ind
 
 
-def __analyze(x, output_var, cols=None):
+def _analyze(x, output_var, cols=None):
     """
     return the CVM indices
     Args:
@@ -166,10 +167,10 @@ def __analyze(x, output_var, cols=None):
         except:
             pass
         #
-        indices.append(__CVM(x.copy(), col, x_names, output_var))
+        indices.append(_CVM(x.copy(), col, x_names, output_var))
         # [
-        #     __CVM(x.copy(), x_names, col, output_var)[1],
-        #     __CVM(x.copy(), col, x_names, output_var),
+        #     _CVM(x.copy(), x_names, col, output_var)[1],
+        #     _CVM(x.copy(), col, x_names, output_var),
         # ]
         # )
     if col_was_none:
